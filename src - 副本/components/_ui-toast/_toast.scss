@@ -1,0 +1,26 @@
+@charset "UTF-8";
+
+//-----------------------------------------------------
+// author:  590000
+//-----------------------------------------------------
+
+
+//--------------------- 通用样式 ---------------------//
+.ui-toast {
+	position: fixed;
+	left: 50%;
+	bottom: 360px;		//
+	width: 516px;		//
+	margin-left: -258px;		//
+	background-color: #333;		//
+	background-color: rgba(0,0,0,0.65);		//
+	border-radius: $radius;		//
+	padding: 13px 30px;		//
+	text-align: center;
+	z-index: $zindex-fix;
+	.toast-txt {
+		line-height: 25px;		//
+		font-size: 14px;		//
+		color: #fff;		//
+	}
+}

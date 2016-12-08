@@ -1,0 +1,43 @@
+@charset "UTF-8";
+
+//-----------------------------------------------------
+// author:  590000
+//-----------------------------------------------------
+
+
+//--------------------- 通用header ---------------------//
+
+.com-header {
+	height: $header-h;
+	@extend %cf;
+	background-color: $main;
+	.layout-wrapper {
+		height: 100%;
+	}
+	.flbox,
+	.frbox {
+		float: left;
+		height: 100%;
+		@extend %vm;
+	}
+	.frbox {
+		float: right;
+	}
+	//logo
+	.logo {
+		display: inline-block;
+		vertical-align: middle;
+		height: 62px;
+		line-height: 62px;
+		padding-left: 70px;
+		font-size: 20px;
+		color: #fff;
+		@include bgurl('logo.png');
+		@include hover(transform,scale(1.07),scale(1.07));
+	}
+	//退出
+	.btn-sign {
+		display: inline-block;
+		vertical-align: middle;
+	}
+}

@@ -1,0 +1,53 @@
+@charset "UTF-8";
+
+//-----------------------------------------------------
+// author:  590000
+//-----------------------------------------------------
+
+
+//--------------------- 无内容 ---------------------//
+.ui-placeholder-empty {
+	margin: 250px 0 200px;		//
+	text-align: center;
+	.empty-pic {
+		display: block;
+		width: 337px;		//
+		height: 152px;		//
+		margin: 0 auto;
+		@include bgurl('empty.png');
+	}
+	.empty-maintxt {
+		line-height: 30px;		//
+		padding-top: 25px;		//
+		font-size: 18px;		//
+		color: $blue;		//
+	}
+}
+
+//--------------------- 提交成功 ---------------------//
+.ui-placeholder-success {
+	margin: 200px 0;		//
+	text-align: center;
+	.success-pic {
+		display: block;
+		width: 178px;		//
+		height: 136px;		//
+		margin: 0 auto;
+		@include bgurl('success.png');
+	}
+	.success-tit {
+		line-height: 24px;		//
+		padding: 16px 0;		//
+		font-size: 18px;		//
+		color: $blue;		//
+	}
+	.success-maintxt {
+		line-height: 20px;		//
+		font-size: 12px;		//
+		color: $grey-fz;		//
+	}
+	.ui-btn {
+		margin-top: 28px;		//
+		width: 309px;		//
+	}
+}

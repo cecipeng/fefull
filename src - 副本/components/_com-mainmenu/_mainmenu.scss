@@ -1,0 +1,64 @@
+@charset "UTF-8";
+
+//-----------------------------------------------------
+// author:  590000
+//-----------------------------------------------------
+
+
+//--------------------- 通用主菜单 ---------------------//
+.com-mainmenu {
+	display: inline-block;
+	vertical-align: middle;
+	margin-left: 50px;
+	//菜单
+	.mainmenu {
+		@extend %cf;
+		> li {
+			position: relative;
+			float: left;
+		}
+		.item {
+			position: relative;
+			display: block;
+			padding: 0 28px;
+			height: $header-h;
+			line-height: $header-h;
+			font-size: 16px;
+			color: #fff;
+			cursor: pointer;
+			@extend %tof;
+			@include hover(background-color,#231f3d,darken(#231f3d,5%));
+		}
+		.dropdown-arrow {
+			display: inline-block;
+			vertical-align: middle;
+			width: 13px;
+			height: 7px;
+			line-height: $header-h;
+			margin-left: 10px;
+			content: "";
+			@extend %iconfont;
+			@extend %icon-arrow3;
+		}
+		.dropdown {
+			display: none;
+			position: absolute;
+			left: 50%;
+			top: $header-h;
+			width: 160px;
+			margin-left: -80px;
+			background-color: $main-dark;
+			z-index: $zindex-dd;
+			.dropitem {
+				display: block;
+				height: 40px;
+				line-height: 40px;
+				font-size: 14px;
+				color: rgba(255,255,255,.6);
+				text-align: center;
+				@extend %tof;
+				@include hover(background-color,lighten($main-dark,3%),darken($main-dark,3%));
+			}
+		}
+	}
+}

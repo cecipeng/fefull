@@ -1,0 +1,61 @@
+@charset "UTF-8";
+
+//-----------------------------------------------------
+// author:  590000
+//-----------------------------------------------------
+
+
+//--------------------- 标签云 ---------------------//
+
+.com-tagcloud {
+	position: relative;
+	display: inline-block;
+	vertical-align: middle;
+	.mainlink {
+		position: relative;
+		display: block;
+		min-width: 50px;
+		height: 36px;
+		padding: 0 15px;
+		line-height: 34px;
+		font-size: 16px;
+		color: $grey-fz;
+		border: 1px solid transparent;
+	}
+	.dropdown-cloud {
+		display: none;
+		position: absolute;
+		right: 0;
+		top: 35px;
+		width: 300px;
+		padding: 15px 5px 5px;
+		border: 1px solid $grey-border;
+		background-color: #fff;
+		z-index: $zindex-dd;
+	}
+	.cloudlist {
+		> li {
+			float: left;
+		}
+		.item {
+			display: block;
+			height: 36px;
+			line-height: 36px;
+			padding: 0 12px;
+			margin: 0 5px 10px;
+			background-color: $grey-bg;
+			font-size: 14px;
+			color: $grey-fz;
+			cursor: pointer;
+			@include hover(background-color,lighten($grey-bg,2%),darken($grey-bg,5%));
+		}
+	}
+	&.on {
+		.mainlink {
+			border-color: $grey-border;
+			border-bottom-color: #fff;
+			background-color: #fff;
+			z-index: $zindex-dd + 1;
+		}
+	}
+}

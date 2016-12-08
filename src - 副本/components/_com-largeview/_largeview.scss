@@ -1,0 +1,71 @@
+@charset "UTF-8";
+
+//-----------------------------------------------------
+// author:  590000
+//-----------------------------------------------------
+
+
+//--------------------- 大图幻灯片 ---------------------//
+
+.com-largeview {
+	.btn-crl {
+		position: absolute;
+		left: 0;
+		top: 50%;
+		width: 60px;		//
+		height: 60px;		//
+		line-height: 60px;		//
+		margin-top: -80px;		//
+		@extend %iconfont;
+		font-size: 60px;		//
+		text-align: center;
+		color: blue;		//
+		cursor: pointer;
+		@include hover(color,rgba(255,255,255,0.5),rgba(255,255,255,0.3));		//
+		&.btn-next {
+			right: 0;
+			left: auto;
+			//@extend .icon-arrow-left;		//
+			transform: rotate(180deg);
+		}
+		&.btn-prev {
+			//@extend .icon-arrow-left;		//
+		}
+	}
+	.pagenum {
+		position: absolute;
+		left: 0;
+		bottom: 0;		//
+		right: 0;
+		font-size: 18px;		//
+		color: #909090;		//
+		text-align: center;
+		font-weight: lighter;
+	}
+	.largeview {
+		position: relative;
+		height: 100%;
+		overflow: hidden;
+		> li {
+			opacity: 0;
+			@include transition(opacity);
+			position: absolute;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			top: 0;
+			@extend %vm;
+			text-align: center;
+			font-size: 0;
+			img {
+				display: inline-block;
+				vertical-align: middle;
+				max-width: 98%;		//
+				max-height: 100%;		//
+			}
+			&.on {
+				opacity: 1;
+			}
+		}
+	}
+}

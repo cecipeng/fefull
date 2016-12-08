@@ -1,0 +1,51 @@
+@charset "UTF-8";
+
+//-----------------------------------------------------
+// author:  590000
+//-----------------------------------------------------
+
+
+//--------------------- 通用crumb ---------------------//
+.ui-crumb {
+	display: inline-block;
+	.item {
+		position: relative;
+		display: inline-block;
+		vertical-align: middle;
+		height: 25px;	//
+		line-height: 25px;	//
+		margin-right: 20px;	//
+		font-size: 16px;	//
+		color: $grey-fz;	//
+		cursor: default;
+		&:before {
+			position: absolute;
+			top: 0;
+			right: -20px;	//
+			width: 20px;	//
+			height: 25px;	//
+			line-height: 25px;	//
+			content: ">";
+			font-size: 16px;	//
+			// font-family: "SimSun";
+			color: $grey-fz;	//
+			text-align: center;
+		}
+	}
+	.lastitem {
+		display: inline-block;
+		vertical-align: middle;
+		height: 25px;	//
+		line-height: 25px;	//
+		color: red;	//
+		font-size: 16px;	//
+		cursor: default;
+	}
+	//可点击
+	&[data-click="on"] {
+		.item {
+			cursor: pointer;
+			@include hover(opacity,0.7,0.45);	//
+		}
+	}
+}
