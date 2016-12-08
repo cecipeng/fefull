@@ -1,0 +1,216 @@
+@charset "UTF-8";
+/*
+ * module:  mod-article
+ * author:  590000
+ */
+
+.mod-article {
+	background-color: $grey-bg;
+	.ui-tab {
+		.tab-head {
+			height: 72px;
+			background-color: #fff;
+			box-shadow: 0 1px 2px #ddd;
+			.layout-wrapper {
+				height: 100%;
+				@extend %vm;
+			}
+			.tabmenu {
+				float: left;
+				height: 100%;
+				vertical-align: bottom;
+				li {
+					margin-bottom: -1px;
+					height: 100%;
+					line-height: 72px;
+				}
+			}
+		}
+	}
+	.com-list-article {
+		padding-top: 40px;
+	}
+
+	//详情页
+	.detail-header {
+		position: relative;
+		height: 200px;
+		@include bgurl('default-article-topbg.jpg',$x:center,$y:center);
+		&:before {
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			content: "";
+			background-color: rgba(47,42,82,0.7);
+			z-index: $zindex-behind;
+		}
+		.layout-wrapper {
+			position: relative;
+			height: 100%;
+			@extend %vm;
+			text-align: center;
+			z-index: $zindex-font;
+		}
+		.headerbox {
+			display: inline-block;
+			vertical-align: middle;
+			width: 95%;
+		}
+		.article-tit {
+			line-height: 40px;
+			font-size: 30px;
+			color: #fff;
+			font-weight: lighter;
+		}
+		.tag-origin {
+			display: inline-block;
+			vertical-align: middle;
+			min-width: 45px;
+			height: 24px;
+			line-height: 24px;
+			margin-left: 10px;
+			padding: 0 9px;
+			text-align: center;
+			font-size: 14px;
+			color: #fff;
+			background-color: $sub;
+		}
+		.article-date {
+			padding-top: 16px;
+			line-height: 20px;
+			font-size: 14px;
+			color: #999;
+			.date {
+				margin-left: 10px;
+				color: #fff;
+				font-weight: lighter;
+			}
+		}
+	}
+	.detail-container {
+		background-color: #fafafa;
+	}
+	.layout-mainby {
+		background-color: #fff;
+		box-shadow: 1px 0 2px #ddd;
+		padding: $padding;
+		//////////////文章内容
+		//引用
+		blockquote {
+			padding: 16px 8px;
+			line-height: 20px;
+			margin-bottom: 25px;
+			font-size: 14px;
+			color: $grey-fz-light;
+			border-left: 4px solid $grey-border;
+			background-color: $grey-bg;
+		}
+		//正文
+		p {
+			margin-bottom: 25px;
+			line-height: 24px;
+			font-size: 14px;
+			color: $grey-fz;
+			text-align: left;
+		}
+		//图片
+		img {
+			display: block;
+			margin: 0 auto 25px;
+			max-width: 100%;
+			height: auto;
+		}
+		//一级标题
+		h2 {
+			margin-bottom: 25px;
+			line-height: 40px;
+			font-size: 20px;
+			color: $main;
+			font-weight: bold;
+			border-bottom: 1px solid $grey-border;
+		}
+		//二级标题
+		h3 {
+			margin-bottom: 25px;
+			line-height: 30px;
+			font-size: 16px;
+			color: $main;
+			font-weight: bold;
+		}
+		//代码片段
+		p code {
+			display: inline;
+			margin: 0 3px;
+			padding: 0 4px;
+			line-height: 22px;
+			border: 1px solid $grey-border;
+			background-color: #ddd;
+			border-radius: 2px;
+			@extend %wb;
+		}
+		//链接
+		a {
+			color: $main;
+		}
+		//无序列表
+		ul {
+			margin-left: 20px;
+			margin-bottom: 25px;
+			list-style: square;
+			> li {
+				margin-bottom: 10px;
+				line-height: 24px;
+				font-size: 14px;
+				color: $grey-fz;
+			}
+		}
+		//有序列表
+		ol {
+			margin-left: 20px;
+			margin-bottom: 25px;
+			list-style: decimal;
+			> li {
+				margin-bottom: 10px;
+				line-height: 24px;
+				font-size: 14px;
+				color: $grey-fz;
+			}
+		}
+		//代码片段通用
+	}
+	.layout-sideby {
+		float: right;
+		width: 200px;
+		padding: $padding 20px;
+		.com-userhead {
+			margin-bottom: 25px;
+			.name {
+				font-size: 16px;
+				color: $grey-fz;
+			}
+		}
+		.btnwrap {
+			margin-bottom: 30px;
+			.ui-btn-sub {
+				display: block;
+				margin-bottom: 14px;
+			}
+			.comment {
+				@extend %iconfont;
+				@extend %icon-edit;
+				margin-right: 10px;
+				font-size: 18px;
+				color: $grey-fz-light;
+			}
+			.fav {
+				@extend %iconfont;
+				@extend %icon-star;
+				margin-right: 10px;
+				font-size: 18px;
+				color: $grey-fz-light;
+			}
+		}
+	}
+}
