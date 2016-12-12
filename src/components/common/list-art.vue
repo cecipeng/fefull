@@ -13,8 +13,8 @@
 						</div>
 						<p class="list-maintxt">Lorem ipsum dolor sit amet, consectetur adipiscing elit. AeneanLorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean</p>
 						<div class="list-foot">
-							@@include('../_com-userhead/_userhead-s.html')
-							@@include('../_com-fav/_fav-s.html',{"txt":"65"})
+							<comUserheader></comUserheader>
+							<fav></fav>
 						</div>
 					</div>
 				</a>
@@ -23,3 +23,12 @@
 	</div>
 </template>
 
+<script>
+
+import comUserheader from './userhead.vue';
+import fav from './fav.vue';
+
+export default {
+    components: { comUserheader,fav }
+}
+</script>

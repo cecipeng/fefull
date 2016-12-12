@@ -14,18 +14,7 @@
     	            <!-- /com-search -->
 
     	            <!-- ui-dropdown -->
-    	            <div class="ui-dropdown">
-    	                <a href="###" class="selector">
-    	                    排序方式
-    	                    <i class="dropdown-arrow"></i>
-    	                </a>
-    	                <div class="dropdown">
-    	                    <ul class="droplist">
-    	                        <li><a href="###" class="dropitem">最新</a></li>
-    	                        <li><a href="###" class="dropitem">热门</a></li>
-    	                    </ul>
-    	                </div>
-    	            </div>
+    	            <comDropdown></comDropdown>   
     	            <!-- /ui-dropdown -->
     	            
                     <!-- com-tagcloud -->
@@ -34,13 +23,10 @@
     	        </div>
     	    </div>
     	    <div class="tab-body layout-wrapper">
-    	        <div class="tab-eachcon on">
+    	        <div class="tab-eachcon">
     	            <!-- com-list-article -->
                     <comListArticle></comListArticle>   
                     <!-- /com-list-article -->
-    	        </div>
-    	        <div class="tab-eachcon">
-    	            2
     	        </div>
     	    </div>
     	</div>
@@ -52,8 +38,9 @@
 import comSearch from './common/search'
 import comTagcloud from './common/tagcloud'
 import comListArticle from './common/list-art'
+import comDropdown from './common/dropdown'
 
 export default {
-    components: { comSearch,comTagcloud,comListArticle }
+    components: { comSearch,comTagcloud,comListArticle,comDropdown }
 }
 </script>

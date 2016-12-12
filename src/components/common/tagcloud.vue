@@ -1,7 +1,7 @@
 <template>
-	<div class="com-tagcloud">
+	<div class="com-tagcloud" @mouseenter="changeShowDropdown" @mouseleave="changeShowDropdown">
 		<a class="mainlink">标签云</a>
-		<div class="dropdown-cloud">
+		<div class="dropdown-cloud" v-show="showDropdown">
 			<ul class="cloudlist">
 				<li><a class="item">CSS</a></li>
 				<li><a class="item">HTML</a></li>
@@ -11,3 +11,18 @@
 	</div>
 </template>
 
+<script>
+export default {
+	data: function(){
+		return {
+			'showDropdown': false
+		}
+	},
+	methods: {
+		changeShowDropdown: function(){
+			console.log(this.showDropdown);
+			return this.showDropdown = !this.showDropdown;
+		}
+	}
+}	
+</script>
