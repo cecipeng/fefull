@@ -56,5 +56,11 @@
 
 
 //--------------------- pages ---------------------//
- 
+.fade-transition {
+    transition: opacity 0.3s ease;
+}
+.fade-enter,
+.fade-leave {
+    opacity: 0;
+}
 @import "_mod-article"; // 文章管理

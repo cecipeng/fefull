@@ -8,8 +8,8 @@ Vue.use(VueRouter);
 
 const routes = [
     { path: '/home',name:'home',component: Home},
-    { path: '/article',name:'article',component: Article}
-
+    { path: '/article',name:'article',component: Article},
+    { path: '/',name:'default',redirect:'/home'} //设置默认页
   ];
 
 const router = new VueRouter({
