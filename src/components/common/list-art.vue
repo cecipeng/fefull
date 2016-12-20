@@ -1,20 +1,20 @@
 <template>
-	<div class="com-list-article">
+	<div class="com-list-article" @click="ss()">
 		<ul class="menulist">
-			<li>
+			<li v-for="item in artlist">
 				<a class="item">
 					<div class="list-image"><img src="./../../assets/pics/demo-article-cover.png" alt=""></div>	
 					<div class="list-main">
 						<div class="list-title">
 							<div class="titlewrap">
-								<p class="title">印象派浅谈之视觉篇</p>
-								<span class="tag-origin">原创</span>
+								<p class="title">{{item.title}}</p>
+								<span class="tag-origin" v-if="item.origin">原创</span>
 							</div>
 						</div>
-						<p class="list-maintxt">Lorem ipsum dolor sit amet, consectetur adipiscing elit. AeneanLorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean</p>
+						<p class="list-maintxt">{{item.maintxt}}</p>
 						<div class="list-foot">
-							<comUserheader></comUserheader>
-							<fav></fav>
+							<comUserheader stylesize="s" :authorid="item.author"></comUserheader>
+							<a class="com-fav">{{item.fav}}</a>
 						</div>
 					</div>
 				</a>
@@ -26,18 +26,19 @@
 <script>
 
 import comUserheader from './userhead.vue';
-import fav from './fav.vue';
 
 export default {
-    components: { comUserheader,fav },
+    components: { comUserheader },
     props: ['artlist'],
     data () {
     	return {
-    		list: artlist
+
     	}
     },
-    method: {
-    	
+    methods: {
+    	ss: function(){
+    		console.log(this.artlist)
+    	}
     }
 }
 </script>

@@ -5,7 +5,7 @@
     	    <div class="tab-head">
     	        <div class="layout-wrapper">
     	            <ul class="tabmenu">
-    	                <li v-for="(tab, index) in tabs" :class="{'on':index===curIndex}" @click="chooseTab(index)">{{tab.tabname}}</li>
+    	                <li v-for="(tab, index) in tablist" :class="{'on':index===curIndex}" @click="chooseTab(index,tab.tabid)">{{tab.tabname}}</li>
     	            </ul>
 
                     <!-- com-search -->
@@ -22,7 +22,7 @@
     	        </div>
     	    </div>
     	    <div class="tab-body layout-wrapper">
-                <comListArticle artlist=dataArtList></comListArticle>
+                <comListArticle :artlist="showArtList"></comListArticle>
                 <!-- <components :is="curView" transition="fade" transition-mode="out-in">
                 </components>   -->
     	    </div>
@@ -37,48 +37,46 @@ import comSearch from './common/search'
 import comTagcloud from './common/tagcloud'
 import comListArticle from './common/list-art'
 import comDropdown from './common/dropdown'
-import dataArtList from './../data.js'
 
 //临时数据
-// Vue.component('view_0', {
-//     template: '\
-//         <div>tab0</div>\
-//     '
-// })
-// Vue.component('view_1', {
-//     template: '\
-//         <comListArticle></comListArticle>\
-//     ',
-//     components: {comListArticle}
-// })
-// Vue.component('view_2', {
-//     template: '\
-//         <div>tab2</div>\
-//     '
-// })
-
-
+import dataArtList from './../data_artlist.js'
+import tabList from './../data_tablist.js'
 
 export default {
 
     data () {
         return {
-            dataArtList: dataArtList,
-            tabs: [ //临时数据
-                {tabname: "项目1"},
-                {tabname: "项目2"},
-                {tabname: "项目3"}
-            ],
+            "showArtList": [],//[]  //ajax
+            "tablist": tabList,//tab分类  //ajax
             curIndex: 0, //默认tab显示第一条
-            curView: 'view_0' //默认tab显示第一条，对应内容为第一个。值为一个组件
+            curView: tabList[0].tabid //默认tab显示第一条，对应内容为第一个。值为一个组件
         }
     },
     components: { comSearch,comTagcloud,comListArticle,comDropdown },
+    created: function(){
+        this.chooseTab(this.curIndex,this.curView);
+    },
     methods: {
         //tab切换
-        chooseTab: function(index){
+        chooseTab: function(index,tabid){
             this.curIndex = index;
-            this.curView = 'view_' + index;
+            this.getArtList(tabid);
+        },
+        //获取列表
+        getArtList: function(tabid){
+            // this.$http.get('http://211.149.193.19:8080/api/customers')
+            //     .then((response) => {
+            //         this.$set('dataArtList', response.data)
+            
+                        for(var i=0; i <dataArtList.length; i++) {
+                            if(dataArtList[i].tabid == tabid) {
+                                this.showArtList = dataArtList[i].list;
+                            }
+                        }
+                // })
+                // .catch(function(response) {
+                //     console.log(response)
+                // })
         }
     }
 }
