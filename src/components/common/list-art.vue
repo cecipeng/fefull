@@ -29,6 +29,15 @@ import comUserheader from './userhead.vue';
 import fav from './fav.vue';
 
 export default {
-    components: { comUserheader,fav }
+    components: { comUserheader,fav },
+    props: ['artlist'],
+    data () {
+    	return {
+    		list: artlist
+    	}
+    },
+    method: {
+    	
+    }
 }
 </script>

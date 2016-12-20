@@ -22,8 +22,9 @@
     	        </div>
     	    </div>
     	    <div class="tab-body layout-wrapper">
-                <components :is="curView" transition="fade" transition-mode="out-in">
-                </components>  
+                <comListArticle artlist=dataArtList></comListArticle>
+                <!-- <components :is="curView" transition="fade" transition-mode="out-in">
+                </components>   -->
     	    </div>
     	</div>
     	<!-- /ui-tab --> 
@@ -36,34 +37,37 @@ import comSearch from './common/search'
 import comTagcloud from './common/tagcloud'
 import comListArticle from './common/list-art'
 import comDropdown from './common/dropdown'
+import dataArtList from './../data.js'
 
 //临时数据
-Vue.component('view_0', {
-    template: '\
-        <div>tab0</div>\
-    '
-})
-Vue.component('view_1', {
-    template: '\
-        <comListArticle></comListArticle>\
-    ',
-    components: {comListArticle}
-})
-Vue.component('view_2', {
-    template: '\
-        <div>tab2</div>\
-    '
-})
+// Vue.component('view_0', {
+//     template: '\
+//         <div>tab0</div>\
+//     '
+// })
+// Vue.component('view_1', {
+//     template: '\
+//         <comListArticle></comListArticle>\
+//     ',
+//     components: {comListArticle}
+// })
+// Vue.component('view_2', {
+//     template: '\
+//         <div>tab2</div>\
+//     '
+// })
 
 
 
 export default {
+
     data () {
         return {
+            dataArtList: dataArtList,
             tabs: [ //临时数据
-                {tabname: "CSS"},
-                {tabname: "HTML"},
-                {tabname: "JavaScript"}
+                {tabname: "项目1"},
+                {tabname: "项目2"},
+                {tabname: "项目3"}
             ],
             curIndex: 0, //默认tab显示第一条
             curView: 'view_0' //默认tab显示第一条，对应内容为第一个。值为一个组件

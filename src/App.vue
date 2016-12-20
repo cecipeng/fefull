@@ -2,14 +2,15 @@
     <div id="app">
         <!-- header -->
         <div class="layout-header">
-            <comHeader></comHeader>
+            <!-- <comHeader></comHeader> -->
         </div>
         <!-- /header -->
         
         <router-view
             keep-alive
             transition="fade"
-            transition-mode='out-in'></router-view>
+            transition-mode='out-in'>
+        </router-view>
     </div>
 </template>
 
