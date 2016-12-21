@@ -22,7 +22,7 @@ export default {
 	},
 	methods: {
 		changeShowDropdown: function(){
-			return this.showDropdown = !this.showDropdown;
+			this.showDropdown = !this.showDropdown;
 		}
 	}
 }

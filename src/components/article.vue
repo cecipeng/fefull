@@ -4,12 +4,13 @@
     	<div class="ui-tab ui-tab1">
     	    <div class="tab-head">
     	        <div class="layout-wrapper">
-    	            <ul class="tabmenu">
-    	                <li v-for="(tab, index) in tablist" :class="{'on':index===curIndex}" @click="chooseTab(index,tab.tabid)">{{tab.tabname}}</li>
+    	            <ul v-if="showTab" class="tabmenu">
+    	                <li v-for="(tab, index) in allTablist" :class="{'on':index===curIndex}" @click="chooseTab(index,tab.tabid)">{{tab.tabname}}</li>
     	            </ul>
+                    <p class="listtit" v-else>{{listTit}}</p>
 
                     <!-- com-search -->
-                    <comSearch></comSearch>   
+                    <comSearch :artlist="allArtList"></comSearch>   
     	            <!-- /com-search -->
 
     	            <!-- ui-dropdown -->
@@ -22,7 +23,7 @@
     	        </div>
     	    </div>
     	    <div class="tab-body layout-wrapper">
-                <comListArticle :artlist="showArtList"></comListArticle>
+                <comListArticle :artlist="curArtList"></comListArticle>
                 <!-- <components :is="curView" transition="fade" transition-mode="out-in">
                 </components>   -->
     	    </div>
@@ -46,37 +47,57 @@ export default {
 
     data () {
         return {
-            "showArtList": [],//[]  //ajax
-            "tablist": tabList,//tab分类  //ajax
-            curIndex: 0, //默认tab显示第一条
-            curView: tabList[0].tabid //默认tab显示第一条，对应内容为第一个。值为一个组件
+            allArtList: [], //文章所有列表
+            curArtList: [], //显示的列表
+            allTablist: [], //tab所有分类
+            curIndex: 0, //默认tab显示第一条（可能顺序不统一）
+            curView: tabList[0].tabid, //默认tab显示第一条对应的内容（可能顺序不统一）
+            showTab: true, //切换：显示tab或搜索结果标题
+            listTit: "" //列表标题
         }
     },
     components: { comSearch,comTagcloud,comListArticle,comDropdown },
     created: function(){
-        this.chooseTab(this.curIndex,this.curView);
+        this.http_allArtList(); //载入页面立即获取文章所有列表
+        this.http_allTabList(); //载入页面立即获取tab所有分类
+        this.chooseTab(this.curIndex,this.curView); //按data中curIndex和curView的设置显示某个tab
     },
     methods: {
         //tab切换
         chooseTab: function(index,tabid){
             this.curIndex = index;
-            this.getArtList(tabid);
+            this.setCurList(tabid);
         },
-        //获取列表
-        getArtList: function(tabid){
+        //根据选择的分类显示对应分类文章
+        setCurList: function(tabid){
+            this.allArtList = dataArtList; //临时处理
+            this.curArtList = []; //清空列表
+            for(var i=0; i<this.allArtList.length; i++) {
+                if(this.allArtList[i].tabid == tabid) {
+                    this.curArtList.push(this.allArtList[i]);
+                }
+            }
+        },
+        //获取文章所有列表
+        http_allArtList: function(){
             // this.$http.get('http://211.149.193.19:8080/api/customers')
             //     .then((response) => {
-            //         this.$set('dataArtList', response.data)
-            
-                        for(var i=0; i <dataArtList.length; i++) {
-                            if(dataArtList[i].tabid == tabid) {
-                                this.showArtList = dataArtList[i].list;
-                            }
-                        }
+            //         this.$set('allArtList', response.data)
                 // })
                 // .catch(function(response) {
                 //     console.log(response)
                 // })
+        },
+        //获取tab所有分类
+        http_allTabList: function(){
+            // this.$http.get('http://211.149.193.19:8080/api/customers')
+            //     .then((response) => {
+            //         this.$set('allTablist', response.data)
+                // })
+                // .catch(function(response) {
+                //     console.log(response)
+                // })
+            this.allTablist = tabList; //临时处理
         }
     }
 }
