@@ -26,6 +26,7 @@ export default {
     		for(var i=0;i<userlist.length;i++){
     			if(this.authorid == userlist[i].userid) {
     				this.user = userlist[i];
+                    // console.log(this.user.userhead);
     			}
     		}
     	}

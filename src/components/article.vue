@@ -7,10 +7,10 @@
     	            <ul v-if="showTab" class="tabmenu">
     	                <li v-for="(tab, index) in allTablist" :class="{'on':index===curIndex}" @click="chooseTab(index,tab.tabid)">{{tab.tabname}}</li>
     	            </ul>
-                    <p class="listtit" v-else>{{listTit}}</p>
+                    <p class="listtit" v-else>"<span class="result">{{listTit}}</span>"的搜索结果：</p>
 
                     <!-- com-search -->
-                    <comSearch :artlist="allArtList"></comSearch>   
+                    <comSearch v-on:showListTitle="showTitle" :artlist="allArtList"></comSearch>   
     	            <!-- /com-search -->
 
     	            <!-- ui-dropdown -->
@@ -78,6 +78,10 @@ export default {
                 }
             }
         },
+        showTitle: function(word){
+            this.showTab = false;
+            this.listTit = word;
+        },
         //获取文章所有列表
         http_allArtList: function(){
             // this.$http.get('http://211.149.193.19:8080/api/customers')
@@ -102,3 +106,18 @@ export default {
     }
 }
 </script>
+
+<style lang="scss">
+    .listtit {
+        float: left;
+        height: 72px;
+        line-height: 72px;
+        font-size: 16px;
+        color: #2f2a52;
+        .result {
+            color: red;
+            font-size: 20px;
+        }
+    }
+
+</style>

@@ -20,8 +20,8 @@ export default {
 	},
 	methods: {
 		changeShowDropdown: function(){
-			console.log(this.showDropdown);
-			return this.showDropdown = !this.showDropdown;
+			// console.log(this.showDropdown);
+			this.showDropdown = !this.showDropdown;
 		}
 	}
 }	

@@ -3,7 +3,7 @@
 		<ul class="menulist">
 			<li v-for="item in artlist">
 				<a class="item">
-					<div class="list-image"><img src="./../../assets/pics/demo-article-cover.png" alt=""></div>	
+					<div class="list-image"><img :src="item.cover" alt=""></div>	
 					<div class="list-main">
 						<div class="list-title">
 							<div class="titlewrap">

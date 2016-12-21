@@ -14,6 +14,7 @@
 	.selector {
 		position: relative;
 		padding: 0;
+		z-index: $zindex-dd + 1;
 		input {
 			display: block;
 			width: 100%;
@@ -47,5 +48,6 @@
 	.dropdown {
 		top: 20px;
 		padding-top: 25px;
+		z-index: $zindex-dd;
 	}
 }
