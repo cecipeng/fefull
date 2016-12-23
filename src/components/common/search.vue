@@ -2,7 +2,7 @@
 	<div class="com-search ui-dropdown">
 		<p class="selector">
 			<input type="text" v-model="searchWord" @keyup="inputing()">
-			<a href="###" class="btn-search" @click="searching"></a>
+			<router-link class="btn-search" tag="a" :to="{name:'search',params:{searchword:searchWord}}"></router-link>
 		</p>
 		<div class="dropdown" v-if="showDropdown">
 			<p class="noresult" v-if="showNoResult">无结果</p>
@@ -53,7 +53,7 @@ export default {
 		},
 		//点击搜索
 		searching: function(){
-			this.$emit('showListTitle',this.searchWord);
+			
 		}
 	}
 }	
