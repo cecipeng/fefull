@@ -4,6 +4,7 @@
     	<div class="ui-tab ui-tab1">
     	    <div class="tab-head">
     	        <div class="layout-wrapper">
+                
     	            <ul class="tabmenu">
     	                <li v-for="(tab, index) in allTablist" :class="{'on':index===curIndex}" @click="chooseTab(index,tab.tabid)">{{tab.tabname}}</li>
     	            </ul>

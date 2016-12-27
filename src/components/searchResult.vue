@@ -4,10 +4,10 @@
     	<div class="ui-tab ui-tab1">
     	    <div class="tab-head">
     	        <div class="layout-wrapper">
-                    <p class="listtit">"<span class="result">{{listTit}}</span>"的搜索结果：</p>
+                    <p class="listtit">"<span class="result">{{ $route.params.keyword }}</span>"的搜索结果：</p>
 
                     <!-- com-search -->
-                    <comSearch v-on:showListTitle="showTitle" :artlist="allArtList"></comSearch>
+                    <comSearch :artlist="allArtList"></comSearch>
     	            <!-- /com-search -->
 
     	            <!-- ui-dropdown -->
@@ -27,6 +27,7 @@
     	</div>
     	<!-- /ui-tab --> 
     </div>
+
 </template>
 
 <script>
@@ -43,15 +44,27 @@ export default {
     
     data () {
         return {
+            curArtList: [], //显示的列表
+            allArtList: [], //文章列表
             listTit: "" //列表标题
         }
     },
-    components: {  },
+    components: { comSearch,comTagcloud,comListArticle,comDropdown },
     created: function(){
-        
+        this.allArtList = this.$store.state.articleData;
+        this.setCurList(this.$route.params.keyword);
     },
     methods: {
-        
+        //根据关键字搜索文章
+        setCurList: function(keyword){
+            const list = this.allArtList; //文章所有列表
+            this.curArtList = []; //清空列表
+            for(var i=0; i<list.length; i++) {
+                if(list[i].title.indexOf(keyword) > -1) { //目前仅根据标题搜索
+                    this.curArtList.push(list[i]);
+                }
+            }
+        }
     }
 }
 </script>

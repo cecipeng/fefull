@@ -2,7 +2,7 @@
 	<div class="com-search ui-dropdown">
 		<p class="selector">
 			<input type="text" v-model="searchWord" @keyup="inputing()">
-			<router-link class="btn-search" tag="a" :to="{name:'search',params:{searchword:searchWord}}"></router-link>
+			<router-link class="btn-search" :to="{ name: 'search', params: { keyword: searchWord }}"></router-link>
 		</p>
 		<div class="dropdown" v-if="showDropdown">
 			<p class="noresult" v-if="showNoResult">无结果</p>
@@ -28,6 +28,9 @@ export default {
 		changeShowDropdown: function(){
 			this.showDropdown = !this.showDropdown;
 		},
+		// routerSearch: function(){
+		// 	router.push({ name: 'search', params: { searchword: this.searchWord }})
+		// },
 		//输入中实时显示下拉菜单
 		inputing: function(){
 			var curlist = {};
@@ -50,6 +53,7 @@ export default {
 			else {
 				this.showDropdown = false; //无内容不显示下拉菜单
 			}
+			console.log(this.searchWord);
 		},
 		//点击搜索
 		searching: function(){

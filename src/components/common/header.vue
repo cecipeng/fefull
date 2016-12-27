@@ -9,9 +9,6 @@
                         <li>
                             <router-link class="item" to="/home">首页</router-link>
                         </li>
-                        <li>
-                            <router-link class="item" to="/article">文章资讯</router-link>
-                        </li>
                         <li id="ui-dropdown">
                             <a class="item selector">资源库<i class="dropdown-arrow"></i></a>
                             <div class="dropdown">
