@@ -155,54 +155,5 @@ export default
         like: 62,
         tabid: 12,
         tag: [201,202,203] 
-    },
-    {
-        title: "标题14",
-        origin: false,
-        maintxt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. AeneanLorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean",
-        author: 11112,
-        fav: 136,
-        cover: "./../../assets/pics/demo-article-cover.png",
-        creatDate: "2016-07-07", 
-        like: 61,
-        tabid: 13,
-        tag: [202] 
-    },
-    {
-        title: "标题15",
-        origin: true,
-        maintxt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. AeneanLorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean",
-        author: 11111,
-        fav: 137,
-        cover: "./../../assets/pics/demo-article-cover.png",
-        creatDate: "2016-09-09", 
-        like: 62,
-        tabid: 13,
-        tag: [201] 
-    },
-    {
-        title: "标题16",
-        origin: false,
-        maintxt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. AeneanLorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean",
-        author: 11113,
-        fav: 138,
-        cover: "./../../assets/pics/demo-article-cover.png",
-        creatDate: "2016-01-02", 
-        like: 63,
-        tabid: 11,
-        tag: [203] 
-    },
-    {
-        title: "标题17",
-        origin: true,
-        maintxt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. AeneanLorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean",
-        author: 11112,
-        fav: 139,
-        cover: "./../../assets/pics/demo-article-cover.png",
-        creatDate: "2016-01-01", 
-        like: 64,
-        tabid: 13,
-        tag: [201,202,203] 
     }
-   
 ]

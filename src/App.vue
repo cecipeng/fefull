@@ -2,7 +2,7 @@
     <div id="app">
         <!-- header -->
         <div class="layout-header">
-            <comHeader></comHeader>
+            <!-- <comHeader></comHeader> -->
         </div>
         <!-- /header -->
         

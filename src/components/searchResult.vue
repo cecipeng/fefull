@@ -7,7 +7,7 @@
                     <p class="listtit">"<span class="result">{{ $route.params.keyword }}</span>"的搜索结果：</p>
 
                     <!-- com-search -->
-                    <comSearch :artlist="allArtList"></comSearch>
+                    <comSearch></comSearch>
     	            <!-- /com-search -->
 
     	            <!-- ui-dropdown -->
@@ -20,9 +20,8 @@
     	        </div>
     	    </div>
     	    <div class="tab-body layout-wrapper">
-                <comListArticle :artlist="curArtList"></comListArticle>
-                <!-- <components :is="curView" transition="fade" transition-mode="out-in">
-                </components>   -->
+                <comListArticle :artlist="$route.params.result"></comListArticle>
+                <comPage></comPage> 
     	    </div>
     	</div>
     	<!-- /ui-tab --> 
@@ -36,35 +35,29 @@ import comSearch from './common/search'
 import comTagcloud from './common/tagcloud'
 import comListArticle from './common/list-art'
 import comDropdown from './common/dropdown'
+import comPage from './common/page'
 
-//临时数据
-import dataArtList from './../data_artlist.js'
+
 
 export default {
     
     data () {
         return {
             curArtList: [], //显示的列表
-            allArtList: [], //文章列表
             listTit: "" //列表标题
         }
     },
-    components: { comSearch,comTagcloud,comListArticle,comDropdown },
+    components: { comSearch,comTagcloud,comListArticle,comDropdown,comPage },
     created: function(){
-        this.allArtList = this.$store.state.articleData;
-        this.setCurList(this.$route.params.keyword);
+        console.log("created");
+        this.curArtList = this.$route.params.result;
+    },
+    updated: function(){
+        console.log("updated");
     },
     methods: {
-        //根据关键字搜索文章
-        setCurList: function(keyword){
-            const list = this.allArtList; //文章所有列表
-            this.curArtList = []; //清空列表
-            for(var i=0; i<list.length; i++) {
-                if(list[i].title.indexOf(keyword) > -1) { //目前仅根据标题搜索
-                    this.curArtList.push(list[i]);
-                }
-            }
-        }
+      
+
     }
 }
 </script>

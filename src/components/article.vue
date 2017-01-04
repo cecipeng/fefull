@@ -6,11 +6,11 @@
     	        <div class="layout-wrapper">
                 
     	            <ul class="tabmenu">
-    	                <li v-for="(tab, index) in allTablist" :class="{'on':index===curIndex}" @click="chooseTab(index,tab.tabid)">{{tab.tabname}}</li>
+    	                <li v-for="(tab, index) in allTablist" :class="{'on':index===curIndex}" @click="changeTab(index,tab.tabid)">{{tab.tabname}}</li>
     	            </ul>
 
                     <!-- com-search -->
-                    <comSearch :artlist="allArtList"></comSearch>   
+                    <comSearch></comSearch>   
     	            <!-- /com-search -->
 
     	            <!-- ui-dropdown -->
@@ -24,8 +24,7 @@
     	    </div>
     	    <div class="tab-body layout-wrapper">
                 <comListArticle :artlist="curArtList"></comListArticle>
-                <!-- <components :is="curView" transition="fade" transition-mode="out-in">
-                </components>   -->
+                <comPage></comPage> 
     	    </div>
     	</div>
     	<!-- /ui-tab --> 
@@ -38,7 +37,11 @@ import comSearch from './common/search'
 import comTagcloud from './common/tagcloud'
 import comListArticle from './common/list-art'
 import comDropdown from './common/dropdown'
+import comPage from './common/page'
 
+//临时数据
+import dataArtList from './../data_artlist_tab1.js'
+import dataArtList2 from './../data_artlist_tab2.js'
 
 export default {
 
@@ -46,37 +49,35 @@ export default {
         return {
             curArtList: [], //显示的列表
             allTablist: [], //文章分类
-            allArtList: [], //文章列表
-            curIndex: 0, //默认tab显示第一条（可能顺序不统一）
-            curView: 11 //默认tab显示第一条对应的内容（可能顺序不统一）
+            curIndex: 0, //初始tab显示第一条
         }
     },
-    components: { comSearch,comTagcloud,comListArticle,comDropdown },
+    components: { comSearch,comTagcloud,comListArticle,comDropdown,comPage },
     created: function(){
-        //获取（公用数据）文章列表，文章分类
-        this.$store.commit('http_article');
+        //获取（公用数据）文章分类
         this.$store.commit('http_articleSort');
-        this.allArtList = this.$store.state.articleData;
         this.allTablist = this.$store.state.articleSortData;
 
-        //按data中curIndex和curView的设置显示某个分类下的文章列表
-        this.chooseTab(this.curIndex,this.curView); 
+        //获取所有tab首页文章列表
+        const initTabid = this.allTablist[this.curIndex].tabid; //curIndex指定tab
+        this.http_article(1,initTabid); //1：第一页
     },
     methods: {
         //tab切换
-        chooseTab: function(index,tabid){
+        changeTab: function(index,tabid){
             this.curIndex = index;
-            this.setCurList(tabid);
+            this.http_article(1,tabid); //默认切换tab后都显示第一页
         },
-        //根据选择的分类显示对应分类文章
-        setCurList: function(tabid){
-            const list = this.allArtList; //文章所有列表
-            this.curArtList = []; //清空列表
-            for(var i=0; i<list.length; i++) {
-                if(list[i].tabid == tabid) {
-                    this.curArtList.push(list[i]);
-                }
-            }
+        //获取文章列表
+        http_article: function(page,tabid){
+            // this.$http.get('http://211.149.193.19:8080/api/customers')
+            //     .then((response) => {
+            //         this.$set('this.curArtList', response.data)
+                // })
+                // .catch(function(response) {
+                //     console.log(response)
+                // })
+            this.curArtList = dataArtList; //临时处理
         }
     }
 }

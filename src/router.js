@@ -10,7 +10,7 @@ Vue.use(VueRouter);
 const routes = [
     { path: '/home',name:'home',component: Home},
     { path: '/article',name:'article',component: Article},
-    { path: '/search/:keyword',name:'search',component: Search},
+    { path: '/search/:keyword/:result',name:'search',component: Search},
     { path: '/',name:'default',redirect:'/article'} //设置默认页
   ];
 
