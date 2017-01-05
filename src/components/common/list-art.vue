@@ -1,8 +1,8 @@
 <template>
-	<div class="com-list-article" @click="ss()">
+	<div class="com-list-article">
 		<ul class="menulist">
 			<li v-for="item in artlist">
-				<a class="item">
+			<router-link tag="a" class="item" :to="{ name: 'articleDetail', params: { articleId: item.articleId }}">
 					<div class="list-image"><img :src="item.cover" alt=""></div>	
 					<div class="list-main">
 						<div class="list-title">
@@ -17,7 +17,7 @@
 							<a class="com-fav">{{item.fav}}</a>
 						</div>
 					</div>
-				</a>
+				</router-link>
 			</li>
 		</ul>
 	</div>

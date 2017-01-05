@@ -14,7 +14,7 @@
     	            <!-- /com-search -->
 
     	            <!-- ui-dropdown -->
-    	            <comDropdown></comDropdown>   
+    	            <comDropdown deftxt='排序方式' :droplist="orderlist"></comDropdown>   
     	            <!-- /ui-dropdown -->
     	            
                     <!-- com-tagcloud -->
@@ -50,6 +50,10 @@ export default {
             curArtList: [], //显示的列表
             allTablist: [], //文章分类
             curIndex: 0, //初始tab显示第一条
+            orderlist: [
+                {orderId: 1, ordername: '最新'},
+                {orderId: 2, ordername: '热门'}
+            ]
         }
     },
     components: { comSearch,comTagcloud,comListArticle,comDropdown,comPage },

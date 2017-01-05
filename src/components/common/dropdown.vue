@@ -1,13 +1,12 @@
 <template>
 	<div class="ui-dropdown" @mouseenter="changeShowDropdown" @mouseleave="changeShowDropdown">
 		<a class="selector">
-			排序方式
+			{{deftxt}}
 			<i class="dropdown-arrow"></i>
 		</a>
 		<div class="dropdown" v-show="showDropdown">
 			<ul class="droplist">
-				<li><a href="###" class="dropitem">最新</a></li>
-				<li><a href="###" class="dropitem">热门</a></li>
+				<li v-for="item in droplist"><a @click="orderList(item.orderId)" class="dropitem">{{item.ordername}}</a></li>
 			</ul>
 		</div>
 	</div>
@@ -20,9 +19,14 @@ export default {
 			'showDropdown': false
 		}
 	},
+	props: ['deftxt','droplist'],
 	methods: {
 		changeShowDropdown: function(){
 			this.showDropdown = !this.showDropdown;
+		},
+		orderList: function(orderId){
+			this.showDropdown = false;
+console.log(orderId);
 		}
 	}
 }

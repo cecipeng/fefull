@@ -2,7 +2,7 @@
 	<div class="com-search ui-dropdown">
 		<p class="selector">
 			<input type="text" v-model="searchWord" @keyup="inputing()">
-			<a class="btn-search" @click="goSearchresult(searchWord)"></a>
+			<router-link tag="a" class="btn-search" :to="{ name: 'search', params: { keyword: searchWord }}"></router-link>
 		</p>
 		<div class="dropdown" v-if="showDropdown">
 			<p class="noresult" v-if="showNoResult">无结果</p>
@@ -15,8 +15,6 @@
 
 <script>
 
-//临时数据
-import dataArtList from './../../data_artlist_tab2.js'
 
 
 export default {
@@ -58,25 +56,7 @@ export default {
 			    //     console.log(response)
 			    // })
 			this.searchResult = ['1','2','3','标题']; //临时处理
-		},
-		//获取搜索结果列表（指定页）
-        http_searchresult: function(keyword){
-            // this.$http.get('http://211.149.193.19:8080/api/customers')
-            //     .then((response) => {
-            //         this.$set('this.curArtList', response.data)
-                // })
-                // .catch(function(response) {
-                //     console.log(response)
-                // })
-            return dataArtList; //临时处理
-            
-
-        },
-        goSearchresult: function(keyword){
-        	console.log(keyword);
-        	var result = this.http_searchresult(keyword);
-        	this.$router.push({path: '/search', name: 'search', params: { keyword: this.searchWord, result: result  }});
-        }
+		}
 	}
 }	
 </script>

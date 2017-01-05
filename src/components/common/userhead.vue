@@ -18,15 +18,21 @@ export default {
     	}
     },
     created: function() {
-        this.getUser()
+        this.http_getUser()
     },
     methods: {
-    	getUser: function(){
-    		
-    		for(var i=0;i<userlist.length;i++){
+        //根据userid获取该用户信息
+    	http_getUser: function(){
+    		// this.$http.get('http://211.149.193.19:8080/api/customers')
+            //     .then((response) => {
+            //         this.$set('this.user', response.data)
+                // })
+                // .catch(function(response) {
+                //     console.log(response)
+                // })
+    		for(var i=0;i<userlist.length;i++){ //临时处理
     			if(this.authorid == userlist[i].userid) {
     				this.user = userlist[i];
-                    // console.log(this.user.userhead);
     			}
     		}
     	}
