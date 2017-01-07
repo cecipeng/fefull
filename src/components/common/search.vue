@@ -2,7 +2,7 @@
 	<div class="com-search ui-dropdown">
 		<p class="selector">
 			<input type="text" v-model="searchWord" @keyup="inputing()">
-			<router-link tag="a" class="btn-search" :to="{ name: 'search', params: { keyword: searchWord }}"></router-link>
+			<router-link tag="a" class="btn-search" :to="{ name: 'search', params: { keyword: searchWord, type: 0 }}"></router-link>
 		</p>
 		<div class="dropdown" v-if="showDropdown">
 			<p class="noresult" v-if="showNoResult">无结果</p>

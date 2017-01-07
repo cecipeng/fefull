@@ -80,7 +80,7 @@ import comUserheader from './common/userhead.vue';
 
 
 //临时数据
-import dataArtList from './../data_artlist_tab2.js'
+import dataArtList from './../data_artlist_tab1.js'
 
 export default {
 
@@ -97,7 +97,7 @@ export default {
     components: { comUserheader },
     created: function(){
         //根据文章id获取文章
-        this.http_getContent(this.articleId);
+        this.http_getContent();
     },
     methods: {
         

@@ -59,17 +59,32 @@ export default {
     methods: {
         //获取搜索结果列表
         http_SearchResult() {
-            console.log("getSearchResult");
             this.keyword = this.$route.params.keyword;
+            if(this.$route.params.type == 0){
 
-            // this.$http.get('http://211.149.193.19:8080/api/customers')
-            //     .then((response) => {
-            //         this.$set('this.curArtList', response.data)
-                // })
-                // .catch(function(response) {
-                //     console.log(response)
-                // })
-            this.curArtList = dataArtList; //临时处理
+                // this.$http.get('http://211.149.193.19:8080/api/customers')
+                //     .then((response) => {
+                //         this.$set('this.curArtList', response.data)
+                    // })
+                    // .catch(function(response) {
+                    //     console.log(response)
+                    // })
+                this.curArtList = dataArtList; //临时处理
+            }
+            else
+            if(this.$route.params.type == 1){
+
+                //根据文章id获取文章列表
+                this.$store.state.tagcloudData
+                // this.$http.get('http://211.149.193.19:8080/api/customers')
+                //     .then((response) => {
+                //         this.$set('this.curArtList', response.data)
+                    // })
+                    // .catch(function(response) {
+                    //     console.log(response)
+                    // })
+                this.curArtList = dataArtList; //临时处理
+            }
         }
     }
 }

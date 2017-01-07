@@ -17,6 +17,9 @@
 		padding: 0 20px 0 15px;
 		font-size: 16px;
 		color: $grey-fz;
+		&:hover + .dropdown {
+			display: block;
+		}
 	}
 	//小三角
 	.selector:after,
@@ -33,7 +36,7 @@
 	}
 	//下拉内容
 	.dropdown {
-		// display: none;
+		display: none;
 		position: absolute;
 		left: 0;
 		right: 0;
@@ -44,6 +47,9 @@
 		overflow-y: auto;
 		overflow-x: hidden;
 		z-index: $zindex-dd;
+		&:hover {
+			display: block;
+		}
 		.dropitem {
 			display: block;
 			height: 30px;
@@ -53,6 +59,7 @@
 			color: $grey-fz;
 			text-align: center;
 			@extend %tof;
+			cursor: pointer;
 			transition: color 0.3s ease-out, background-color 0.3s ease-out;
 			&:hover {
 				color: $grey-fz-dark;

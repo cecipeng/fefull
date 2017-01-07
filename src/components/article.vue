@@ -13,12 +13,31 @@
                     <comSearch></comSearch>   
     	            <!-- /com-search -->
 
-    	            <!-- ui-dropdown -->
-    	            <comDropdown deftxt='排序方式' :droplist="orderlist"></comDropdown>   
-    	            <!-- /ui-dropdown -->
+    	            <!-- 排序 -->
+                    <div class="ui-dropdown">
+                        <a class="selector">
+                            排序方式
+                            <i class="dropdown-arrow"></i>
+                        </a>
+                        <div class="dropdown">
+                            <ul class="droplist">
+                                <li><a @click="orderList(0)" class="dropitem">最新</a></li>
+                                <li><a @click="orderList(1)" class="dropitem">热门</a></li>
+                            </ul>
+                        </div>
+                    </div>
+    	            <!-- /排序 -->
     	            
                     <!-- com-tagcloud -->
-                    <comTagcloud></comTagcloud>   
+                    <div class="ui-dropdown tagcloud">
+                        <a class="selector">
+                            排序方式
+                            <i class="dropdown-arrow"></i>
+                        </a>
+                        <div class="dropdown">
+                            <comTagcloud :tagcloudList="allTagcloud"></comTagcloud>  
+                        </div>
+                    </div>
                     <!-- /com-tagcloud -->
     	        </div>
     	    </div>
@@ -36,12 +55,12 @@ import Vue from 'vue'
 import comSearch from './common/search'
 import comTagcloud from './common/tagcloud'
 import comListArticle from './common/list-art'
-import comDropdown from './common/dropdown'
 import comPage from './common/page'
 
 //临时数据
 import dataArtList from './../data_artlist_tab1.js'
 import dataArtList2 from './../data_artlist_tab2.js'
+import tagcloudList from './../data_tagcloud.js'
 
 export default {
 
@@ -49,14 +68,11 @@ export default {
         return {
             curArtList: [], //显示的列表
             allTablist: [], //文章分类
-            curIndex: 0, //初始tab显示第一条
-            orderlist: [
-                {orderId: 1, ordername: '最新'},
-                {orderId: 2, ordername: '热门'}
-            ]
+            allTagcloud: [],
+            curIndex: 0 //初始tab显示第一条
         }
     },
-    components: { comSearch,comTagcloud,comListArticle,comDropdown,comPage },
+    components: { comSearch,comTagcloud,comListArticle,comPage },
     created: function(){
         //获取（公用数据）文章分类
         this.$store.commit('http_articleSort');
@@ -65,6 +81,10 @@ export default {
         //获取所有tab首页文章列表
         const initTabid = this.allTablist[this.curIndex].tabid; //curIndex指定tab
         this.http_article(1,initTabid); //1：第一页
+
+        //获取标签云列表
+        this.$store.commit('http_tagcloud');
+        this.allTagcloud = this.$store.state.tagcloudData;
     },
     methods: {
         //tab切换
@@ -83,6 +103,16 @@ export default {
                 // })
             this.curArtList = dataArtList; //临时处理
         }
+
     }
 }
 </script>
+
+<style lang="scss">
+    .ui-dropdown.tagcloud {
+        .dropdown {
+            left: auto;
+            width: 300px;
+        }
+    }
+</style>

@@ -1,28 +1,18 @@
 <template>
-	<div class="com-tagcloud" @mouseenter="changeShowDropdown" @mouseleave="changeShowDropdown">
-		<a class="mainlink">标签云</a>
-		<div class="dropdown-cloud" v-show="showDropdown">
-			<ul class="cloudlist">
-				<li><a class="item">CSS</a></li>
-				<li><a class="item">HTML</a></li>
-				<li><a class="item">JQuery</a></li>
-			</ul>
-		</div>
-	</div>
+	<ul class="com-tagcloud">
+		<li v-for="item in tagcloudList"><router-link tag="a" class="item" :to="{ name: 'search', params: { keyword: item.tagcloudName, type: 1 }}">{{item.tagcloudName}}</router-link></li>
+	</ul>
 </template>
 
 <script>
 export default {
 	data: function(){
 		return {
-			'showDropdown': false
+			
 		}
 	},
+	props: [ 'tagcloudList' ],
 	methods: {
-		changeShowDropdown: function(){
-			// console.log(this.showDropdown);
-			this.showDropdown = !this.showDropdown;
-		}
 	}
 }	
 </script>
