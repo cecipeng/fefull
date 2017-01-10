@@ -33,10 +33,10 @@
                 <!-- /mainmenu -->
             </div>
             <div class="frbox">
-                <div class="ui-dropdown">
+                <div class="ui-dropdown" v-if="showUser">
                     <a class="selector">
                         <!-- com-userhead -->
-                        <comUserheader></comUserheader>
+                        <comUserheader stylesize="" :authorid="loginUser"></comUserheader>
                         <!-- /com-userhead -->
                         <i class="dropdown-arrow"></i>
                     </a>
@@ -46,8 +46,11 @@
                         </ul>
                     </div>
                 </div>
+                <div class="unlogin" v-else="showUser">
+                    <a class="btn-login">登录</a>
+                    <a class="btn-register">注册</a>
+                </div>
                 
-                <a href="###" class="btn-sign">注销</a>
             </div>   
         </div>   
     </div>
@@ -60,13 +63,30 @@ export default {
     components: { comUserheader },
     data () {
         return {
-            showHeader: true //显示头部：默认显示，个人中心页不显示
+            showHeader: true, //显示头部：默认显示，个人中心页不显示
+            showUser: false, //显示登录用户
+            loginUser: "" //登录用户ID
+
         }
+    },
+    created: function(){
+        this.getUser();
     },
     methods: {
         linkToUsercenter: function(){
             this.showHeader = false; //个人中心页不显示头部
             this.$router.push({ path: 'usercenter' });
+        },
+        getUser: function(){
+            this.$store.commit('getLoginInfor');
+            const user = this.$store.state.loginUser;
+            if(user !== "") {
+                this.showUser = true;
+                this.loginUser = user;
+            }
+            else {
+                this.showUser = false;
+            }
         }
     }
 }

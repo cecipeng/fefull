@@ -13,7 +13,9 @@ import tagcloudList from './data_tagcloud.js'
 const store = new Vuex.Store({
     state: {
     	articleSortData: [], //文章分类列表
-        tagcloudData: [] //标签云列表
+        tagcloudData: [], //标签云列表
+        loginUser: "" //登录用户ID
+
     },
     mutations: {
     	//获取文章分类
@@ -37,6 +39,18 @@ const store = new Vuex.Store({
                 //     console.log(response)
                 // })
             state.tagcloudData = tagcloudList; //临时处理
+        },
+        //获取登录状态
+        getLoginInfor: function(state){
+            const localStorage = window.localStorage;
+            if(localStorage.ui) {
+                console.log("已登录");
+                state.loginUser = localStorage.ui;
+            }
+            else {
+                console.log("未登录");
+                state.loginUser = "";
+            }
         }
     }
 });

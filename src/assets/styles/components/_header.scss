@@ -10,7 +10,7 @@
 .com-header {
 	height: $header-h;
 	@extend %cf;
-	background-color: $main;
+	background-color: $grey-bg-dark;
 	.layout-wrapper {
 		height: 100%;
 	}

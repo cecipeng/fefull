@@ -15,6 +15,34 @@
 		top: 0;
 		bottom: 0;
 		width: 250px;
+		padding-top: 130px;//
+		.logo {
+			position: absolute;
+			left: 0;
+			top: 0;
+			right: 0;
+			height: 130px;//
+			background-color: $main;
+		}
+		.slideby-con {
+			height: 100%;
+			background-color: $grey-bg-dark;
+		}
+	}
+	//左侧菜单
+	.slideMenu {
+		padding-top: 30px;
+		li {
+			line-height: 50px;
+			padding-left: 82px;
+			font-size: 16px;
+			color: #ffffff;
+			text-align: left;
+			border-top: 1px solid #303030;
+			&.on {
+				background-color: $grey-bg-darker;
+			}
+		}
 	}
 	.mainby {
 		height: 100%;

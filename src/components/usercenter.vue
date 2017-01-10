@@ -1,35 +1,51 @@
 <template>
     <div class="mod-usercenter">
     	<div class="sideby">
-            sideby
+            <div href="###" class="logo">前端综合体</div>
+            <div class="slideby-con">
+                <comUserheader stylesize="ver" :authorid="loginUser"></comUserheader>
+                <ul class="slideMenu">
+                    <router-link class="on" tag="li" class="item" to="/usercenter/myartCreate">我的文章</router-link>
+                    <li>我的文章</li>
+                </ul>
+            </div>
         </div>
         <div class="mainby">
-            mainby
+            <router-view
+                keep-alive
+                transition="fade"
+                transition-mode='out-in'>
+            </router-view>
         </div>
     </div>
 </template>
 
 <script>
-import comSearch from './common/search'
+import comUserheader from './common/userhead.vue';
 
 
 export default {
 
     data () {
         return {
-            
+            loginUser: ""
         }
     },
-    components: { comSearch },
+    components: { comUserheader },
     created: function(){
-        
+        this.getUser();
     },
     methods: {
-        
+        getUser: function(){
+            this.$store.commit('getLoginInfor');
+            this.loginUser = this.$store.state.loginUser;
+        }
     }
 }
 </script>
 
 <style lang="scss">
-    
+    .com-userhead {
+        margin-top: -42px;
+    }
 </style>
