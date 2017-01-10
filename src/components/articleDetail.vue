@@ -31,12 +31,7 @@
                 <!-- 标签云 -->
                 <div class="similar">
                     <h3 class="sidetitle">标签云</h3>
-                    <ul class="similarlist">
-                        
-                        <li><a class="item" href="###">印象派浅谈之技术篇</a></li>
-                        <li><a class="item" href="###">印象派浅谈之技术篇</a></li>
-                        <li><a class="item" href="###">印象派浅谈之技术篇</a></li>
-                    </ul>
+                    <comTagcloud :tagcloudList="allTagcloud"></comTagcloud>
                 </div>
                 <!-- /标签云 -->
             </div>
@@ -77,7 +72,7 @@
 
 <script>
 import comUserheader from './common/userhead.vue';
-
+import comTagcloud from './common/tagcloud'
 
 //临时数据
 import dataArtList from './../data_artlist_tab1.js'
@@ -88,16 +83,21 @@ export default {
         return {
             articleId: 0, //文章ID
             article: {}, //文章
+            allTagcloud: [], //标签云
             similar: [] //相似文章
         }
     },
     watch: {
         '$route': 'http_getContent' //路由发生改变时重新载入内容
     },
-    components: { comUserheader },
+    components: { comUserheader,comTagcloud },
     created: function(){
         //根据文章id获取文章
         this.http_getContent();
+
+        //获取标签云列表
+        this.$store.commit('http_tagcloud');
+        this.allTagcloud = this.$store.state.tagcloudData;
     },
     methods: {
         

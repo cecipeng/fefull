@@ -5,6 +5,7 @@ import Home from './components/home'
 import Article from './components/article'
 import ArticleDetail from './components/articleDetail'
 import Search from './components/searchResult'
+import Usercenter from './components/usercenter'
 
 Vue.use(VueRouter);
 
@@ -13,6 +14,7 @@ const routes = [
     { path: '/article',name:'article',component: Article},
     { path: '/articleDetail/:articleId',name:'articleDetail',component: ArticleDetail},
     { path: '/search/:keyword/:type',name:'search',component: Search},
+    { path: '/usercenter',name:'usercenter',component: Usercenter},
     { path: '/',name:'default',redirect:'/article'} //设置默认页
   ];
 

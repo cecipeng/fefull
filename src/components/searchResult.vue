@@ -41,6 +41,7 @@ import comPage from './common/page'
 import dataArtList from './../data_artlist_tab2.js'
 
 
+
 export default {
     
     data () {
@@ -60,8 +61,7 @@ export default {
         //获取搜索结果列表
         http_SearchResult() {
             this.keyword = this.$route.params.keyword;
-            if(this.$route.params.type == 0){
-
+            if(this.$route.params.type == 0){ //搜索的结果
                 // this.$http.get('http://211.149.193.19:8080/api/customers')
                 //     .then((response) => {
                 //         this.$set('this.curArtList', response.data)
@@ -72,10 +72,18 @@ export default {
                 this.curArtList = dataArtList; //临时处理
             }
             else
-            if(this.$route.params.type == 1){
+            if(this.$route.params.type == 1){ //标签云的结果
+                const cloudlist = this.$store.state.tagcloudData;
+                //根据标签id获取标签名称
+                for(var i = 0; i <cloudlist.length; i++) {
+                    if(this.$route.params.keyword == cloudlist[i].tagcloudId) {
+                        this.keyword = "标签云‘" +cloudlist[i].tagcloudName + "’";
+                        this.curArtList = cloudlist[i].artlist; //临时处理
+                    }
+                }
 
-                //根据文章id获取文章列表
-                this.$store.state.tagcloudData
+                //根据标签云id获取文章列表
+                //
                 // this.$http.get('http://211.149.193.19:8080/api/customers')
                 //     .then((response) => {
                 //         this.$set('this.curArtList', response.data)
@@ -83,7 +91,6 @@ export default {
                     // .catch(function(response) {
                     //     console.log(response)
                     // })
-                this.curArtList = dataArtList; //临时处理
             }
         }
     }

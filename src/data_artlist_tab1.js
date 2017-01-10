@@ -34,7 +34,7 @@ export default
         origin: true,
         maintxt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. AeneanLorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean",
         author: 11113,
-        fav: 126,
+        fav: 123,
         cover: "./../../assets/pics/demo-article-cover.png",
         creatDate: "2016-01-03", 
         like: 63,

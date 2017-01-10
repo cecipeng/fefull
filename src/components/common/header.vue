@@ -33,9 +33,20 @@
                 <!-- /mainmenu -->
             </div>
             <div class="frbox">
-                <!-- com-userhead -->
-                <comUserheader></comUserheader>
-                <!-- /com-userhead -->
+                <div class="ui-dropdown">
+                    <a class="selector">
+                        <!-- com-userhead -->
+                        <comUserheader></comUserheader>
+                        <!-- /com-userhead -->
+                        <i class="dropdown-arrow"></i>
+                    </a>
+                    <div class="dropdown">
+                        <ul class="droplist">
+                            <li><a @click="" class="dropitem">个人中心</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
                 <a href="###" class="btn-sign">注销</a>
             </div>   
         </div>   

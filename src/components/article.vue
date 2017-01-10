@@ -21,8 +21,9 @@
                         </a>
                         <div class="dropdown">
                             <ul class="droplist">
-                                <li><a @click="orderList(0)" class="dropitem">最新</a></li>
-                                <li><a @click="orderList(1)" class="dropitem">热门</a></li>
+                                <li><a @click="orderList(0)" class="dropitem">默认</a></li>
+                                <li><a @click="orderList(1)" class="dropitem">最新</a></li>
+                                <li><a @click="orderList(2)" class="dropitem">热门</a></li>
                             </ul>
                         </div>
                     </div>
@@ -67,8 +68,9 @@ export default {
     data () {
         return {
             curArtList: [], //显示的列表
+            originArtList: [], //默认排序的列表
             allTablist: [], //文章分类
-            allTagcloud: [],
+            allTagcloud: [], //标签云
             curIndex: 0 //初始tab显示第一条
         }
     },
@@ -96,14 +98,42 @@ export default {
         http_article: function(page,tabid){
             // this.$http.get('http://211.149.193.19:8080/api/customers')
             //     .then((response) => {
-            //         this.$set('this.curArtList', response.data)
+            //         this.$set('this.originArtList', response.data)
                 // })
                 // .catch(function(response) {
                 //     console.log(response)
                 // })
-            this.curArtList = dataArtList; //临时处理
-        }
+            this.originArtList = dataArtList; //临时处理
+            this.curArtList = this.originArtList;
+        },
+        //列表排序
+        orderList: function(type){
+            const list = this.originArtList;
 
+            if(type == 0) { //默认排序
+                this.curArtList = this.originArtList;
+            }
+            else
+            if(type == 1) { //最新排序
+
+            }
+            else
+            if(type == 2) { //热门排序
+                console.log(this.curArtList[0].title);
+                for(var i = 0; i<list.length; i++) {
+                    for(var j = list.length - 1; j>0 ;j--) {
+
+                        if(list[j].fav < list[j-1].fav) {
+                            const temp = list[j-1];
+                            list[j-1] = list[j];
+                            list[j] = temp;
+                        }
+                    }
+                }
+                this.curArtList = list;
+                console.log(this.curArtList[0].title);
+            }
+        }
     }
 }
 </script>
