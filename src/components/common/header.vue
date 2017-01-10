@@ -1,11 +1,11 @@
 <template>
-    <div class="com-header">
+    <div class="com-header" v-if="showHeader">
         <div class="layout-wrapper">
             <div class="flbox">
-                <a href="###" class="logo">前端综合体</a>
+                <!-- <a href="###" class="logo">前端综合体</a> -->
                 <!-- mainmenu -->
                 <div class="com-mainmenu">
-                    <ul class="mainmenu">
+                    <!-- <ul class="mainmenu">
                         <li>
                             <router-link class="item" to="/home">首页</router-link>
                         </li>
@@ -28,7 +28,7 @@
                         <li>
                             <a class="item">项目管理</a>
                         </li>
-                    </ul>
+                    </ul> -->
                 </div>
                 <!-- /mainmenu -->
             </div>
@@ -42,7 +42,7 @@
                     </a>
                     <div class="dropdown">
                         <ul class="droplist">
-                            <li><a @click="" class="dropitem">个人中心</a></li>
+                            <li><a @click="linkToUsercenter" class="dropitem">个人中心</a></li>
                         </ul>
                     </div>
                 </div>
@@ -57,6 +57,17 @@
 import comUserheader from './userhead.vue';
 
 export default {
-    components: { comUserheader }
+    components: { comUserheader },
+    data () {
+        return {
+            showHeader: true //显示头部：默认显示，个人中心页不显示
+        }
+    },
+    methods: {
+        linkToUsercenter: function(){
+            this.showHeader = false; //个人中心页不显示头部
+            this.$router.push({ path: 'usercenter' });
+        }
+    }
 }
 </script>

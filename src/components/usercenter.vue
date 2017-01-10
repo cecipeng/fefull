@@ -1,6 +1,11 @@
 <template>
     <div class="mod-usercenter">
-    	
+    	<div class="sideby">
+            sideby
+        </div>
+        <div class="mainby">
+            mainby
+        </div>
     </div>
 </template>
 

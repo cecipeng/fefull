@@ -6,5 +6,17 @@
 
 //个人中心
 .mod-usercenter {
-	
+	height: 100%;
+	position: relative;
+	padding-left: 250px;
+	.sideby {
+		position: absolute;
+		left: 0;
+		top: 0;
+		bottom: 0;
+		width: 250px;
+	}
+	.mainby {
+		height: 100%;
+	}
 }
