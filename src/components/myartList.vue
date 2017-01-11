@@ -1,5 +1,5 @@
 <template>
-    list
+    <div>sd</div>
 </template>
 
 <script>
@@ -12,7 +12,6 @@ export default {
            
         }
     },
-    components: {  },
     created: function(){
         
     },

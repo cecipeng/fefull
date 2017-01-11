@@ -1,11 +1,11 @@
 <template>
     <div class="mod-usercenter">
     	<div class="sideby">
-            <div href="###" class="logo">前端综合体</div>
+            <div href="###" class="logo"></div>
             <div class="slideby-con">
                 <comUserheader stylesize="ver" :authorid="loginUser"></comUserheader>
                 <ul class="slideMenu">
-                    <router-link class="on" tag="li" class="item" to="/usercenter/myartCreate">我的文章</router-link>
+                    <router-link class="item on" tag="li" to="/usercenter/myartCreate">我的文章</router-link>
                     <li>我的文章</li>
                 </ul>
             </div>

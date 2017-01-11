@@ -17,20 +17,21 @@ const routes = [
     {   path: '/articleDetail/:articleId',name:'articleDetail',component: ArticleDetail},
     {   path: '/search/:keyword/:type',name:'search',component: Search},
     {   path: '/usercenter',name:'usercenter',component: Usercenter,
+            
+            children: [
+                {
+                    path: 'myartCreate',name:'myartCreate',component: MyartCreate,
+                },
+                {
+                    path: 'myartList',name:'myartList',component: MyartList,
+                }
+            ],
             beforeEnter: (to, from, next) => {
                 if(needLogin()) {
                     next();
                 }
                 
             },
-            children: [
-                {
-                    path: '/myartCreate',name:'myartCreate',component: MyartCreate,
-                },
-                {
-                    path: '/myartList',name:'myartList',component: MyartList,
-                }
-            ]
     },
     { path: '/',name:'default',redirect:'/article'} //设置默认页
   ];
