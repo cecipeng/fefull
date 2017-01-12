@@ -45,7 +45,5 @@ export default {
 </script>
 
 <style lang="scss">
-    .com-userhead {
-        margin-top: -42px;
-    }
+
 </style>

@@ -14,28 +14,28 @@
     	            <!-- /com-search -->
 
     	            <!-- 排序 -->
-                    <div class="ui-dropdown">
-                        <a class="selector">
+                    <div class="ui-dropdown" @mouseleave="showDropdown1=false">
+                        <a class="selector" @mouseenter="showDropdown1=true">
                             排序方式
                             <i class="dropdown-arrow"></i>
                         </a>
-                        <div class="dropdown">
+                        <div class="dropdown" v-show="showDropdown1">
                             <ul class="droplist">
-                                <li><a @click="orderList(0)" class="dropitem">默认</a></li>
-                                <li><a @click="orderList(1)" class="dropitem">最新</a></li>
-                                <li><a @click="orderList(2)" class="dropitem">热门</a></li>
+                                <li><a @click="orderList(0);showDropdown1 = false" class="dropitem">默认</a></li>
+                                <li><a @click="orderList(1);showDropdown1 = false" class="dropitem">最新</a></li>
+                                <li><a @click="orderList(2);showDropdown1 = false" class="dropitem">热门</a></li>
                             </ul>
                         </div>
                     </div>
     	            <!-- /排序 -->
     	            
                     <!-- com-tagcloud -->
-                    <div class="ui-dropdown tagcloud">
-                        <a class="selector">
+                    <div class="ui-dropdown tagcloud"  @mouseleave="showDropdown2=false">
+                        <a class="selector" @mouseenter="showDropdown2=true">
                             排序方式
                             <i class="dropdown-arrow"></i>
                         </a>
-                        <div class="dropdown">
+                        <div class="dropdown" v-show="showDropdown2">
                             <comTagcloud :tagcloudList="allTagcloud"></comTagcloud>  
                         </div>
                     </div>
@@ -67,6 +67,8 @@ export default {
 
     data () {
         return {
+            showDropdown1: false, //显示下拉菜单
+            showDropdown2: false, //显示下拉菜单
             curArtList: [], //显示的列表
             originArtList: [], //默认排序的列表
             allTablist: [], //文章分类
@@ -87,6 +89,7 @@ export default {
         //获取标签云列表
         this.$store.commit('http_tagcloud');
         this.allTagcloud = this.$store.state.tagcloudData;
+
     },
     methods: {
         //tab切换

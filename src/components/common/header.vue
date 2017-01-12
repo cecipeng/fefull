@@ -1,5 +1,5 @@
 <template>
-    <div class="com-header" v-if="showHeader">
+    <div class="com-header" v-if="!noHeaderRouter.test($route.path)">
         <div class="layout-wrapper">
             <div class="flbox">
                 <!-- <a href="###" class="logo">前端综合体</a> -->
@@ -33,20 +33,21 @@
                 <!-- /mainmenu -->
             </div>
             <div class="frbox">
-                <div class="ui-dropdown" v-if="showUser">
-                    <a class="selector">
+                <div class="header-userdrop ui-dropdown" v-if="$store.state.loginUser!=''" @mouseleave="showDropdown = false">
+                    <a class="selector" @mouseenter="showDropdown = true">
                         <!-- com-userhead -->
-                        <comUserheader stylesize="" :authorid="loginUser"></comUserheader>
+                        <comUserheader stylesize="" :authorid="$store.state.loginUser"></comUserheader>
                         <!-- /com-userhead -->
                         <i class="dropdown-arrow"></i>
                     </a>
-                    <div class="dropdown">
+                    <div class="dropdown" v-show="showDropdown">
                         <ul class="droplist">
-                            <li><a @click="linkToUsercenter" class="dropitem">个人中心</a></li>
+                            <li><a @click="$router.push({ path: 'usercenter' })" class="dropitem">个人中心</a></li>
+                            <li><a @click="showDropdown = false" class="dropitem">个人中心</a></li>
                         </ul>
                     </div>
                 </div>
-                <div class="unlogin" v-else="showUser">
+                <div class="unlogin" v-else>
                     <a class="btn-login">登录</a>
                     <a class="btn-register">注册</a>
                 </div>
@@ -63,31 +64,27 @@ export default {
     components: { comUserheader },
     data () {
         return {
-            showHeader: true, //显示头部：默认显示，个人中心页不显示
-            showUser: false, //显示登录用户
-            loginUser: "" //登录用户ID
-
+            showDropdown: false,
+            noHeaderRouter: /(usercenter)|(articleDetail)/ //不需要头部的页面路由
         }
     },
     created: function(){
-        this.getUser();
+        //重新获取登录状态
+        this.$store.commit('getLoginInfor');
     },
     methods: {
-        linkToUsercenter: function(){
-            this.showHeader = false; //个人中心页不显示头部
-            this.$router.push({ path: 'usercenter' });
-        },
-        getUser: function(){
-            this.$store.commit('getLoginInfor');
-            const user = this.$store.state.loginUser;
-            if(user !== "") {
-                this.showUser = true;
-                this.loginUser = user;
-            }
-            else {
-                this.showUser = false;
-            }
-        }
+     
     }
 }
 </script>
+
+
+<style lang="scss">
+.header-userdrop {
+    padding: 15px 0;
+    .dropdown {
+        top: 80px;
+    }
+}
+</style>
+

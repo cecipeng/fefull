@@ -13,15 +13,15 @@ $pink:                  #ddd;
 
 // main color
 $main:                  #f4b913;
-$main-dark:             #201d38;
-$main-darker:           darken($main,10%);
-$main-light:            #3e376b;
+$main-dark:             darken($main,3%);
+$main-darker:           darken($main,6%);
+$main-light:            lighten($main,10%);
 $main-lighter:          lighten($main,15%);
 
 // sub color
-$sub: 					#ff216a;
-$sub-dark: 				darken($sub,5%);
-$sub-darker: 			darken($sub,10%);
+$sub: 					#362c11;
+$sub-dark: 				darken($sub,3%);
+$sub-darker: 			darken($sub,6%);
 $sub-light: 			lighten($sub,10%);
 $sub-lighter: 			lighten($sub,15%);
 
@@ -37,7 +37,7 @@ $grey-border-light: 	#ddd;
 $grey-fz: 				#666;
 $grey-fz-dark: 			#333;
 $grey-fz-light: 		#999;
-
+$icon:					#8a8a8a;
 //--------------------- radius ---------------------//
 
 $radius:                3px;           //rem：去掉单位
@@ -91,3 +91,5 @@ $mq-s:                  max-width $con-minw;
 //       width: 200px;
 //     }
 //   }
+
+

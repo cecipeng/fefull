@@ -25,8 +25,16 @@
 			background-color: $main;
 		}
 		.slideby-con {
+			position: relative;
 			height: 100%;
+			padding-top: 80px;
 			background-color: $grey-bg-dark;
+			.com-userhead {
+				position: absolute;
+				left: 0;
+				top: -42px;
+				right: 0;
+			}
 		}
 	}
 	//左侧菜单
@@ -50,13 +58,152 @@
 
 	//个人中心顶部
 	.ui-user-header {
+		@extend %cf;
+		padding: 20px 20px 30px;	
 		.user-header {
 			float: left;
+			height: 46px;
+			line-height: 46px;
+			padding-left: 20px;
+			font-size: 18px;
+			color: $grey-fz-dark;
+			@include bgurl('user-header.png');
+			background-position: left center;
+			.font-l {
+				font-size: 30px;
+			}
 		}
 	}
 	//创建文章
 	.myartCreate {
-
+		.createbox {
+			padding: 0 30px;
+			.createtit {
+				line-height: 20px;
+				margin-bottom: 10px;
+				font-size: 14px;
+				color: $grey-fz-light;
+				.num {
+					font-size: 20px;
+					margin-right: 2px;
+				}
+			}
+		}
+		//文章标题
+		.formbox-arttit {
+			position: relative;
+			margin-bottom: 25px;
+			border: 4px solid #ededed;
+			.ui-dropdown {
+				position: absolute;
+				left: 0px;
+				top: 0px;
+				border-right: 1px solid $grey-border;
+			}
+			.inp-arttit {
+				width: 100%;
+				height: 36px;
+				line-height: 34px;
+				padding-left: 115px;
+				font-size: 16px;
+				color: $grey-fz-dark;
+				font-weight: bold;
+				border: 1px solid $grey-border;
+				border-radius: 2px;
+			}
+		}
+		.formrow {
+			position: relative;
+			padding-left: 100px;
+			margin-bottom: 20px;
+			.formlabel {
+				position: absolute;
+				left: 0;
+				top: 0;
+				width: 100px;
+				height: 24px;
+				line-height: 24px;
+				font-size: 14px;
+				color: $grey-fz;
+				text-align: right;
+			}
+		}
+		.form-radio {
+			li {
+				display: inline-block;
+				vertical-align: middle;
+				margin: 0 6px;
+				padding: 0 6px;
+				line-height: 24px;
+				font-size: 14px;
+				color: $grey-fz;
+				&.on {
+					background-color: $main;
+					color: #fff;
+					border-radius: 4px;
+				}
+			}
+		}
+		.form-checkbox {
+			padding: 10px;
+			background-color: #f7f7f7;
+			border-radius: 4px;
+			li {
+				display: inline-block;
+				vertical-align: middle;
+				margin: 0 6px;
+				padding-left: 20px;
+				line-height: 24px;
+				font-size: 14px;
+				color: $grey-fz;
+				@include bgurl('form-checkbox.png');
+				background-position: left center;
+				background-size: auto auto;
+				cursor: pointer;
+				&:hover {
+					color: $main;
+				}
+				&.on {
+					@include bgurl('form-checkbox-on.png');
+					background-position: left center;
+					background-size: auto auto;
+				}
+			}
+		}
+		.btn-upload {
+			margin-bottom: 10px;
+			.ui-btn {
+				position: relative;
+			}
+			input {
+				position: absolute;
+				left: 0;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				opacity: 0;
+				cursor: pointer;
+			}
+		}
+		.uploaded {
+			.coverbox {
+				display: inline-block;
+				vertical-align: middle;
+				width: 350px;
+				height: 200px;
+				border: 1px dashed $grey-border;
+				img {
+					width: 100%;
+					height: 100%;
+				}
+			}
+		}
+		.btnwrap {
+			padding: 20px 0 40px 100px;
+			.ui-btn {
+				margin-right: 16px;
+			}
+		}
 	}
 
 }
