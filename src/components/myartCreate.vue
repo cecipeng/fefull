@@ -6,23 +6,22 @@
         <div class="createbox">
             <!-- 文章标题 -->
             <div class="createtit"><span class="num">1/</span>文章标题</div>
-            <div class="formbox-arttit">
+            <div class="arttitbox">
                 <!-- 是否原创 -->
-                <div class="ui-dropdown">
-                    <a class="selector">
-                        排序方式
+                <div class="ui-dropdown" @mouseleave="showDropdown=false">
+                    <a class="selector" @mouseenter="showDropdown=true">
+                        原创
                         <i class="dropdown-arrow"></i>
                     </a>
-                    <div class="dropdown">
+                    <div class="dropdown" v-show="showDropdown">
                         <ul class="droplist">
-                            <li><a @click="orderList(0)" class="dropitem">默认</a></li>
-                            <li><a @click="orderList(1)" class="dropitem">最新</a></li>
-                            <li><a @click="orderList(2)" class="dropitem">热门</a></li>
+                            <li><a @click="showDropdown = false" class="dropitem">转载</a></li>
+                            <li><a @click="showDropdown = false" class="dropitem">原创</a></li>
                         </ul>
                     </div>
                 </div>
                 <!-- /是否原创 -->
-                <input type="text" class="inp-arttit" />
+                <input type="text" class="form-input form-input-wide inp-arttit" placeholder="请输入文章标题">
             </div>
             <!-- /文章标题 -->
 
@@ -35,45 +34,47 @@
             <div class="createtit"><span class="num">3/</span>文章设置</div>
             <div class="artsetting">
 
-                <div class="formrow">
-                    <span class="formlabel">文章分类：</span>
-                    <ul class="form-radio">
-                        <li class="on">未分类</li>
-                        <li>未分类</li>
-                        <li>未分类</li>
-                    </ul>
-                </div>
-
-                <div class="formrow">
-                    <span class="formlabel">文章标签：</span>
-                    <ul class="form-checkbox">
-                        <li class="on">未分类</li>
-                        <li>未分类</li>
-                        <li>未分类</li>
-                        <li>未分类</li>
-                        <li class="on">未分类</li>
-                        <li>未分类</li>
-                        <li>未分类</li>
-                        <li>未分类</li>
-                        <li>未分类</li>
-                        <li>未分类</li>
-                        <li>未分类</li>
-                        <li>未分类</li>
-                        <li class="on">未分类</li>
-                        <li>未分类</li>
-                    </ul>
-                </div>
-
-                <div class="formrow">
-                    <span class="formlabel">文章封面：</span>
-                    <div class="btn-upload">
-                        <a class="ui-btn ui-btn-white">上传封面<input type="file"></input></a>
-
+                <div class="ui-formrow">
+                    <label class="form-label">文章分类：</label>
+                    <div class="form-con">
+                        <ul class="sortwrap">
+                            <li class="sort on">CSS</li>
+                            <li class="sort">CSS</li>
+                            <li class="sort">CSS</li>
+                        </ul>
                     </div>
-                    <div class="uploaded">
-                        <div class="coverbox">
-                            <img src="">
+                </div>
+    
+                <div class="ui-formrow">
+                    <label class="form-label">文章标签：</label>
+                    <div class="form-con">
+                        <ul class="checkboxwrap">
+                            <li class="form-checkbox" data-status="check">
+                                <span class="checkbox-txt">我同意</span>
+                                <input type="checkbox" class="form-hidden">
+                            </li>
+                            <li class="form-checkbox">
+                                <span class="checkbox-txt">我同意</span>
+                                <input type="checkbox" class="form-hidden">
+                            </li>
+                            <li class="form-checkbox">
+                                <span class="checkbox-txt">我同意</span>
+                                <input type="checkbox" class="form-hidden">
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="ui-formrow">
+                    <span class="form-label">文章封面：</span>
+                    <div class="form-con form-upload">
+                        <div class="uploadbtn">
+                            <a href="###" class="ui-btn ui-btn-white btn-upload">上传封面<input type="file" class="form-hidden"></a>
                         </div>
+                        <div class="imgpreview">
+                            <img src="" alt="">
+                        </div>
+                        <p class="upload-intro">仅支持JPG、GIF、PNG格式，图片尺寸为：350*200PX</p>
                     </div>
                 </div>
 
@@ -94,6 +95,7 @@ export default {
 
     data () {
         return {
+            showDropdown: false, //显示下拉菜单
         }
     },
     components: { Ueditor },
@@ -113,4 +115,19 @@ export default {
     .com-ueditor {
         margin-bottom: 25px;
     }
+    .arttitbox .ui-dropdown {
+        .selector {
+            height: 40px;
+        }
+        .dropdown {
+            top: 39px;
+            margin-right: -1px;
+        }
+    }
+    .radiowrap {
+        .form-radio {
+            margin-right: 26px;
+        }
+    }
+    
 </style>

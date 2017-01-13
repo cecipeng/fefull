@@ -1,5 +1,5 @@
 <template>
-    <div id="app">
+    <div id="app" :style="$store.state.showPop?'overflow:hidden':''">
         <!-- header -->
         <div class="layout-header">
             <comHeader></comHeader>
@@ -11,15 +11,19 @@
             transition="fade"
             transition-mode='out-in'>
         </router-view>
+
+        <comLoginPop></comLoginPop>
+        
     </div>
 </template>
 
 
 <script>
 import comHeader from './components/common/header';
+import comLoginPop from './components/common/login-pop';
 export default {
     components: {
-        comHeader
+        comHeader,comLoginPop
     }
 }
 </script>

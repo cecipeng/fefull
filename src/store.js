@@ -14,7 +14,8 @@ const store = new Vuex.Store({
     state: {
     	articleSortData: [], //文章分类列表
         tagcloudData: [], //标签云列表
-        loginUser: "" //登录用户ID
+        loginUser: "", //登录用户ID
+        showPop: false //是否显示弹窗，是，最外层overflow:hidden
 
     },
     mutations: {

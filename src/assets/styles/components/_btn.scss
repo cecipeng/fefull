@@ -16,6 +16,10 @@
 	&.s-disabled {
 		cursor: default;
 	}
+	&.ui-btn-wide {
+		display: block;
+		width: 100%;
+	}
 
 	//--------------------- 主要确认按钮 ---------------------//
 	&.ui-btn-main {

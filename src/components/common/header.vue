@@ -64,8 +64,8 @@ export default {
     components: { comUserheader },
     data () {
         return {
-            showDropdown: false,
-            noHeaderRouter: /(usercenter)|(articleDetail)/ //不需要头部的页面路由
+            showDropdown: false, //显示下拉菜单
+            noHeaderRouter: /(usercenter)/ //不需要头部的页面路由
         }
     },
     created: function(){

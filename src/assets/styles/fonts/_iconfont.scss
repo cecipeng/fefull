@@ -3,11 +3,11 @@
 //--------------------- iconfont ---------------------//
 //
 @font-face {font-family: "iconfont";
-  src: url('./assets/styles/fonts/iconfont.eot?t=1484211735292'); /* IE9*/
-  src: url('./assets/styles/fonts/iconfont.eot?t=1484211735292#iefix') format('embedded-opentype'), /* IE6-IE8 */
-  url('./assets/styles/fonts/iconfont.woff?t=1484211735292') format('woff'), /* chrome, firefox */
-  url('./assets/styles/fonts/iconfont.ttf?t=1484211735292') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-  url('./assets/styles/fonts/iconfont.svg?t=1484211735292#iconfont') format('svg'); /* iOS 4.1- */
+  src: url('./assets/styles/fonts/iconfont.eot?t=1484286856789'); /* IE9*/
+  src: url('./assets/styles/fonts/iconfont.eot?t=1484286856789#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('./assets/styles/fonts/iconfont.woff?t=1484286856789') format('woff'), /* chrome, firefox */
+  url('./assets/styles/fonts/iconfont.ttf?t=1484286856789') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('./assets/styles/fonts/iconfont.svg?t=1484286856789#iconfont') format('svg'); /* iOS 4.1- */
 }
 
 %iconfont {
@@ -23,10 +23,13 @@
 
 %icon-edit:before { content: "\e653"; }
 %icon-star:before { content: "\e666"; }
-%icon-head:before { content: "\e68c"; }
 %icon-tag:before { content: "\e690"; }
 %icon-search:before { content: "\e693"; }
 %icon-arrow1:before { content: "\e6ba"; }
 %icon-arrow2:before { content: "\e6b6"; }
+%icon-head:before { content: "\e68c"; }
 %icon-arrow3:before { content: "\e654"; }
 %icon-starfill:before { content: "\e6c9"; }
+%icon-article:before { content: "\e694"; }
+%icon-checkbox:before { content: "\e610"; }
+%icon-delete:before { content: "\e602"; }
