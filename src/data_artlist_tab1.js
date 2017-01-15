@@ -5,7 +5,11 @@ export default
         title: "标题CSS1",
         origin: false, //是否原创
         maintxt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. AeneanLorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean",
-        author: 11111, //作者id
+        author: { //作者id
+            userid: 11111,
+            username: "张某某",
+            userhead: "./../../assets/pics/demo-head.png"
+        },
         fav: 124, //收藏数
         cover: "./../../assets/pics/demo-article-cover.png", //封面图
         creatDate: "2016.09.09 15:33", //发布时间
@@ -19,7 +23,11 @@ export default
         title: "标题CSS2",
         origin: false,
         maintxt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. AeneanLorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean",
-        author: 11112,
+        author: {
+            userid: 11112,
+            username: "某某",
+            userhead: "./../../assets/pics/demo-head.png"
+        },
         fav: 125,
         cover: "./../../assets/pics/demo-article-cover.png",
         creatDate: "2016-01-02", 
@@ -33,7 +41,11 @@ export default
         title: "标题CSS3",
         origin: true,
         maintxt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. AeneanLorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean",
-        author: 11113,
+        author: {
+            userid: 11113,
+            username: "li某某",
+            userhead: "./../../assets/pics/demo-head.png"
+        },
         fav: 123,
         cover: "./../../assets/pics/demo-article-cover.png",
         creatDate: "2016-01-03", 
@@ -47,7 +59,11 @@ export default
         title: "标题HTML4",
         origin: true,
         maintxt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. AeneanLorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean",
-        author: 11112,
+        author: {
+            userid: 11112,
+            username: "某某",
+            userhead: "./../../assets/pics/demo-head.png"
+        },
         fav: 126,
         cover: "./../../assets/pics/demo-article-cover.png",
         creatDate: "2016-01-04", 
@@ -61,7 +77,11 @@ export default
         title: "标题HTML5",
         origin: false,
         maintxt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. AeneanLorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean",
-        author: 11111,
+        author: {
+            userid: 11112,
+            username: "某某",
+            userhead: "./../../assets/pics/demo-head.png"
+        },
         fav: 127,
         cover: "./../../assets/pics/demo-article-cover.png",
         creatDate: "2016-01-05", 
@@ -75,7 +95,11 @@ export default
         title: "标题HTML6",
         origin: true,
         maintxt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. AeneanLorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean",
-        author: 11112,
+        author: {
+            userid: 11112,
+            username: "某某",
+            userhead: "./../../assets/pics/demo-head.png"
+        },
         fav: 128,
         cover: "./../../assets/pics/demo-article-cover.png",
         creatDate: "2016-05-02", 
@@ -89,7 +113,11 @@ export default
         title: "标题Javascript7",
         origin: false,
         maintxt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. AeneanLorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean",
-        author: 11111,
+        author: {
+            userid: 11112,
+            username: "某某",
+            userhead: "./../../assets/pics/demo-head.png"
+        },
         fav: 129,
         cover: "./../../assets/pics/demo-article-cover.png",
         creatDate: "2016-11-12", 
@@ -103,7 +131,11 @@ export default
         title: "标题Javascript8",
         origin: true,
         maintxt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. AeneanLorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean",
-        author: 11111,
+        author: {
+            userid: 11112,
+            username: "某某",
+            userhead: "./../../assets/pics/demo-head.png"
+        },
         fav: 130,
         cover: "./../../assets/pics/demo-article-cover.png",
         creatDate: "2015-11-12", 
@@ -117,7 +149,11 @@ export default
         title: "标题Javascript9",
         origin: false,
         maintxt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. AeneanLorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean",
-        author: 11113,
+        author: {
+            userid: 11112,
+            username: "某某",
+            userhead: "./../../assets/pics/demo-head.png"
+        },
         fav: 131,
         cover: "./../../assets/pics/demo-article-cover.png",
         creatDate: "2016-01-02", 
@@ -131,7 +167,11 @@ export default
         title: "标题Javascript10",
         origin: true,
         maintxt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. AeneanLorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean",
-        author: 11113,
+        author: {
+            userid: 11112,
+            username: "某某",
+            userhead: "./../../assets/pics/demo-head.png"
+        },
         fav: 132,
         cover: "./../../assets/pics/demo-article-cover.png",
         creatDate: "2016-08-08", 
@@ -145,7 +185,11 @@ export default
         title: "标题11",
         origin: true,
         maintxt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. AeneanLorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean",
-        author: 11112,
+        author: {
+            userid: 11112,
+            username: "某某",
+            userhead: "./../../assets/pics/demo-head.png"
+        },
         fav: 133,
         cover: "./../../assets/pics/demo-article-cover.png",
         creatDate: "2015-03-18", 
@@ -159,7 +203,11 @@ export default
         title: "标题12",
         origin: false,
         maintxt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. AeneanLorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean",
-        author: 11113,
+        author: {
+            userid: 11112,
+            username: "某某",
+            userhead: "./../../assets/pics/demo-head.png"
+        },
         fav: 134,
         cover: "./../../assets/pics/demo-article-cover.png",
         creatDate: "2016-06-01", 
@@ -173,7 +221,11 @@ export default
         title: "标题13",
         origin: false,
         maintxt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. AeneanLorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean",
-        author: 11111,
+        author: {
+            userid: 11112,
+            username: "某某",
+            userhead: "./../../assets/pics/demo-head.png"
+        },
         fav: 135,
         cover: "./../../assets/pics/demo-article-cover.png",
         creatDate: "2016-10-30", 

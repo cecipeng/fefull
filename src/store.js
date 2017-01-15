@@ -14,9 +14,9 @@ const store = new Vuex.Store({
     state: {
     	articleSortData: [], //文章分类列表
         tagcloudData: [], //标签云列表
-        loginUser: "", //登录用户ID
-        showPop: false //是否显示弹窗，是，最外层overflow:hidden
-
+        loginUser: {}, //登录用户ID
+        showPop: false, //是否显示弹窗，是，最外层overflow:hidden
+        baseUrl: "http://localhost:8833/fefull/api/" //接口地址
     },
     mutations: {
     	//获取文章分类
@@ -44,13 +44,21 @@ const store = new Vuex.Store({
         //获取登录状态
         getLoginInfor: function(state){
             const localStorage = window.localStorage;
-            if(localStorage.ui) {
-                console.log("已登录");
-                state.loginUser = localStorage.ui;
+            if(localStorage.userid) { // token
+                console.log("store:已登录");
+                state.loginUser = {
+                    "userid" : localStorage.userid,
+                    "username" : localStorage.username,
+                    "userhead" : localStorage.userhead
+                };
             }
             else {
-                console.log("未登录");
-                state.loginUser = "";
+                console.log("store:未登录");
+                state.loginUser = {
+                    "userid" : "",
+                    "username" : "",
+                    "userhead" : ""
+                };
             }
         }
     }

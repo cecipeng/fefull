@@ -13,13 +13,6 @@
 	text-align: center;
 	border-radius: $radius;
 	cursor: pointer;
-	&.s-disabled {
-		cursor: default;
-	}
-	&.ui-btn-wide {
-		display: block;
-		width: 100%;
-	}
 
 	//--------------------- 主要确认按钮 ---------------------//
 	&.ui-btn-main {
@@ -29,10 +22,6 @@
 		font-size: 16px;
 		color: #fff;
 		background-color: $main;
-		&.s-disabled {
-			background-color: #e1e1e1;   //
-			// @include hover(background-color,#e1e1e1,#e1e1e1);  //
-		}
 		@include hover(background-color,$main-light,$main-dark);
 		&[data-size="size-l"] {
 			
@@ -50,10 +39,6 @@
 		font-size: 16px;
 		color: #fff;
 		background-color: $sub;
-		&.s-disabled {
-			background-color: #e1e1e1;   //
-			// @include hover(background-color,#e1e1e1,#e1e1e1);  //
-		}
 		@include hover(background-color,$sub-light,$sub-dark);
 		&[data-size="size-l"] {
 			
@@ -76,4 +61,15 @@
 		@include hovers((border-color,$main,$main-dark)(color,$main,$main-dark));
 	}
 	
+	//不可点击
+	&.s-disabled {
+		cursor: default;
+		background-color: #e1e1e1;
+		@include hover(background-color,#e1e1e1,#e1e1e1);
+	}
+	//block按钮
+	&.ui-btn-wide {
+		display: block;
+		width: 100%;
+	}
 }

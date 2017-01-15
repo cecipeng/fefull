@@ -47,28 +47,6 @@ export default {
             height: 200px;
             background: #f5f5f5;
         }
-        .formbox {
-            padding: 30px;
-        }
-        .errortip {
-            height: 20px;
-            line-height: 20px;
-            margin: 20px 0 10px;
-            text-align: center;
-            font-size: 12px;
-            color: red;
-        }
-        .form-input {
-            position: relative;
-        }
-        .inp-username {
-            border-bottom-left-radius: 0;
-            border-bottom-right-radius: 0; 
-        }
-        .inp-pwd {
-            margin-top: -1px;
-            border-top-left-radius: 0;
-            border-top-right-radius: 0; 
-        }
+        
     }
 </style>

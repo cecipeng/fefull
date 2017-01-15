@@ -13,7 +13,7 @@
 						</div>
 						<p class="list-maintxt">{{item.maintxt}}</p>
 						<div class="list-foot">
-							<comUserheader stylesize="s" :authorid="item.author"></comUserheader>
+							<comUserheader stylesize="s" :userData="item.author"></comUserheader>
 							<a class="com-fav">{{item.fav}}</a>
 						</div>
 					</div>

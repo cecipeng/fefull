@@ -8,13 +8,14 @@
 .mod-usercenter {
 	height: 100%;
 	position: relative;
-	padding-left: 250px;
+	padding: 10px 10px 10px 250px;
+	background-color: $main;
 	.sideby {
 		position: absolute;
-		left: 0;
+		left: 10px;
 		top: 0;
-		bottom: 0;
-		width: 250px;
+		bottom: 10px;
+		width: 240px;
 		padding-top: 130px;//
 		.logo {
 			position: absolute;
@@ -22,13 +23,16 @@
 			top: 0;
 			right: 0;
 			height: 130px;//
-			background-color: $main;
+			// background-color: $main;
 		}
 		.slideby-con {
 			position: relative;
 			height: 100%;
 			padding-top: 80px;
 			background-color: $grey-bg-dark;
+			border-radius: 10px;
+			border-bottom-right-radius: 0px;
+			border-top-right-radius: 0px;
 			.com-userhead {
 				position: absolute;
 				left: 0;
@@ -48,30 +52,47 @@
 			text-align: left;
 			border-top: 1px solid #303030;
 			&.on {
-				background-color: $grey-bg-darker;
+				// background-color: $grey-bg-darker;
+				background-color: #fff;
+				margin-left: -6px;
+				color: $main;
+				border-top-left-radius: 5px;
+				border-bottom-left-radius: 5px;
 			}
 		}
 	}
 	.mainby {
+		background-color: #fff;
+		border-radius: 10px;
+		border-bottom-left-radius: 0;
 		height: 100%;
+		overflow-y: auto;
+		overflow-x: hidden;
 	}
 
 	//个人中心顶部
 	.ui-user-header {
 		@extend %cf;
-		padding: 20px 20px 30px;	
+		@extend %vm;
+		padding: 20px 30px 30px 20px;
+		margin-bottom: 20px;
+		text-align: right;	
 		.user-header {
 			float: left;
 			height: 46px;
 			line-height: 46px;
 			padding-left: 20px;
 			font-size: 18px;
+			text-align: left;
 			color: $grey-fz-dark;
 			@include bgurl('user-header.png');
 			background-position: left center;
 			.font-l {
 				font-size: 30px;
 			}
+		}
+		.ui-btn {
+
 		}
 	}
 	//创建文章
@@ -146,5 +167,45 @@
 			}
 		}
 	}
+	//文章列表
+	.myartList {
+		.listbox {
+			padding: 0 30px;
+		}
+		.artlist {
+			width: 100%;
+			td {
+				line-height: 40px;
+				font-size: 12px;
+				color: $grey-fz;
+				border: 1px solid $grey-border;
+				text-align: center;
+			}
+			thead td {
+				font-weight: bold;
+				background-color: $grey-bg;
+			}
+			.btn-ctrl {
+				display: inline-block;
+				vertical-align: middle;
+				width: 28px;
+				height: 28px;
+				line-height: 28px;
+				@extend %iconfont;
+				font-size: 20px;
+				color: $grey-fz;
+				@include hover(color,$main,$main-dark);
+				&.ctrl-view {
+					@extend %icon-view;
+				}
+				&.ctrl-edit {
+					@extend %icon-edit1;
+				}
+				&.ctrl-del {
+					@extend %icon-del;
+				}
+			}
 
+		}
+	}
 }

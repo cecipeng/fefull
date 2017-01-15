@@ -14,7 +14,7 @@
         <div class="detail-container layout-wrapper">
             <!-- 侧栏 -->
             <div class="layout-sideby">
-                <comUserheader stylesize="" :authorid="article.author"></comUserheader>
+                <comUserheader stylesize="" :userData="article.author"></comUserheader>
                 <div class="btnwrap">
                     <a href="###" class="ui-btn ui-btn-sub"><i class="comment"></i>评论</a>
                     <a href="###" class="ui-btn ui-btn-sub"><i class="fav"></i>收藏</a>

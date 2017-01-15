@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import Vuex from 'vuex';
+import store from './store'
 
 import Home from './components/home'
 import Article from './components/article'
@@ -8,29 +10,33 @@ import Search from './components/searchResult'
 import Usercenter from './components/usercenter'
 import MyartCreate from './components/myartCreate'
 import MyartList from './components/myartList'
+import Login from './components/login'
 
 Vue.use(VueRouter);
+Vue.use(Vuex);
 
 const routes = [
     {   path: '/home',name:'home',component: Home},
     {   path: '/article',name:'article',component: Article},
     {   path: '/articleDetail/:articleId',name:'articleDetail',component: ArticleDetail},
     {   path: '/search/:keyword/:type',name:'search',component: Search},
+    {   path: '/login',name:'login',component: Login},
     {   path: '/usercenter',name:'usercenter',component: Usercenter,
-            
             children: [
                 {
-                    path: 'myartCreate',name:'myartCreate',component: MyartCreate,
+                    path: '/usercenter/myartCreate',name:'myartCreate',component: MyartCreate,
                 },
                 {
-                    path: 'myartList',name:'myartList',component: MyartList,
+                    path: '/usercenter/myartList',name:'myartList',component: MyartList,
                 }
             ],
             beforeEnter: (to, from, next) => {
-                if(needLogin()) {
+                if(isLogin()) {
                     next();
                 }
-                
+                else {
+                    router.push({ path: '/login' });
+                }
             },
     },
     { path: '/',name:'default',redirect:'/article'} //设置默认页
@@ -42,16 +48,25 @@ const router = new VueRouter({
     routes
 });
 
+//每次页面跳转前获取用户信息，用于渲染页面
+router.beforeEach((to, from, next) => {
+    store.state.loginUser = {
+        "userid" : localStorage.userid,
+        "username" : localStorage.username,
+        "userhead" : localStorage.userhead
+    };
+    next();
+})
 
-
-function needLogin(){
+function isLogin(){
+    //去后台校验token
     const localStorage = window.localStorage;
-    if(localStorage.ui) {
-        console.log("登录成功");
+    if(localStorage.userid) {
+        console.log("router：登录成功");
         return true;
     }
     else {
-        console.log("登录失败");
+        console.log("router：登录失败");
         return false;
     }
 }

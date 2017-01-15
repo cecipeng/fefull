@@ -52,7 +52,6 @@
 </template>
 
 <script>
-import Vue from 'vue'
 import comSearch from './common/search'
 import comTagcloud from './common/tagcloud'
 import comListArticle from './common/list-art'
@@ -82,7 +81,7 @@ export default {
         this.$store.commit('http_articleSort');
         this.allTablist = this.$store.state.articleSortData;
 
-        //获取所有tab首页文章列表
+        //获取指定tab首页文章列表
         const initTabid = this.allTablist[this.curIndex].tabid; //curIndex指定tab
         this.http_article(1,initTabid); //1：第一页
 

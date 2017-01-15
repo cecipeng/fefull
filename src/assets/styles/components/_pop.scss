@@ -31,7 +31,7 @@
 			font-size: 20px;
 			color: $grey-fz;			
 			@extend %iconfont;
-			@extend %icon-delete;
+			@extend %icon-close;
 			cursor: pointer;
 			&:hover {
 				color: $main;	

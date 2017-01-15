@@ -40,6 +40,15 @@
 		display: inline-block;
 		vertical-align: middle;
 	}
+	.unlogin {
+		height: 100%;
+		@extend %vm;
+		.ui-btn {
+			min-width: 60px;
+			margin-left: 10px;
+			background-color: none;
+		}
+	}
 }
 
 
