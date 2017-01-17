@@ -13,7 +13,9 @@
 </template>
 
 <script>
-
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+Vue.use(VueRouter);
 
 export default {
 
@@ -41,31 +43,18 @@ export default {
                 this.isLogining = false;
                 return;
             }
-           // console.log("this.loginUrl:"+this.loginUrl);
-            this.$http.post(this.loginUrl,this.loginModel,{
-                headers: {
-                    "Content-Type":"application/x-www-form-urlencoded"
-                }
-            })
-            .then((response) => {
-                if(response.data.meta.success) {
-                    localStorage.setItem('userid', response.data.data.userid);
-                    localStorage.setItem('username', response.data.data.username);
-                    localStorage.setItem('userhead', response.data.data.userhead);
-                    localStorage.setItem('token', response.data.data.token);
-                    // localStorage.setItem('accessToken', response.access_token)
-                    this.$router.push({ path: '/home' });
+            this.AJAX_POST(this.loginUrl,this.loginModel,function(RE,r){
+                if(RE.meta.code == 1000) {
+                    localStorage.setItem('userid', RE.datas.userid);
+                    localStorage.setItem('username', RE.datas.username);
+                    localStorage.setItem('userhead', RE.datas.userhead);
+                    localStorage.setItem('accessToken', RE.datas.token);
+                    r.push({ path: '/home' });
                 }
                 else {
-                    this.errortip = response.meta.message;
+                    this.errortip = RE.meta.message;
                 }
-            })
-            .catch(function(response) {
-                console.log(response)
-            })
-          
-                   
-                  
+            })     
         }
     }
 }

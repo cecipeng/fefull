@@ -16,7 +16,7 @@ const store = new Vuex.Store({
         tagcloudData: [], //标签云列表
         loginUser: {}, //登录用户ID
         showPop: false, //是否显示弹窗，是，最外层overflow:hidden
-        baseUrl: "http://localhost:8833/fefull/api/" //接口地址
+        baseUrl: "http://wnet.ittun.com/fefull/api/" //接口地址
     },
     mutations: {
     	//获取文章分类
@@ -60,6 +60,10 @@ const store = new Vuex.Store({
                     "userhead" : ""
                 };
             }
+        },
+        //接口状态码
+        getCodeMessage: function(state,){
+
         }
     }
 });
