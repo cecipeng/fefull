@@ -10,7 +10,7 @@ export default
         cover: "./../../assets/pics/demo-article-cover.png",
         creatDate: "2015-11-12", 
         like: 66,
-        tabid: 11,
+        tabId: 11,
         tag: [202],
         reprint: "http://uedc.163.com/9321.html"
     },
@@ -24,7 +24,7 @@ export default
         cover: "./../../assets/pics/demo-article-cover.png",
         creatDate: "2016-01-02", 
         like: 65,
-        tabid: 13,
+        tabId: 13,
         tag: [201],
         reprint: "http://uedc.163.com/9322.html" 
     },
@@ -38,7 +38,7 @@ export default
         cover: "./../../assets/pics/demo-article-cover.png",
         creatDate: "2016-08-08", 
         like: 64,
-        tabid: 12,
+        tabId: 12,
         tag: [203],
         reprint: "http://uedc.163.com/9323.html" 
     },
@@ -52,7 +52,7 @@ export default
         cover: "./../../assets/pics/demo-article-cover.png",
         creatDate: "2015-03-18", 
         like: 63,
-        tabid: 13,
+        tabId: 13,
         tag: [202,203],
         reprint: "http://uedc.163.com/9324.html" 
     },
@@ -66,7 +66,7 @@ export default
         cover: "./../../assets/pics/demo-article-cover.png",
         creatDate: "2016-06-01", 
         like: 62,
-        tabid: 11,
+        tabId: 11,
         tag: [201,202],
         reprint: "http://uedc.163.com/9325.html" 
     },
@@ -80,7 +80,7 @@ export default
         cover: "./../../assets/pics/demo-article-cover.png",
         creatDate: "2016-10-30", 
         like: 62,
-        tabid: 12,
+        tabId: 12,
         tag: [201,202,203],
         reprint: "http://uedc.163.com/9326.html" 
     }

@@ -6,7 +6,7 @@
     	        <div class="layout-wrapper">
                 
     	            <ul class="tabmenu">
-    	                <li v-for="(tab, index) in allTablist" :class="{'on':index===curIndex}" @click="changeTab(index,tab.tabid)">{{tab.tabname}}</li>
+    	                <li v-for="(tab, index) in allTablist" :class="{'on':index===curIndex}" @click="changeTab(index,tab.tabId)">{{tab.tabName}}</li>
     	            </ul>
 
                     <!-- com-search -->
@@ -82,8 +82,8 @@ export default {
         this.allTablist = this.$store.state.articleSortData;
 
         //获取指定tab首页文章列表
-        const initTabid = this.allTablist[this.curIndex].tabid; //curIndex指定tab
-        this.http_article(1,initTabid); //1：第一页
+        const initTabId = this.allTablist[this.curIndex].tabId; //curIndex指定tab
+        this.http_article(1,initTabId); //1：第一页
 
         //获取标签云列表
         this.$store.commit('http_tagcloud');
@@ -92,12 +92,12 @@ export default {
     },
     methods: {
         //tab切换
-        changeTab: function(index,tabid){
+        changeTab: function(index,tabId){
             this.curIndex = index;
-            this.http_article(1,tabid); //默认切换tab后都显示第一页
+            this.http_article(1,tabId); //默认切换tab后都显示第一页
         },
         //获取文章列表
-        http_article: function(page,tabid){
+        http_article: function(page,tabId){
             // this.$http.get('http://211.149.193.19:8080/api/customers')
             //     .then((response) => {
             //         this.$set('this.originArtList', response.data)

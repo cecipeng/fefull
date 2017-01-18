@@ -51,9 +51,9 @@ const router = new VueRouter({
 //每次页面跳转前获取用户信息，用于渲染页面
 router.beforeEach((to, from, next) => {
     store.state.loginUser = {
-        "userid" : localStorage.userid,
-        "username" : localStorage.username,
-        "userhead" : localStorage.userhead
+        "userId" : localStorage.userId,
+        "userName" : localStorage.userName,
+        "userHead" : localStorage.userHead
     };
     next();
 })
@@ -61,7 +61,7 @@ router.beforeEach((to, from, next) => {
 function isLogin(){
     //去后台校验token
     const localStorage = window.localStorage;
-    if(localStorage.userid) {
+    if(localStorage.userId) {
         console.log("router：登录成功");
         return true;
     }

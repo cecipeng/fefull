@@ -1,7 +1,7 @@
 <template>
-	<div class="com-userhead" :data-style-size="stylesize" :data-authorid="userData.userid">
-		<span class="head"><img :src="userData.userhead"></span>
-		<span class="name">{{userData.username}}</span>
+	<div class="com-userhead" :data-style-size="stylesize" :data-authorid="userData.userId">
+		<span class="head"><img :src="userData.userHead"></span>
+		<span class="name">{{userData.userName}}</span>
 	</div>
 </template>
 

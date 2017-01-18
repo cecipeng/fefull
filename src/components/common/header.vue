@@ -5,7 +5,7 @@
                 <!-- <a href="###" class="logo">前端综合体</a> -->
                 <!-- mainmenu -->
                 <div class="com-mainmenu">
-                    <ul class="mainmenu">
+                    <!-- <ul class="mainmenu">
                         <li>
                             <router-link class="item" to="/home">首页</router-link>
                         </li>
@@ -28,12 +28,12 @@
                         <li>
                             <a class="item">项目管理</a>
                         </li>
-                    </ul>
+                    </ul> -->
                 </div>
                 <!-- /mainmenu -->
             </div>
             <div class="frbox">
-                <div class="header-userdrop ui-dropdown" v-if="$store.state.loginUser.userid!=''" @mouseleave="showDropdown = false">
+                <div class="header-userdrop ui-dropdown" v-if="$store.state.loginUser.userId!=''" @mouseleave="showDropdown = false">
                     <a class="selector" @mouseenter="showDropdown = true">
                         <!-- com-userhead -->
                         <comUserheader stylesize="" :userData="$store.state.loginUser"></comUserheader>

@@ -12,9 +12,9 @@ import tagcloudList from './data_tagcloud.js'
 
 const store = new Vuex.Store({
     state: {
-    	articleSortData: [], //文章分类列表
-        tagcloudData: [], //标签云列表
-        loginUser: {}, //登录用户ID
+    	articleSortData: [], //公用列表：文章分类列表
+        tagcloudData: [], //公用列表：标签云列表
+        loginUser: {}, //登录用户ID,name,头像
         showPop: false, //是否显示弹窗，是，最外层overflow:hidden
         baseUrl: "http://wnet.ittun.com/fefull/api/" //接口地址
     },
@@ -44,20 +44,20 @@ const store = new Vuex.Store({
         //获取登录状态
         getLoginInfor: function(state){
             const localStorage = window.localStorage;
-            if(localStorage.userid) { // token
+            if(localStorage.userId) { // token
                 console.log("store:已登录");
                 state.loginUser = {
-                    "userid" : localStorage.userid,
-                    "username" : localStorage.username,
-                    "userhead" : localStorage.userhead
+                    "userId" : localStorage.userId,
+                    "userName" : localStorage.userName,
+                    "userHead" : localStorage.userHead
                 };
             }
             else {
                 console.log("store:未登录");
                 state.loginUser = {
-                    "userid" : "",
-                    "username" : "",
-                    "userhead" : ""
+                    "userId" : "",
+                    "userName" : "",
+                    "userHead" : ""
                 };
             }
         },

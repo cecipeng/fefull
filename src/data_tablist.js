@@ -1,15 +1,15 @@
 export default
 [
     {
-        tabid: 11,
-        tabname: "项目1"
+        tabId: 11,
+        tabName: "项目1"
     },
     {
-        tabid: 12,
-        tabname: "项目2"
+        tabId: 12,
+        tabName: "项目2"
     },
     {
-        tabid: 13,
-        tabname: "项目3"
+        tabId: 13,
+        tabName: "项目3"
     }
 ]

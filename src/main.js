@@ -18,11 +18,13 @@ new Vue({
 
 /* 全局函数 */
 Vue.prototype.AJAX_POST = function(url,data,callback){
-
-	Vue.http.post(url,data,{
+	Vue.http.post(url,{
          headers: {
              "Content-Type":"application/x-www-form-urlencoded", //post默认以request payload提交data，改为form data形式
              "Authorization":localStorage.accessToken || "" //身份验证，与后端约定每次请求附上token值验明是否登录
+         },
+         params: {
+            data
          }
     })
     .then((response) => {

@@ -1,7 +1,7 @@
 <template>
     <div class="mod-login">
     	<div class="formbox">
-            <input type="text" v-model="loginModel.username" class="form-input form-input-wide inp-username" placeholder="请输入">
+            <input type="text" v-model="loginModel.userName" class="form-input form-input-wide inp-username" placeholder="请输入">
             <input type="text" v-model="loginModel.password" class="form-input form-input-wide inp-pwd" placeholder="请输入">
             <p class="errortip">{{errortip}}</p>
             <div class="btnwrap">
@@ -25,7 +25,7 @@ export default {
             errortip: "", //错误提示
             loginUrl: this.$store.state.baseUrl + "login/verify", //接口地址
             loginModel: {
-                username: "",
+                userName: "",
                 password: ""
             }
         }
@@ -33,7 +33,7 @@ export default {
     methods: {
         login: function(){
             this.isLogining = true;
-            if(this.loginModel.username.length == 0) {
+            if(this.loginModel.userName.length == 0) {
                 this.errortip = "用户名不能为空！";
                 this.isLogining = false;
                 return;
@@ -44,11 +44,11 @@ export default {
                 return;
             }
             this.AJAX_POST(this.loginUrl,this.loginModel,function(RE,r){
-                if(RE.meta.code == 1000) {
-                    localStorage.setItem('userid', RE.datas.userid);
-                    localStorage.setItem('username', RE.datas.username);
-                    localStorage.setItem('userhead', RE.datas.userhead);
-                    localStorage.setItem('accessToken', RE.datas.token);
+                if(RE.meta.code == "0000") {
+                    localStorage.setItem('userId', RE.datas.userId);
+                    localStorage.setItem('userName', RE.datas.userName);
+                    localStorage.setItem('userHead', RE.datas.userHead);
+                    localStorage.setItem('accessToken', RE.datas.accessToken);
                     r.push({ path: '/home' });
                 }
                 else {
