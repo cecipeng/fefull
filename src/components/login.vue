@@ -55,9 +55,9 @@ export default {
                         localStorage.setItem('userName', RE.datas.userName);
                         localStorage.setItem('userHead', RE.datas.userHead);
                         localStorage.setItem('accessToken', RE.datas.accessToken);
-                        s.commit('getLoginInfor');
-                        r.push({ path: '/home' });
                         _this.isLogining = false;
+                        r.push({ path: '/home' });
+                        s.commit('getLoginInfor');
                     }
                     else { 
                         _this.errortip = RE.meta.message;

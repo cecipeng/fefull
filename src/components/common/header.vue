@@ -83,6 +83,9 @@ export default {
             return this.$store.state.loginUser.isLogining;
         }
     },
+    // watch: {
+    //     '$router' : '$store.commit("getLoginInfor")'
+    // },
     methods: {
         loginOut: function(){
             localStorage.removeItem('userId');
