@@ -16,9 +16,13 @@ const store = new Vuex.Store({
         tagcloudData: [], //公用列表：标签云列表
         loginUser: {}, //登录用户ID,name,头像
         showPop: false, //是否显示弹窗，是，最外层overflow:hidden
-        baseUrl: "http://wnet.ittun.com/fefull/api/" //接口地址
+        baseUrl: "http://wnet.ittun.com/fefull/api/", //接口地址
+        ajaxMessage: "me" //接口返回信息
     },
     mutations: {
+        set_ajaxMessage: function(state,mess){
+            state.ajaxMessage = mess;
+        },
     	//获取文章分类
     	http_articleSort: function(state){
     	    // this.$http.get('http://211.149.193.19:8080/api/customers')

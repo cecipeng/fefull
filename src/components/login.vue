@@ -1,12 +1,12 @@
 <template>
     <div class="mod-login">
     	<div class="formbox">
-            <input type="text" v-model="loginModel.userName" class="form-input form-input-wide inp-username" placeholder="è¯·è¾“å…¥">
-            <input type="text" v-model="loginModel.password" class="form-input form-input-wide inp-pwd" placeholder="è¯·è¾“å…¥">
-            <p class="errortip">{{errortip}}</p>
+            <input type="text" v-model="loginModel.userName" class="form-input form-input-wide inp-username" placeholder="ÇëÊäÈë">
+            <input type="text" v-model="loginModel.password" class="form-input form-input-wide inp-pwd" placeholder="ÇëÊäÈë">
+            <p class="errortip">{{$store.state.ajaxMessage}}</p>
             <div class="btnwrap">
-                <a class="ui-btn ui-btn-wide ui-btn-main s-disabled" v-if="isLogining">æ­£åœ¨ç™»å½•...</a>
-                <a class="ui-btn ui-btn-wide ui-btn-main" v-else @click="login">ç™»å½•</a>
+                <a class="ui-btn ui-btn-wide ui-btn-main s-disabled" v-if="isLogining">ÕıÔÚµÇÂ¼...</a>
+                <a class="ui-btn ui-btn-wide ui-btn-main" v-else @click="login">µÇÂ¼</a>
             </div>
         </div>
     </div>
@@ -21,9 +21,9 @@ export default {
 
     data () {
         return {
-            isLogining: false, //æ­£åœ¨ç™»å½•ä¸­
-            errortip: "", //é”™è¯¯æç¤º
-            loginUrl: this.$store.state.baseUrl + "login/verify", //æ¥å£åœ°å€
+            isLogining: false, //ÕıÔÚµÇÂ¼ÖĞ
+            errortip: "", //´íÎóÌáÊ¾
+            loginUrl: this.$store.state.baseUrl + "login/verify", //½Ó¿ÚµØÖ·
             loginModel: {
                 userName: "",
                 password: ""
@@ -34,25 +34,30 @@ export default {
         login: function(){
             this.isLogining = true;
             if(this.loginModel.userName.length == 0) {
-                this.errortip = "ç”¨æˆ·åä¸èƒ½ä¸ºç©ºï¼";
+                this.errortip = "ÓÃ»§Ãû²»ÄÜÎª¿Õ£¡";
                 this.isLogining = false;
                 return;
             }
             if(this.loginModel.password.length == 0) {
-                this.errortip = "å¯†ç ä¸èƒ½ä¸ºç©ºï¼";
+                this.errortip = "ÃÜÂë²»ÄÜÎª¿Õ£¡";
                 this.isLogining = false;
                 return;
             }
-            this.AJAX_POST(this.loginUrl,this.loginModel,function(RE,r){
-                if(RE.meta.code == "0000") {
+            var _this = this;
+            this.AJAX_POST(this.loginUrl,this.loginModel,function(RE,r,s){
+                console.log("isLogining"+_this.isLogining);
+                s.commit('set_ajaxMessage',RE.meta.message);
+                if(RE.meta.code == "0000") { //ÇëÇó³É¹¦
                     localStorage.setItem('userId', RE.datas.userId);
                     localStorage.setItem('userName', RE.datas.userName);
                     localStorage.setItem('userHead', RE.datas.userHead);
                     localStorage.setItem('accessToken', RE.datas.accessToken);
                     r.push({ path: '/home' });
+
                 }
-                else {
-                    this.errortip = RE.meta.message;
+                else { 
+
+                    // this.errortip = RE.meta.message;
                 }
             })     
         }

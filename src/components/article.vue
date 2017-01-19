@@ -70,8 +70,6 @@ export default {
             showDropdown2: false, //显示下拉菜单
             curArtList: [], //显示的列表
             originArtList: [], //默认排序的列表
-            allTablist: [], //文章分类
-            allTagcloud: [], //标签云
             curIndex: 0 //初始tab显示第一条
         }
     },
@@ -79,7 +77,6 @@ export default {
     created: function(){
         //获取（公用数据）文章分类
         this.$store.commit('http_articleSort');
-        this.allTablist = this.$store.state.articleSortData;
 
         //获取指定tab首页文章列表
         const initTabId = this.allTablist[this.curIndex].tabId; //curIndex指定tab
@@ -87,8 +84,15 @@ export default {
 
         //获取标签云列表
         this.$store.commit('http_tagcloud');
-        this.allTagcloud = this.$store.state.tagcloudData;
 
+    },
+    computed: {
+        allTablist() { //文章分类
+            return this.$store.state.articleSortData;
+        },
+        allTagcloud() { //标签云
+            return this.$store.state.tagcloudData;
+        }
     },
     methods: {
         //tab切换
