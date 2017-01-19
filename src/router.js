@@ -1,7 +1,8 @@
 import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Vuex from 'vuex';
-import store from './store'
+import VueRouter from 'vue-router' //router
+import Vuex from 'vuex'; //store
+
+import store from './store.js'
 
 import Home from './components/home'
 import Article from './components/article'

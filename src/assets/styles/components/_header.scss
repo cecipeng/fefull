@@ -75,6 +75,9 @@
 			cursor: pointer;
 			@extend %tof;
 			@include hover(background-color,#231f3d,darken(#231f3d,5%));
+			&.router-link-active {
+				background-color: darken(#231f3d,5%);
+			}
 		}
 		.dropdown-arrow {
 			display: inline-block;

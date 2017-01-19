@@ -32,7 +32,7 @@
                     <!-- com-tagcloud -->
                     <div class="ui-dropdown tagcloud"  @mouseleave="showDropdown2=false">
                         <a class="selector" @mouseenter="showDropdown2=true">
-                            排序方式
+                            标签云
                             <i class="dropdown-arrow"></i>
                         </a>
                         <div class="dropdown" v-show="showDropdown2">
@@ -79,8 +79,8 @@ export default {
         this.$store.commit('http_articleSort');
 
         //获取指定tab首页文章列表
-        const initTabId = this.allTablist[this.curIndex].tabId; //curIndex指定tab
-        this.http_article(1,initTabId); //1：第一页
+        // const initTabId = this.allTablist[this.curIndex].tabId; //curIndex指定tab
+        this.http_article(1,1); //1：第一页
 
         //获取标签云列表
         this.$store.commit('http_tagcloud');
