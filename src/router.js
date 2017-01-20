@@ -51,11 +51,7 @@ const router = new VueRouter({
 
 //每次页面跳转前获取用户信息，用于渲染页面
 router.beforeEach((to, from, next) => {
-    store.state.loginUser = {
-        "userId" : localStorage.userId,
-        "userName" : localStorage.userName,
-        "userHead" : localStorage.userHead
-    };
+    store.commit('getLoginInfor');
     next();
 })
 
