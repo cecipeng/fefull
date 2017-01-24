@@ -6,7 +6,8 @@
     	        <div class="layout-wrapper">
                 
     	            <ul class="tabmenu">
-    	                <li v-for="(tab, index) in allTablist" :class="{'on':index===curIndex}" @click="changeTab(index,tab.tabId)">{{tab.tabName}}</li>
+                        <li>全部</li>
+    	                <li v-for="(cat, index) in allTablist" :class="{'on':index===curIndex}" :data-id="cat.categoryId" @click="http_article('','',1,1)">{{cat.categoryName}}</li>
     	            </ul>
 
                     <!-- com-search -->
@@ -79,8 +80,8 @@ export default {
         this.$store.commit('http_articleSort');
 
         //获取指定tab首页文章列表
-        // const initTabId = this.allTablist[this.curIndex].tabId; //curIndex指定tab
-        this.http_article(1,1); //1：第一页
+        // const initTabId = this.allTablist[this.curIndex].categoryId; //curIndex指定tab
+        // this.http_article(1,11); //1：第一页
 
         //获取标签云列表
         this.$store.commit('http_tagcloud');
@@ -98,19 +99,37 @@ export default {
         //tab切换
         changeTab: function(index,tabId){
             this.curIndex = index;
-            this.http_article(1,tabId); //默认切换tab后都显示第一页
+            // this.http_article(1,tabId); //默认切换tab后都显示第一页
         },
         //获取文章列表
-        http_article: function(page,tabId){
-            // this.$http.get('http://211.149.193.19:8080/api/customers')
-            //     .then((response) => {
-            //         this.$set('this.originArtList', response.data)
-                // })
-                // .catch(function(response) {
-                //     console.log(response)
-                // })
-            this.originArtList = dataArtList; //临时处理
-            this.curArtList = this.originArtList;
+        http_article: function(categoryId,tagCloudId,nowPage,pageSize){
+            var _this = this;
+            var para = {
+                nowPage: nowPage,
+                pageSize: pageSize
+            };
+
+            if(categoryId && categoryId!="") {
+                para.categoryId = categoryId;
+            }
+            if(tagCloudId && tagCloudId!="") {
+                para.tagCloudId = tagCloudId;
+            }
+            console.log(para);
+            this.UTIL.AJAX_GET(
+                "article/queryPage",
+                para,
+                function(RE,r,s){
+                    if(RE.meta.code == "0000") { //请求成功
+                        _this.originArtList = RE.datas;
+                        _this.curArtList = _this.originArtList;
+                    }
+                    else { 
+                        console.log("FEFull：获取文章列表失败，"+RE.meta.message);
+                    }
+                }
+            );
+        
         },
         //列表排序
         orderList: function(type){

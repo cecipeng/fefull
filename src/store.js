@@ -29,7 +29,7 @@ const store = new Vuex.Store({
     	//获取文章分类
     	http_articleSort: function(state){
             UTIL.AJAX_GET(
-                state.baseUrl + "article/categories",
+                "article/categories",
                 "",
                 function(RE,r,s){
                     if(RE.meta.code == "0000") { //请求成功
@@ -44,7 +44,7 @@ const store = new Vuex.Store({
         //获取标签云列表
         http_tagcloud: function(state){
             UTIL.AJAX_GET(
-                state.baseUrl + "article/tags",
+                "article/tags",
                 "",
                 function(RE,r,s){
                     if(RE.meta.code == "0000") { //请求成功

@@ -2,13 +2,13 @@
 	<div class="com-list-article">
 		<ul class="menulist">
 			<li v-for="item in artlist">
-			<router-link tag="a" class="item" :to="{ name: 'articleDetail', params: { articleId: item.articleId }}">
+				<router-link tag="a" class="item" :to="{ name: 'articleDetail', params: { articleId: item.articleId }}" :data-id="item.articleId" :data-publishedDate="item.publishedDate" :data-like="item.like" :data-category="item.category.categoryId">
 					<div class="list-image"><img :src="item.cover" alt=""></div>	
 					<div class="list-main">
 						<div class="list-title">
 							<div class="titlewrap">
 								<p class="title">{{item.title}}</p>
-								<span class="tag-origin" v-if="item.origin">原创</span>
+								<span class="tag-origin" v-if="item.origin==1">原创</span>
 							</div>
 						</div>
 						<p class="list-maintxt">{{item.maintxt}}</p>

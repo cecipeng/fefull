@@ -23,7 +23,6 @@ export default {
         return {
             isLogining: false, //正在登录中
             errortip: "", //错误提示
-            loginUrl: this.$store.state.baseUrl + "login/verify", //接口地址
             loginModel: {
                 userName: "",
                 password: ""
@@ -46,7 +45,7 @@ export default {
 
             var _this = this;
             this.UTIL.AJAX_POST(
-                this.loginUrl,
+                "login/verify",
                 this.loginModel,
                 function(RE,r,s){
                     if(RE.meta.code == "0000") { //请求成功
