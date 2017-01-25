@@ -7,7 +7,7 @@
                 
     	            <ul class="tabmenu">
                         <li>全部</li>
-    	                <li v-for="(cat, index) in allTablist" :class="{'on':index===curIndex}" :data-id="cat.categoryId" @click="http_article('','',1,1)">{{cat.categoryName}}</li>
+    	                <li v-for="(cat, index) in allTablist" :class="{'on':index===curIndex}" :data-id="cat.categoryId" @click="http_article(1,1)">{{cat.categoryName}}</li>
     	            </ul>
 
                     <!-- com-search -->
@@ -102,23 +102,27 @@ export default {
             // this.http_article(1,tabId); //默认切换tab后都显示第一页
         },
         //获取文章列表
-        http_article: function(categoryId,tagCloudId,nowPage,pageSize){
+        http_article: function(nowPage,pageSize){
             var _this = this;
             var para = {
                 nowPage: nowPage,
                 pageSize: pageSize
             };
 
-            if(categoryId && categoryId!="") {
-                para.categoryId = categoryId;
-            }
-            if(tagCloudId && tagCloudId!="") {
-                para.tagCloudId = tagCloudId;
-            }
+            //如果有传条件查询（文章分类、标签云）
+            // if(categoryId && categoryId!="") {
+            //     para.categoryId = categoryId;
+            // }
+            // if(tagCloudId && tagCloudId!="") {
+            //     para.tagCloudId = tagCloudId;
+            // }
             console.log(para);
             this.UTIL.AJAX_GET(
                 "article/queryPage",
-                para,
+                {
+                'nowPage': nowPage,
+                'pageSize': pageSize
+                },
                 function(RE,r,s){
                     if(RE.meta.code == "0000") { //请求成功
                         _this.originArtList = RE.datas;
@@ -130,6 +134,9 @@ export default {
                 }
             );
         
+        },
+        showPage: function(){
+
         },
         //列表排序
         orderList: function(type){

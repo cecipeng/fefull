@@ -13,15 +13,16 @@ Vue.use(VueRouter);
 export default {
     
     // 公用get请求
-    AJAX_GET: function(url,data,callback){
+    AJAX_GET: function(url,_data,callback){
+        console.log(url);
         Vue.http.get(
             store.state.baseUrl + url,
-            {emulateJSON : true},
+            _data,
             {headers: {
                 "Authorization":localStorage.accessToken || "" //身份验证，与后端约定每次请求附上token值验明是否登录
-            },
-            params: data
-        })
+                }
+            }
+        )
         .then((response) => {
             switch(response.data.meta.code) {
                 case "1001": //未登录
@@ -49,10 +50,11 @@ export default {
             {emulateJSON : true},
             {headers: {
                 // "Content-Type":"application/x-www-form-urlencoded", //post默认以request payload提交data，改为form data形式
-                "Authorization":localStorage.accessToken || "" //身份验证，与后端约定每次请求附上token值验明是否登录
+                "Authorization": localStorage.accessToken || "" //身份验证，与后端约定每次请求附上token值验明是否登录
+                }
             },
-            params: data
-        })
+            {params: data}
+        )
         .then((response) => {
             switch(response.data.meta.code) {
                 case "1001": //未登录
