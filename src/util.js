@@ -26,6 +26,7 @@ export default {
                 params: _data
         })
         .then((response) => {
+            
             switch(response.data.meta.code) {
                 case "1001": //未登录
                     router.push({ path: '/login' }); //跳转到登录页

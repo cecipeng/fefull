@@ -7,7 +7,7 @@
                 
     	            <ul class="tabmenu">
                         <li>全部</li>
-    	                <li v-for="(cat, index) in allTablist" :class="{'on':index===curIndex}" :data-id="cat.categoryId" @click="http_article(1,1)">{{cat.categoryName}}</li>
+    	                <li v-for="(cat, index) in allTablist" :class="{'on':index===curIndex}" :data-id="cat.categoryId" @click="changeTab(index,cat.categoryId)">{{cat.categoryName}}</li>
     	            </ul>
 
                     <!-- com-search -->
@@ -70,7 +70,12 @@ export default {
             showDropdown1: false, //显示下拉菜单
             showDropdown2: false, //显示下拉菜单
             curArtList: [], //显示的列表
-            pageParams: {}, //响应分页数据
+            pageParams: {
+                cur: '',
+                pageSize: 10,
+                nowPage: '',
+                totalPage: ''
+            }, //响应分页数据
             originArtList: [], //默认排序的列表
             curIndex: 0 //初始tab显示第一条
         }
@@ -87,6 +92,9 @@ export default {
         //获取标签云列表
         this.$store.commit('http_tagcloud');
 
+        //获取文章列表，默认获取全部分类下的第一页
+        // this.http_article(1,10);
+        // this.changeTab(0,);
     },
     computed: {
         allTablist() { //文章分类
@@ -100,23 +108,22 @@ export default {
         //tab切换
         changeTab: function(index,tabId){
             this.curIndex = index;
-            // this.http_article(1,tabId); //默认切换tab后都显示第一页
+            this.http_article(1,this.pageParams.pageSize,tabId); //默认切换tab后都显示第一页
         },
         //获取文章列表
-        http_article: function(nowPage,pageSize){
+        http_article: function(nowPage,pageSize,categoryId,tagCloudId){
             var _this = this;
             var para = {
-                nowPage: nowPage,
-                pageSize: pageSize
+                'nowPage': nowPage,
+                'pageSize': pageSize
             };
-
             //如果有传条件查询（文章分类、标签云）
-            // if(categoryId && categoryId!="") {
-            //     para.categoryId = categoryId;
-            // }
-            // if(tagCloudId && tagCloudId!="") {
-            //     para.tagCloudId = tagCloudId;
-            // }
+            if(categoryId && categoryId!="") {
+                para.categoryId = categoryId;
+            }
+            if(tagCloudId && tagCloudId!="") {
+                para.tagCloudId = tagCloudId;
+            }
             this.UTIL.AJAX_GET(
                 "article/queryPage",
                 para,
@@ -126,11 +133,10 @@ export default {
                         _this.curArtList = _this.originArtList;
 
                         //分页响应数据，存储在对象中传入分页组件
-                        _this.pageParams.pageSize = 2//RE.datas.pageSize; //一页显示数量
-                        _this.pageParams.nowPage = 3//RE.datas.nowPage; //当前页
-                        _this.pageParams.totalPage = 15//RE.datas.totalPage; //总页数
-                        _this.pageParams.cur = this.curIndex;
-                        console.log(_this.pageParams);
+                        _this.pageParams.pageSize = RE.datas.pageSize; //一页显示数量
+                        _this.pageParams.nowPage = RE.datas.nowPage; //当前页
+                        _this.pageParams.totalPage = RE.datas.totalPage; //总页数
+                        _this.pageParams.cur = _this.curIndex;
                     }
                     else { 
                         console.log("FEFull：获取文章列表失败，"+RE.meta.message);

@@ -31,9 +31,11 @@ export default {
         },
         pagelist: function(){ //分页列表
             var _page = this.pageParams;
-            console.log(this.pageParams.nowPage);
+            
             var _list = [];
+            console.log(this.showPageNum);
             if(_page.totalPage > this.showPageNum){ //需要有省略
+
                 if(_page.nowPage - this.nowPageFront <= 2) {
                     for(var i = 1 ; i<=this.showPageNum-2 ; i++){
                         this._list.push(i);
@@ -57,6 +59,7 @@ export default {
                     this.showLastPage = true;
                 }
             }
+
             return _list;
         }
     },

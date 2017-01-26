@@ -4,8 +4,8 @@
         <div class="detail-header">
             <div class="layout-wrapper">
                 <div class="headerbox">
-                    <h1 class="article-tit">{{article.title}}<span class="tag-origin" v-if="article.origin">原创</span></h1>
-                    <p class="article-date">发表于<em class="date">{{article.creatDate}}</em></p>
+                    <h1 class="article-tit">{{article.title}}<span class="tag-origin" v-if="article.origin==1">原创</span></h1>
+                    <p class="article-date">发表于<em class="date">{{article.publishedDate}}</em></p>
                 </div>
             </div>
         </div>
@@ -102,8 +102,23 @@ export default {
     methods: {
         
         http_getContent() {
+            var _this = this;
             this.articleId = this.$route.params.articleId;
-            
+            this.UTIL.AJAX_GET(
+                "article/getArticleById",
+                {
+                    articleId: this.articleId
+                },
+                function(RE,r,s){
+                    if(RE.meta.code == "0000") { //请求成功
+                        _this.article = RE.datas;
+                        console.log(_this.article.author.userName);
+                    }
+                    else { 
+                        console.log("FEFull：获取文章详情失败，"+RE.meta.message);
+                    }
+                }
+            );
             //获取指定文章
             // this.$http.get('http://211.149.193.19:8080/api/customers')
             //     .then((response) => {
@@ -112,11 +127,7 @@ export default {
                 // .catch(function(response) {
                 //     console.log(response)
                 // })
-            for(var i = 0; i<dataArtList.length; i++){ //临时处理
-                if(dataArtList[i].articleId == this.articleId) {
-                    this.article = dataArtList[i];
-                }
-            }
+      
             //获取相似文章
             // this.$http.get('http://211.149.193.19:8080/api/customers')
             //     .then((response) => {
