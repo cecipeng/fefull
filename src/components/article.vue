@@ -45,7 +45,7 @@
     	    </div>
     	    <div class="tab-body layout-wrapper">
                 <comListArticle :artlist="curArtList"></comListArticle>
-                <comPage></comPage> 
+                <comPage :pageParams="pageParams"></comPage> 
     	    </div>
     	</div>
     	<!-- /ui-tab --> 
@@ -70,6 +70,7 @@ export default {
             showDropdown1: false, //显示下拉菜单
             showDropdown2: false, //显示下拉菜单
             curArtList: [], //显示的列表
+            pageParams: {}, //响应分页数据
             originArtList: [], //默认排序的列表
             curIndex: 0 //初始tab显示第一条
         }
@@ -116,17 +117,20 @@ export default {
             // if(tagCloudId && tagCloudId!="") {
             //     para.tagCloudId = tagCloudId;
             // }
-            console.log(para);
             this.UTIL.AJAX_GET(
                 "article/queryPage",
-                {
-                'nowPage': nowPage,
-                'pageSize': pageSize
-                },
+                para,
                 function(RE,r,s){
                     if(RE.meta.code == "0000") { //请求成功
-                        _this.originArtList = RE.datas;
+                        _this.originArtList = RE.datas.reList;
                         _this.curArtList = _this.originArtList;
+
+                        //分页响应数据，存储在对象中传入分页组件
+                        _this.pageParams.pageSize = 2//RE.datas.pageSize; //一页显示数量
+                        _this.pageParams.nowPage = 3//RE.datas.nowPage; //当前页
+                        _this.pageParams.totalPage = 15//RE.datas.totalPage; //总页数
+                        _this.pageParams.cur = this.curIndex;
+                        console.log(_this.pageParams);
                     }
                     else { 
                         console.log("FEFull：获取文章列表失败，"+RE.meta.message);

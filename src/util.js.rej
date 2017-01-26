@@ -1,0 +1,16 @@
+diff a/src/util.js b/src/util.js	(rejected hunks)
+@@ -50,10 +50,11 @@
+             {emulateJSON : true},
+             {headers: {
+                 // "Content-Type":"application/x-www-form-urlencoded", //post默认以request payload提交data，改为form data形式
+-                "Authorization":localStorage.accessToken || "" //身份验证，与后端约定每次请求附上token值验明是否登录
++                "Authorization": localStorage.accessToken || "" //身份验证，与后端约定每次请求附上token值验明是否登录
++                }
+             },
+-            params: data
+-        })
++            {params: data}
++        )
+         .then((response) => {
+             switch(response.data.meta.code) {
+                 case "1001": //未登录
