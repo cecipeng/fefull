@@ -6,8 +6,8 @@
     	        <div class="layout-wrapper">
                 
     	            <ul class="tabmenu">
-                        <li>全部</li>
-    	                <li v-for="(cat, index) in allTablist" :class="{'on':index===curIndex}" :data-id="cat.categoryId" @click="changeTab(index,cat.categoryId)">{{cat.categoryName}}</li>
+                        <li :class="{'on':curIndex==0}" @click="changeTab(0,'')">全部</li>
+    	                <li v-for="(cat, index) in allTablist" :class="{'on':index+1===curIndex}" :data-id="cat.categoryId" @click="changeTab(index+1,cat.categoryId)">{{cat.categoryName}}</li>
     	            </ul>
 
                     <!-- com-search -->
@@ -71,7 +71,6 @@ export default {
             showDropdown2: false, //显示下拉菜单
             curArtList: [], //显示的列表
             pageParams: {
-                cur: '',
                 pageSize: 10,
                 nowPage: '',
                 totalPage: ''
@@ -117,7 +116,7 @@ export default {
                 'nowPage': nowPage,
                 'pageSize': pageSize
             };
-            //如果有传条件查询（文章分类、标签云）
+            //如果有传条件查询（文章分类、标签云）,请求参数带上条件
             if(categoryId && categoryId!="") {
                 para.categoryId = categoryId;
             }
@@ -136,14 +135,12 @@ export default {
                         _this.pageParams.pageSize = RE.datas.pageSize; //一页显示数量
                         _this.pageParams.nowPage = RE.datas.nowPage; //当前页
                         _this.pageParams.totalPage = RE.datas.totalPage; //总页数
-                        _this.pageParams.cur = _this.curIndex;
                     }
                     else { 
                         console.log("FEFull：获取文章列表失败，"+RE.meta.message);
                     }
                 }
             );
-        
         },
         showPage: function(){
 
