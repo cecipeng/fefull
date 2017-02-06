@@ -45,7 +45,7 @@
     	    </div>
     	    <div class="tab-body layout-wrapper">
                 <comListArticle :artlist="curArtList"></comListArticle>
-                <comPage :pageParams="pageParams"></comPage> 
+                <comPage :pageParams="Pages" @rendData="rendList"></comPage> 
     	    </div>
     	</div>
     	<!-- /ui-tab --> 
@@ -70,10 +70,11 @@ export default {
             showDropdown1: false, //显示下拉菜单
             showDropdown2: false, //显示下拉菜单
             curArtList: [], //显示的列表
-            pageParams: {
+            Pages: {
+                pageUrl: "article/queryPage", //请求地址
+                params: "", //请求参数
                 pageSize: 10,
-                nowPage: '',
-                totalPage: ''
+                nowPage: 0
             }, //响应分页数据
             originArtList: [], //默认排序的列表
             curIndex: 0 //初始tab显示第一条
@@ -107,41 +108,48 @@ export default {
         //tab切换
         changeTab: function(index,tabId){
             this.curIndex = index;
-            this.http_article(1,this.pageParams.pageSize,tabId); //默认切换tab后都显示第一页
+            this.Pages.params = {
+                tabId: tabId
+            }
+            // this.http_article(1,this.pageParams.pageSize,tabId); //默认切换tab后都显示第一页
+        },
+        rendList: function(data){
+            _this.originArtList = data;
+            _this.curArtList = _this.originArtList;
         },
         //获取文章列表
-        http_article: function(nowPage,pageSize,categoryId,tagCloudId){
-            var _this = this;
-            var para = {
-                'nowPage': nowPage,
-                'pageSize': pageSize
-            };
-            //如果有传条件查询（文章分类、标签云）,请求参数带上条件
-            if(categoryId && categoryId!="") {
-                para.categoryId = categoryId;
-            }
-            if(tagCloudId && tagCloudId!="") {
-                para.tagCloudId = tagCloudId;
-            }
-            this.UTIL.AJAX_GET(
-                "article/queryPage",
-                para,
-                function(RE,r,s){
-                    if(RE.meta.code == "0000") { //请求成功
-                        _this.originArtList = RE.datas.reList;
-                        _this.curArtList = _this.originArtList;
+        // http_article: function(nowPage,pageSize,categoryId,tagCloudId){
+        //     var _this = this;
+        //     var para = {
+        //         'nowPage': nowPage,
+        //         'pageSize': pageSize
+        //     };
+        //     //如果有传条件查询（文章分类、标签云）,请求参数带上条件
+        //     if(categoryId && categoryId!="") {
+        //         para.categoryId = categoryId;
+        //     }
+        //     if(tagCloudId && tagCloudId!="") {
+        //         para.tagCloudId = tagCloudId;
+        //     }
+        //     this.UTIL.AJAX_GET(
+        //         "article/queryPage",
+        //         para,
+        //         function(RE,r,s){
+        //             if(RE.meta.code == "0000") { //请求成功
+        //                 _this.originArtList = RE.datas.reList;
+        //                 _this.curArtList = _this.originArtList;
 
-                        //分页响应数据，存储在对象中传入分页组件
-                        _this.pageParams.pageSize = RE.datas.pageSize; //一页显示数量
-                        _this.pageParams.nowPage = RE.datas.nowPage; //当前页
-                        _this.pageParams.totalPage = RE.datas.totalPage; //总页数
-                    }
-                    else { 
-                        console.log("FEFull：获取文章列表失败，"+RE.meta.message);
-                    }
-                }
-            );
-        },
+        //                 //分页响应数据，存储在对象中传入分页组件
+        //                 _this.pageParams.pageSize = RE.datas.pageSize; //一页显示数量
+        //                 _this.pageParams.nowPage = RE.datas.nowPage; //当前页
+        //                 _this.pageParams.totalPage = RE.datas.totalPage; //总页数
+        //             }
+        //             else { 
+        //                 console.log("FEFull：获取文章列表失败，"+RE.meta.message);
+        //             }
+        //         }
+        //     );
+        // },
         showPage: function(){
 
         },
