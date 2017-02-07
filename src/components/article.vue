@@ -45,7 +45,7 @@
     	    </div>
     	    <div class="tab-body layout-wrapper">
                 <comListArticle :artlist="curArtList"></comListArticle>
-                <comPage :pageParams="Pages" @rendData="rendList"></comPage> 
+                <comPage :Pages="Pages" @rendData="rendList"></comPage> 
     	    </div>
     	</div>
     	<!-- /ui-tab --> 
@@ -72,10 +72,13 @@ export default {
             curArtList: [], //显示的列表
             Pages: {
                 pageUrl: "article/queryPage", //请求地址
-                params: "", //请求参数
-                pageSize: 10,
-                nowPage: 0
-            }, //响应分页数据
+                params: { //请求参数
+                    nowPage: 1,
+                    pageSize: 10,
+                    // categoryId: "", //文章分类ID，需要时添加
+                    // tagCloudId: "" //标签云ID，需要时添加
+                },
+            },
             originArtList: [], //默认排序的列表
             curIndex: 0 //初始tab显示第一条
         }
@@ -92,6 +95,7 @@ export default {
         //获取标签云列表
         this.$store.commit('http_tagcloud');
 
+        
         //获取文章列表，默认获取全部分类下的第一页
         // this.http_article(1,10);
         // this.changeTab(0,);
@@ -109,7 +113,8 @@ export default {
         changeTab: function(index,tabId){
             this.curIndex = index;
             this.Pages.params = {
-                tabId: tabId
+                categoryId: tabId,
+                nowPage: 1
             }
             // this.http_article(1,this.pageParams.pageSize,tabId); //默认切换tab后都显示第一页
         },

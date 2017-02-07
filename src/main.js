@@ -15,7 +15,7 @@ Vue.use(Vuex);
 import UTIL from './util.js'
 
 /* eslint-disable no-new */
-new Vue({
+var VM = new Vue({
     router,
     store,
     render: h => h(App)
