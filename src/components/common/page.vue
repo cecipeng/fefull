@@ -1,23 +1,19 @@
 <template>
 	<div class="com-page">
-        <a href="###" class="btn-turnpage page-prev" v-if="Pages.nowPage != 1">上一页</a>
-        <a href="###" class="btn-num" v-if="showFirstPage">1</a>
+        <a class="btn-turnpage page-prev" v-if="current != 1">上一页</a>
+        <a class="btn-num" v-if="showFirstPage">1</a>
         <span class="more" v-if="showFirstPage">...</span>
-        <a href="###" class="btn-num" v-for="item in pagelist" :class="{'on':Pages.nowPage == item}">{{item}}</a>
+        <a class="btn-num" v-for="item in pagelist" :class="{'on':current == item}" @click="current=item">{{item}}</a>
         <span class="more" v-if="showLastPage">...</span>
-        <a href="###" class="btn-num" v-if="showLastPage">{{Pages.totalPage}}</a>
-        <a href="###" class="btn-turnpage page-next" v-if="Pages.nowPage != Pages.totalPage">下一页</a>
-        <!-- <a href="###" class="btn-turnpage page-prev" v-if="showPrevBtn">上一页</a>
-        <a href="###" class="btn-num" v-if="showFirstPage">1</a>
-        <span class="more" v-if="showFirstPage">...</span>
-        <a href="###" class="btn-num" v-for="item in pagelist" :class="{'on':curPage == item}">{{item}}</a>
-        <span class="more" v-if="showLastPage">...</span>
-        <a href="###" class="btn-num" v-if="showLastPage">{{Pages.totalPage}}</a>
-        <a href="###" class="btn-turnpage page-next" v-if="showNextBtn">下一页</a> -->
+        <a class="btn-num" v-if="showLastPage">{{allPage}}</a>
+        <a class="btn-turnpage page-next" v-if="current != allPage">下一页</a>
     </div>
 </template>
 
 <script>
+
+//公用方法
+import UTIL from './../../util.js'
 
 export default {
     props: ['Pages'], //Pages结构：{pageSize: 10, nowPage: '', totalPage: ''}
@@ -27,10 +23,9 @@ export default {
             allPage: 0, //总页数
             pageSize: 0, //每页显示几条数据
             showItem: 9, //显示页数
-
             showFirstPage: false, //显示第一页和省略号
             showLastPage: false, //显示最后一页和省略号
-
+            // pagelist: []
             // showPrevBtn: false, //显示上一页按钮
             // showNextBtn: false, //显示下一页按钮
             // showPageNum: 9, //显示几个分页数（包括...），其他用...，为了对称，必须使用奇数
@@ -39,20 +34,29 @@ export default {
     	}
     },
     created: function() {
-        this.http_page(1);
+        // this.http_page(1);
     },
+    // watch: {
+    //     "Pages.params.categoryId": function(){
+    //         console.log("watch");
+    //     }
+    // },
     computed: {
-        nowPageFront: function() { //计算：有省略号时，中间显示几个
+        nowPageFront() { //计算：有省略号时，中间显示几个
             return ( this.showItem - 4 - 1 ) / 2; 
         },
-        pagelist: function(){ //分页列表
+        pagelist(){ //分页列表
             var _list = [];
             var _params = this.Pages;
             var _bt = this.nowPageFront;
             var _num = "";
+            if(this.Pages.params.categoryId){
+                
+            }
+            this.http_page(this.Pages.params.nowPage); //请求到数据，并改变了三个参数
 
-            this.http_page(_params.params.nowPage); //请求到数据，并改变了三个参数
             if(this.allPage > this.showItem) { //总页数大于要显示的页数，出现省略号
+
                 if(this.current - _bt <= 3) { //只显示尾部省略号
                     this.showFirstPage = false;
                     this.showLastPage = true;
@@ -77,12 +81,14 @@ export default {
             }
             else if(this.allPage <= this.showItem) { //总页数小于要显示的页数，全部显示，不显示省略号
                 this.showFirstPage = false;
+
                 this.showLastPage = false;
-                _num = Math.min(this.showItem,this.allpage);
-                while(_num >= 0) {
+                _num = Math.min(this.showItem,this.allPage);
+                while(_num > 0) {
                     _list.unshift(_num--);
                 }
             }
+            console.log("ff");
             return _list;
         }
 
@@ -93,38 +99,33 @@ export default {
         //     this.showNextBtn = nowPage == lastPage ? false : true;
         // },
     	http_page: function(idx){
+            console.log("cc:"+idx);
             if(idx != this.current) {
                 this.current = idx;
                 
                 var _this = this;
-                console.log(this);
-                VM.UTIL.AJAX_GET(
-                    // this.Pages.pageUrl,
-                    // this.Pages.params,
-                    "article/queryPage",
-                    {
-                        nowPage: 1,
-                        pageSize: 10
-                    },
+                UTIL.AJAX_GET(
+                    this.Pages.pageUrl,
+                    this.Pages.params,
                     function(RE,r,s){
-                        if(RE.meta.code == "0000") { //请求成功
-                            this.$emit('rendData', RE.datas.reList);
-                            // _this.originArtList = RE.datas.reList;
-                            // _this.curArtList = _this.originArtList;
 
-                            //分页响应数据，存储在对象中传入分页组件
-                            // _this.Pages.pageSize = RE.datas.pageSize; //一页显示数量
+                        if(RE.meta.code == "0000") { //请求成功
+
                             _this.current = RE.datas.nowPage; //当前页
                             _this.allPage = RE.datas.totalPage; //总页数
                             _this.pageSize = RE.datas.pageSize;
+
+                            _this.$emit('rendData', RE.datas.reList); //列表传入父组件
+
                         }
                         else { 
-                            console.log("FEFull：获取文章列表失败，"+RE.meta.message);
+                            console.log("FEFull：获取文章列表失败，"+RE);
                         }
                     }
                 );
             }
         }
+
     }
     
 }

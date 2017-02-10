@@ -6,7 +6,7 @@
     	        <div class="layout-wrapper">
                 
     	            <ul class="tabmenu">
-                        <li :class="{'on':curIndex==0}" @click="changeTab(0,'')">全部</li>
+                        <li :class="{'on':curIndex==0}" @click="changeTab(0,0)">全部</li>
     	                <li v-for="(cat, index) in allTablist" :class="{'on':index+1===curIndex}" :data-id="cat.categoryId" @click="changeTab(index+1,cat.categoryId)">{{cat.categoryName}}</li>
     	            </ul>
 
@@ -45,7 +45,7 @@
     	    </div>
     	    <div class="tab-body layout-wrapper">
                 <comListArticle :artlist="curArtList"></comListArticle>
-                <comPage :Pages="Pages" @rendData="rendList"></comPage> 
+                <comPage :Pages="Pages" v-on:rendData="rendList"></comPage> 
     	    </div>
     	</div>
     	<!-- /ui-tab --> 
@@ -57,6 +57,7 @@ import comSearch from './common/search'
 import comTagcloud from './common/tagcloud'
 import comListArticle from './common/list-art'
 import comPage from './common/page'
+import test from './common/test'
 
 //临时数据
 import dataArtList from './../data_artlist_tab1.js'
@@ -70,23 +71,29 @@ export default {
             showDropdown1: false, //显示下拉菜单
             showDropdown2: false, //显示下拉菜单
             curArtList: [], //显示的列表
-            Pages: {
+            Pages: { //文章列表参数，请求在分页组件中发起
                 pageUrl: "article/queryPage", //请求地址
                 params: { //请求参数
                     nowPage: 1,
                     pageSize: 10,
-                    // categoryId: "", //文章分类ID，需要时添加
-                    // tagCloudId: "" //标签云ID，需要时添加
+                    categoryId: "", //文章分类ID，需要时添加
+                    tagCloudId: "" //标签云ID，需要时添加
                 },
             },
             originArtList: [], //默认排序的列表
-            curIndex: 0 //初始tab显示第一条
+            curIndex: 0, //初始tab显示第一条
+            msg: {
+                name: {
+                    a:1
+                }
+            }
         }
     },
-    components: { comSearch,comTagcloud,comListArticle,comPage },
+    components: { comSearch,comTagcloud,comListArticle,comPage,test },
     created: function(){
         //获取（公用数据）文章分类
         this.$store.commit('http_articleSort');
+
 
         //获取指定tab首页文章列表
         // const initTabId = this.allTablist[this.curIndex].categoryId; //curIndex指定tab
@@ -99,6 +106,7 @@ export default {
         //获取文章列表，默认获取全部分类下的第一页
         // this.http_article(1,10);
         // this.changeTab(0,);
+
     },
     computed: {
         allTablist() { //文章分类
@@ -111,16 +119,15 @@ export default {
     methods: {
         //tab切换
         changeTab: function(index,tabId){
+            this.msg.name.a = 4;
             this.curIndex = index;
-            this.Pages.params = {
-                categoryId: tabId,
-                nowPage: 1
-            }
+            this.Pages.params.categoryId = tabId;
+            this.Pages.params.nowPage = 1;
             // this.http_article(1,this.pageParams.pageSize,tabId); //默认切换tab后都显示第一页
         },
         rendList: function(data){
-            _this.originArtList = data;
-            _this.curArtList = _this.originArtList;
+            this.originArtList = data;
+            this.curArtList = this.originArtList;
         },
         //获取文章列表
         // http_article: function(nowPage,pageSize,categoryId,tagCloudId){

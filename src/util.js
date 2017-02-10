@@ -42,7 +42,7 @@ export default {
             }
         })
         .catch(function(response) {
-            console.log("FEFull："+response.data.meta.message);
+            // console.log("FEFull："+response.data.meta.message);
         })
     },
 

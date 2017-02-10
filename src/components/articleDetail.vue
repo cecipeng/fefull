@@ -77,6 +77,9 @@ import comTagcloud from './common/tagcloud'
 //临时数据
 import dataArtList from './../data_artlist_tab1.js'
 
+//公用方法
+import UTIL from './../util.js'
+
 export default {
 
     data () {
@@ -104,7 +107,7 @@ export default {
         http_getContent() {
             var _this = this;
             this.articleId = this.$route.params.articleId;
-            this.UTIL.AJAX_GET(
+            UTIL.AJAX_GET(
                 "article/getArticleById",
                 {
                     articleId: this.articleId
