@@ -16,6 +16,9 @@ import Login from './components/login'
 Vue.use(VueRouter);
 Vue.use(Vuex);
 
+//公用方法
+import UTIL from './util.js'
+
 const routes = [
     {   path: '/home',name:'home',component: Home},
     {   path: '/article',name:'article',component: Article},
@@ -23,22 +26,22 @@ const routes = [
     {   path: '/search/:keyword/:type',name:'search',component: Search},
     {   path: '/login',name:'login',component: Login},
     {   path: '/usercenter',name:'usercenter',component: Usercenter,
-            children: [
-                {
-                    path: '/usercenter/myartCreate',name:'myartCreate',component: MyartCreate,
-                },
-                {
-                    path: '/usercenter/myartList',name:'myartList',component: MyartList,
-                }
-            ],
-            beforeEnter: (to, from, next) => {
-                if(isLogin()) {
-                    next();
-                }
-                else {
-                    router.push({ path: '/login' });
-                }
+        children: [
+            {
+                path: '/usercenter/myartCreate',name:'myartCreate',component: MyartCreate,
             },
+            {
+                path: '/usercenter/myartList',name:'myartList',component: MyartList,
+            }
+        ],
+        beforeEnter: (to, from, next) => {
+            if(isLogin()) {
+                next();
+            }
+            else {
+                router.push({ path: '/login' });
+            }
+        },
     },
     { path: '/',name:'default',redirect:'/article'} //设置默认页
   ];

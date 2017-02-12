@@ -6,8 +6,8 @@
     	        <div class="layout-wrapper">
                 
     	            <ul class="tabmenu">
-                        <li :class="{'on':curIndex==0}" @click="changeTab(0,0)">全部</li>
-    	                <li v-for="(cat, index) in allTablist" :class="{'on':index+1===curIndex}" :data-id="cat.categoryId" @click="changeTab(index+1,cat.categoryId)">{{cat.categoryName}}</li>
+                        <li :class="{'on':curIndex==0}" @click="changeTab(1,'')">全部</li>
+    	                <li v-for="(cat, index) in allTablist" :class="{'on':index+1==curIndex}" :data-id="cat.categoryId" @click="changeTab(1,cat.categoryId)">{{cat.categoryName}}</li>
     	            </ul>
 
                     <!-- com-search -->
@@ -45,7 +45,7 @@
     	    </div>
     	    <div class="tab-body layout-wrapper">
                 <comListArticle :artlist="curArtList"></comListArticle>
-                <comPage :Pages="Pages" v-on:rendData="rendList"></comPage> 
+                <comPage :Pages="Pages" @changePage="changePage" ></comPage> 
     	    </div>
     	</div>
     	<!-- /ui-tab --> 
@@ -57,12 +57,15 @@ import comSearch from './common/search'
 import comTagcloud from './common/tagcloud'
 import comListArticle from './common/list-art'
 import comPage from './common/page'
-import test from './common/test'
 
 //临时数据
 import dataArtList from './../data_artlist_tab1.js'
 import dataArtList2 from './../data_artlist_tab2.js'
 import tagcloudList from './../data_tagcloud.js'
+
+//公用方法
+import UTIL from './../util.js'
+
 
 export default {
 
@@ -71,7 +74,8 @@ export default {
             showDropdown1: false, //显示下拉菜单
             showDropdown2: false, //显示下拉菜单
             curArtList: [], //显示的列表
-            Pages: { //文章列表参数，请求在分页组件中发起
+            originArtList: [], //默认排序的列表
+            ajaxParams: { //ajax请求参数
                 pageUrl: "article/queryPage", //请求地址
                 params: { //请求参数
                     nowPage: 1,
@@ -80,32 +84,24 @@ export default {
                     tagCloudId: "" //标签云ID，需要时添加
                 },
             },
-            originArtList: [], //默认排序的列表
-            curIndex: 0, //初始tab显示第一条
-            msg: {
-                name: {
-                    a:1
-                }
-            }
+            Pages: { //分页组件传入参数，数据由后端提供
+                nowPage: 0,
+                allPage: 0,
+                pageSize: 0
+            },
+            curIndex: 0 //初始tab显示第一条
         }
     },
-    components: { comSearch,comTagcloud,comListArticle,comPage,test },
+    components: { comSearch,comTagcloud,comListArticle,comPage },
     created: function(){
         //获取（公用数据）文章分类
         this.$store.commit('http_articleSort');
 
-
-        //获取指定tab首页文章列表
-        // const initTabId = this.allTablist[this.curIndex].categoryId; //curIndex指定tab
-        // this.http_article(1,11); //1：第一页
-
         //获取标签云列表
         this.$store.commit('http_tagcloud');
 
-        
         //获取文章列表，默认获取全部分类下的第一页
-        // this.http_article(1,10);
-        // this.changeTab(0,);
+        this.http_article(1);
 
     },
     computed: {
@@ -118,50 +114,55 @@ export default {
     },
     methods: {
         //tab切换
-        changeTab: function(index,tabId){
-            this.msg.name.a = 4;
-            this.curIndex = index;
-            this.Pages.params.categoryId = tabId;
-            this.Pages.params.nowPage = 1;
-            // this.http_article(1,this.pageParams.pageSize,tabId); //默认切换tab后都显示第一页
+        changeTab: function(nowPage,categoryId){
+            this.curIndex = nowPage;
+            // this.ajaxParams.params.categoryId = categoryId;
+            // this.ajaxParams.params.nowPage = 1;
+            this.http_article(1,categoryId); //默认切换tab后都显示第一页
         },
-        rendList: function(data){
-            this.originArtList = data;
-            this.curArtList = this.originArtList;
-        },
-        //获取文章列表
-        // http_article: function(nowPage,pageSize,categoryId,tagCloudId){
-        //     var _this = this;
-        //     var para = {
-        //         'nowPage': nowPage,
-        //         'pageSize': pageSize
-        //     };
-        //     //如果有传条件查询（文章分类、标签云）,请求参数带上条件
-        //     if(categoryId && categoryId!="") {
-        //         para.categoryId = categoryId;
-        //     }
-        //     if(tagCloudId && tagCloudId!="") {
-        //         para.tagCloudId = tagCloudId;
-        //     }
-        //     this.UTIL.AJAX_GET(
-        //         "article/queryPage",
-        //         para,
-        //         function(RE,r,s){
-        //             if(RE.meta.code == "0000") { //请求成功
-        //                 _this.originArtList = RE.datas.reList;
-        //                 _this.curArtList = _this.originArtList;
-
-        //                 //分页响应数据，存储在对象中传入分页组件
-        //                 _this.pageParams.pageSize = RE.datas.pageSize; //一页显示数量
-        //                 _this.pageParams.nowPage = RE.datas.nowPage; //当前页
-        //                 _this.pageParams.totalPage = RE.datas.totalPage; //总页数
-        //             }
-        //             else { 
-        //                 console.log("FEFull：获取文章列表失败，"+RE.meta.message);
-        //             }
-        //         }
-        //     );
+        // rendList: function(data){
+        //     this.originArtList = data;
+        //     this.curArtList = this.originArtList;
         // },
+        //获取文章列表
+        http_article: function(nowPage,categoryId,tagCloudId){
+            var _this = this;
+            var _params = this.ajaxParams.params;
+
+            _params.nowPage = nowPage;
+            //如果有传条件查询（文章分类、标签云）,请求参数带上条件
+            _params.categoryId = categoryId!="" ? categoryId : "";
+            _params.tagCloudId = tagCloudId!="" ? tagCloudId : "";
+            // if(categoryId!="") {
+            //     _params.categoryId = categoryId;
+            // }
+            // if(tagCloudId!="") {
+            //     _params.tagCloudId = tagCloudId;
+            // }
+            UTIL.AJAX_GET(
+                this.ajaxParams.pageUrl,
+                _params,
+                function(RE,r,s){
+                    if(RE.meta.code == "0000") { //请求成功
+                        //文章列表
+                        _this.originArtList = RE.datas.reList;
+                        _this.curArtList = _this.originArtList;
+
+                        //分页响应数据，存储在对象Pages中传入分页组件
+                        _this.Pages.pageSize = RE.datas.pageSize; //一页显示数量
+                        _this.Pages.nowPage = RE.datas.nowPage; //当前页
+                        _this.Pages.allPage = RE.datas.totalPage; //总页数
+
+                    }
+                    else { 
+                        console.log("FEFull：获取文章列表失败，"+RE.meta.message);
+                    }
+                }
+            );
+        },
+        changePage(idx){
+            this.http_article(idx);
+        },
         showPage: function(){
 
         },

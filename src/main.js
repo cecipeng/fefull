@@ -11,7 +11,7 @@ Vue.use(VueResource);
 Vue.use(VueRouter);
 Vue.use(Vuex);
 
-//鍏敤鏂规硶
+//公用方法
 import UTIL from './util.js'
 
 /* eslint-disable no-new */

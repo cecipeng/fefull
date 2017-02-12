@@ -36,9 +36,6 @@ export default {
     	}
     },
     methods: {
-    	ss: function(){
-    		console.log(this.artlist)
-    	}
     }
 }
 </script>

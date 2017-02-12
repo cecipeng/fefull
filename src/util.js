@@ -18,6 +18,7 @@ export default {
             store.state.baseUrl + url,
             {
                 emulateJSON : true,
+                async: false,
                 headers: {
                     // "Content-Type":"application/x-www-form-urlencoded", //post默认以request payload提交data，改为form data形式
                     "Authorization": localStorage.accessToken || "" //身份验证，与后端约定每次请求附上token值验明是否登录
