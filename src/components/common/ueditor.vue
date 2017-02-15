@@ -13,14 +13,14 @@ import './../../assets/libs/ueditor/lang/zh-cn/zh-cn.js'
 export default {
     data () {
     	return {
-
+            ue: {}
     	}
     },
     created: function() {
         
     },
     mounted: function(){
-       var ue = UE.getEditor('ueditor', {
+        this.ue = UE.getEditor('ueditor', {
             UEDITOR_HOME_URL: __dirname + "src/assets/libs/ueditor/",
             toolbars: [
                 [
@@ -96,7 +96,10 @@ export default {
         });
     },
     methods: {
-        
+        //获取编辑器内容，可在其他组件调用
+        getUeditor: function(){
+            return this.ue.getContent();
+        }
     }
     
 }

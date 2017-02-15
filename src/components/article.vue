@@ -6,8 +6,8 @@
     	        <div class="layout-wrapper">
                 
     	            <ul class="tabmenu">
-                        <li :class="{'on':curIndex==0}" @click="changeTab(1,'')">全部</li>
-    	                <li v-for="(cat, index) in allTablist" :class="{'on':index+1==curIndex}" :data-id="cat.categoryId" @click="changeTab(1,cat.categoryId)">{{cat.categoryName}}</li>
+                        <li :class="{'on':curIndex==0}" @click="changeTab(0,'')">全部</li>
+    	                <li v-for="(cat, index) in allTablist" :class="{'on':index+1==curIndex}" :data-id="cat.categoryId" @click="changeTab(index+1,cat.categoryId)">{{cat.categoryName}}</li>
     	            </ul>
 
                     <!-- com-search -->
@@ -79,7 +79,7 @@ export default {
                 pageUrl: "article/queryPage", //请求地址
                 params: { //请求参数
                     nowPage: 1,
-                    pageSize: 10,
+                    pageSize: 9,
                     categoryId: "", //文章分类ID，需要时添加
                     tagCloudId: "" //标签云ID，需要时添加
                 },
@@ -114,10 +114,8 @@ export default {
     },
     methods: {
         //tab切换
-        changeTab: function(nowPage,categoryId){
-            this.curIndex = nowPage;
-            // this.ajaxParams.params.categoryId = categoryId;
-            // this.ajaxParams.params.nowPage = 1;
+        changeTab: function(idx,categoryId){
+            this.curIndex = idx;
             this.http_article(1,categoryId); //默认切换tab后都显示第一页
         },
         // rendList: function(data){
@@ -160,8 +158,9 @@ export default {
                 }
             );
         },
-        changePage(idx){
-            this.http_article(idx);
+        //分页组件传回：请求跳转到第几页
+        changePage(idx){ 
+            this.http_article(idx,this.ajaxParams.params.categoryId,this.ajaxParams.params.tagCloudId);
         },
         showPage: function(){
 

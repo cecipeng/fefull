@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router' //router
-import Vuex from 'vuex'; //store
 
 import store from './store.js'
 
@@ -14,7 +13,6 @@ import MyartList from './components/myartList'
 import Login from './components/login'
 
 Vue.use(VueRouter);
-Vue.use(Vuex);
 
 //公用方法
 import UTIL from './util.js'

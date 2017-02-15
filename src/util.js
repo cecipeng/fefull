@@ -1,14 +1,9 @@
 import Vue from 'vue';
-import Vuex from 'vuex'; //store
 import VueResource from 'vue-resource'; //ajax
-import VueRouter from 'vue-router' //router
-
 import store from './store.js'
 import router from './router.js'
 
-Vue.use(Vuex);
 Vue.use(VueResource);
-Vue.use(VueRouter);
 
 export default {
     
