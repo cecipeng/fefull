@@ -17,6 +17,7 @@ const store = new Vuex.Store({
         tagcloudData: [], //公用列表：标签云列表
         loginUser: {}, //登录用户ID,name,头像
         showPop: false, //是否显示弹窗，是，最外层overflow:hidden
+        strict: false, //是否启用严格模式
         baseUrl: "http://wnet.ittun.com/fefull/api/" //接口地址
         // ajaxMessage: "me" //接口返回信息
     },

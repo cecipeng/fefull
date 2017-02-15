@@ -1175,10 +1175,15 @@ var utils = UE.utils = {
                         doReady(doc)
                     });
                 } else {
-                    doc.addEventListener("DOMContentLoaded", function () {
+					var listener = function(){
+						doc.removeEventListener("DOMContentLoaded", listener, false);
+                        doReady(doc);
+					}
+					doc.addEventListener("DOMContentLoaded", listener, false);
+                    /*doc.addEventListener("DOMContentLoaded", function () {
                         doc.removeEventListener("DOMContentLoaded", arguments.callee, false);
                         doReady(doc);
-                    }, false);
+                    }, false);*/
                     win.addEventListener('load', function () {
                         doReady(doc)
                     }, false);

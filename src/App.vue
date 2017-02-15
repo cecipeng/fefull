@@ -31,6 +31,6 @@ export default {
 
 <style lang="scss">
 @import "src/assets/styles/styles.scss";
-@import "assets/libs/ueditor/themes/default/css/ueditor.css";
-@import "assets/libs/ueditor/themes/iframe.css";
+//@import "assets/libs/ueditor/themes/default/css/ueditor.css";
+//@import "assets/libs/ueditor/themes/iframe.css";
 </style>

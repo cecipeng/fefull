@@ -6,9 +6,9 @@
 
 <script>
 
-import './../../assets/libs/ueditor/ueditor.config.js'
-import './../../assets/libs/ueditor/ueditor.all.js'
-import './../../assets/libs/ueditor/lang/zh-cn/zh-cn.js'
+import './../../../static/libs/ueditor/ueditor.config.js'
+import './../../../static/libs/ueditor/ueditor.all.js'
+import './../../../static/libs/ueditor/lang/zh-cn/zh-cn.js'
 
 export default {
     data () {
@@ -21,7 +21,7 @@ export default {
     },
     mounted: function(){
         this.ue = UE.getEditor('ueditor', {
-            UEDITOR_HOME_URL: __dirname + "src/assets/libs/ueditor/",
+            //UEDITOR_HOME_URL: __dirname + "/static/libs/ueditor/",
             toolbars: [
                 [
                     'fullscreen', //全屏
