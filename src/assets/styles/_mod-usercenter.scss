@@ -218,3 +218,18 @@
 		}
 	}
 }
+
+.previewfix {
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	height: 80px;
+	background-color: rgba(0,0,0,0.7);
+	@extend %vm;
+	text-align: center;
+	.ui-btn {
+		min-width: 120px;
+		margin: 0 10px;
+	}
+}

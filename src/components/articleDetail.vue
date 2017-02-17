@@ -4,10 +4,10 @@
         <div class="detail-header">
             <div class="layout-wrapper">
                 <div class="headerbox">
-                    <h1 class="article-tit">{{article.title}}<span class="tag-origin" v-if="article.origin==1">原创</span></h1>
+                    <h1 class="article-tit">{{article.title}}<span class="tag-origin" v-if="article.origin.originId==1">{{article.origin.originName}}</span></h1>
                     <div class="subcon">
                         <p class="article-date">发表于<em class="date">{{article.publishedDate}}</em></p>
-                        <!-- <p class="article-date" :data-categoryId="article.category.categoryId">分类：<em class="date">{{article.category.categoryName}}</em></p> -->
+                        <p class="article-date" :data-categoryId="article.category.categoryId">分类：<em class="date">{{article.category.categoryName}}</em></p>
                     </div>
                 </div>
             </div>
@@ -44,7 +44,7 @@
             <div class="layout-mainby">
                 <div class="articletxt">{{article.maintxt}}</div>
                 <div class="articletxt">
-                    <blockquote v-if="article.origin!=1">转载自：<span class="link">{{article.reprint}}</span></blockquote>
+                    <blockquote v-if="article.origin.originId!=1">转载自：<span class="link">{{article.reprint}}</span></blockquote>
                     <p><a href="yxp.163.com">网易印像派</a>是网易公司推出的个性产品服务平台，在网易印像派可以网上冲印各类数码产品。随着印像派业务不断扩展，几年前设计的首页无论是在交互还是视觉上都已经无法满足现有的业务需求，所以首页的改版是一件迟早要提上议程的事情。</p>
                     <img src="../assets/pics/demo-article-detail.png">
                     <h1>CSS Shapes</h1>

@@ -11,6 +11,7 @@ import Usercenter from './components/usercenter'
 import MyartCreate from './components/myartCreate'
 import MyartList from './components/myartList'
 import Login from './components/login'
+import Preview from './components/preview'
 
 Vue.use(VueRouter);
 
@@ -21,6 +22,7 @@ const routes = [
     {   path: '/home',name:'home',component: Home},
     {   path: '/article',name:'article',component: Article},
     {   path: '/articleDetail/:articleId',name:'articleDetail',component: ArticleDetail},
+    {   path: '/preview',name:'preview',component: Preview},
     {   path: '/search/:keyword/:type',name:'search',component: Search},
     {   path: '/login',name:'login',component: Login},
     {   path: '/usercenter',name:'usercenter',component: Usercenter,

@@ -68,7 +68,7 @@ export default {
     data () {
         return {
             showDropdown: false, //显示下拉菜单
-            noHeaderRouter: /(usercenter)|(login)/ //不需要头部的页面路由
+            noHeaderRouter: /(usercenter)|(login)|(preview)/ //不需要头部的页面路由
         }
     },
     created: function(){

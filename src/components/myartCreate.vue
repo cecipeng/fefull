@@ -11,12 +11,12 @@
                     <!-- 是否原创 -->
                     <div class="ui-dropdown" @mouseleave="showDropdown=false">
                         <a class="selector" @mouseenter="showDropdown=true">
-                            <span class="origin">{{result.origin.name}}</span>
+                            <span class="origin">{{result.origin.originName}}</span>
                             <i class="dropdown-arrow"></i>
                         </a>
                         <div class="dropdown" v-show="showDropdown">
                             <ul class="droplist">
-                                <li v-for="(item, index) in originSource"><a @click="changeDropdown(item)" class="dropitem" :data-id="item.id">{{item.name}}</a></li>
+                                <li v-for="(item, index) in originSource"><a @click="changeDropdown(item)" class="dropitem" :data-id="item.originId">{{item.originName}}</a></li>
                             </ul>
                         </div>
                     </div>
@@ -25,7 +25,7 @@
                     <p class="form-tip">{{formStatus.title.tiptxt}}</p>
                 </div>
 
-                <div class="reprint ui-formrow ui-forminline" v-if="result.origin.id==0" :class="{'form-error':formStatus.reprint.status===1}">
+                <div class="reprint ui-formrow ui-forminline" v-if="result.origin.originId==0" :class="{'form-error':formStatus.reprint.status===1}">
                     <label class="form-label">转载地址：</label>
                     <div class="form-con">
                         <input type="text" class="form-input" v-model="result.reprint">
@@ -38,7 +38,7 @@
             <!-- 文章正文 -->
             <div class="createtit"><span class="num">2/</span>文章正文</div>
             <div class="ui-formrow ui-formnolabel" :class="{'form-error':formStatus.maintxt.status===1}">
-                <Ueditor ref="getContent"></Ueditor>
+                <Ueditor :content="result.maintxt" ref="getContent"></Ueditor>
                 <p class="form-tip">{{formStatus.maintxt.tiptxt}}</p>
             </div>
             <!-- /文章正文 -->
@@ -60,7 +60,7 @@
                     <label class="form-label">文章标签：</label>
                     <div class="form-con">
                         <ul class="checkboxwrap">
-                            <li class="form-checkbox" v-for="(item, index) in allTagcloud" :data-id="item.tagcloudId" :class="{'on':isCheck(item.tagcloudId)}">
+                            <li class="form-checkbox" v-for="(item, index) in allTagcloud" :data-id="item.tagcloudId" :class="{'check':isCheck[index]}" @click="isCheck[index] = !isCheck[index]">
                                 <span class="checkbox-txt">{{item.tagcloudName}}</span>
                                 <input type="checkbox" class="form-hidden" :value="item.tagcloudId" v-model="result.tagclouds">
                             </li>
@@ -72,12 +72,7 @@
                 <div class="ui-formrow ui-forminline" :class="{'form-error':formStatus.reprint.status===1}">
                     <span class="form-label">文章封面：</span>
                     <div class="form-con form-upload">
-                        <div class="uploadbtn">
-                            <a href="###" class="ui-btn ui-btn-white btn-upload">上传封面<input type="file" class="form-hidden"></a>
-                        </div>
-                        <div class="imgpreview">
-                            <img src="" alt="">
-                        </div>
+                        <uploadImg @exportImg = "getImg"></uploadImg>
                         <p class="upload-intro">仅支持JPG、GIF、PNG格式，图片尺寸为：350*200PX</p>
                     </div>
                     <p class="form-tip">{{formStatus.cover.tiptxt}}</p>
@@ -95,6 +90,7 @@
 <script>
 
 import Ueditor from './common/ueditor.vue';
+import UploadImg from './common/uploadImg.vue';
 
 export default {
 
@@ -102,19 +98,14 @@ export default {
         return {
             showDropdown: false, //显示下拉菜单
             originSource: [ //是否原创源数据
-                { id: 1, name: '原创'},
-                { id: 0, name: '转载'}
+                { originId: 1, originName: '原创'},
+                { originId: 0, originName: '转载'}
             ],
             result: { //表单结果
-                articleId: "", //文章id
                 title: "", //文章标题
                 origin: {}, //是否原创
                 maintxt: "", //文章正文内容
-                author: {}, //作者
-                fav: 0, //收藏数
                 cover: "", //封面图
-                publishedDate: "", //发布时间
-                like: 0, //点赞数
                 category: {}, //所属分类
                 tagclouds: [], //所属标签云
                 reprint: "" //转载自
@@ -140,10 +131,11 @@ export default {
                     status: 0,
                     tiptxt: ""
                 }
-            }
+            },
+            isCheck: [],
         }
     },
-    components: { Ueditor },
+    components: { Ueditor,UploadImg },
     created: function(){
         //获取（公用数据）文章分类
         this.$store.commit('http_articleSort');
@@ -151,9 +143,34 @@ export default {
         //获取标签云列表
         this.$store.commit('http_tagcloud');
 
-        this.result.origin = this.originSource[1];
-        this.result.category = this.$store.state.articleSortData[0];
-        this.initResult(this.result);
+        //重置表单：清空数据or赋值数据
+        if(typeof this.$store.state.editArticle == "object") { //有数据
+            var tagclouds = this.$store.state.editArticle.tagclouds;
+            var tag;
+
+            //标签复选框根据数据来渲染是否勾选
+            outer:
+            for(var i = 0; i < this.$store.state.tagcloudData.length; i++) {
+                tag = this.$store.state.tagcloudData[i];
+                inter:
+                for(var j = 0; j < tagclouds.length; j++) {
+                    if(tagclouds[j] == tag.tagcloudId) {
+                        this.isCheck[i] = true;
+                        continue outer;
+                    }
+                }
+                this.isCheck[i] = false;
+            }
+            this.initResult(this.$store.state.editArticle);
+        }
+        else { //未传入数据，判断为新建，所有表单重置为初始值
+            for(var i = 0; i < this.$store.state.tagcloudData.length; i++) { //复选框默认全不选
+                this.isCheck[i] = false;
+            }
+            this.result.origin = this.originSource[1]; //默认显示“原创”
+            this.result.category = this.$store.state.articleSortData[0]; //默认分类为第一个
+            this.initResult(this.result);
+        }
     },
     computed: {
         allTablist() { //文章分类
@@ -177,55 +194,41 @@ export default {
             this.result.origin = or;
         },
         preview: function(){
-            this.validate();
-            // console.log();
-            // console.log("id="+this.result.articleId);
-            // console.log("title="+this.result.title);
-            // console.log("origin="+this.result.origin.name);
-            // console.log("maintxt="+this.result.maintxt);
-            // console.log("author="+this.result.author);
-            // console.log("cover="+this.result.cover);
-            // console.log("publishedDate="+this.result.publishedDate);
-            // console.log("category="+this.result.category);
+            if(this.validate()) { //表单验证通过
+                this.$store.commit('setEditArticle',this.result);
+                this.$router.push({ name: 'preview'})
+            }
         },
         //验证表单
         validate: function(){
-            this.result.maintxt = this.$refs.getContent.getUeditor();
-            //标题
-            if(this.result.title == "") {
-                this.formStatus.title.status = 1;
-                this.formStatus.title.tiptxt = "不能为空！";
+            this.result.maintxt = this.$refs.getContent.getUeditor(); //获取富文本内容
+            
+            if( //不能为空判断
+                this.validateEmpty(this.result.title, this.formStatus.title) &&//标题
+                this.validateEmpty(this.result.reprint, this.formStatus.reprint) &&//转载地址
+                this.validateEmpty(this.result.maintxt, this.formStatus.maintxt) &&//正文
+                this.validateEmpty(this.result.tagclouds, this.formStatus.tagclouds)//标签云
+            ) {
+                return true;
             }
-
-            //转载地址
-            if(this.result.origin.id==0 && this.result.reprint == "") {
-                this.formStatus.reprint.status = 1;
-                this.formStatus.reprint.tiptxt = "不能为空！";
-            }
-
-            //正文
-            if(this.result.maintxt.length == 0) {
-                this.formStatus.maintxt.status = 1;
-                this.formStatus.maintxt.tiptxt = "不能为空！";
-            }
-
-            //标签云
-            if(this.result.tagclouds.length == 0) {
-                this.formStatus.tagclouds.status = 1;
-                this.formStatus.tagclouds.tiptxt = "不能为空！";
-            }
-
+            else return false;
         },
-        //判断checkbox是否被选中
-        isCheck: function(n){
-            console.log(n);
-            for(var i = 0; i<this.result.tagclouds; i++){
-                if(this.result.tagclouds[i] == n) {
-                    // console.log("gfgdf");
-                    return true;
-                }
+        //判断是否为空
+        validateEmpty: function(re,st){
+            if(re.length == 0) {
+                st.status = 1;
+                st.tiptxt = "不能为空！";
+                return false;
             }
-            return false;
+            else {
+                st.status = 0;
+                st.tiptxt = "";
+                return true;
+            }
+        },
+        //获取上传图片
+        getImg: function(img){
+            this.result.cover = img;
         }
     }
 }

@@ -18,6 +18,7 @@ const store = new Vuex.Store({
         loginUser: {}, //登录用户ID,name,头像
         showPop: false, //是否显示弹窗，是，最外层overflow:hidden
         strict: false, //是否启用严格模式
+        editArticle: "", //正在编辑的文章
         baseUrl: "http://wnet.ittun.com/fefull/api/" //接口地址
         // ajaxMessage: "me" //接口返回信息
     },
@@ -75,6 +76,10 @@ const store = new Vuex.Store({
                 };
                 console.log("no:userId:"+state.loginUser.isLogining);
             }
+        },
+        //存储正在编辑的文章内容
+        setEditArticle: function(state,con){
+            state.editArticle = con;
         }
         
     }

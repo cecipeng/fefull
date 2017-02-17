@@ -11,6 +11,7 @@ import './../../../static/libs/ueditor/ueditor.all.js'
 import './../../../static/libs/ueditor/lang/zh-cn/zh-cn.js'
 
 export default {
+    props: [ 'content' ],
     data () {
     	return {
             ue: {}
@@ -93,6 +94,9 @@ export default {
             initialFrameHeight: 400, //编辑器高度
             elementPathEnabled: false, //是否启用元素路径
             wordCount: false //是否开启字数统计
+        });
+        this.ue.ready(function() {
+            ue.setContent(this.content);
         });
     },
     methods: {

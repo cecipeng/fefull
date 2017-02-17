@@ -8,7 +8,7 @@
 						<div class="list-title">
 							<div class="titlewrap">
 								<p class="title">{{item.title}}</p>
-								<span class="tag-origin" v-if="item.origin==1">原创</span>
+								<span class="tag-origin" v-if="item.origin.originId==1">{{item.origin.originName}}</span>
 							</div>
 						</div>
 						<p class="list-maintxt">{{item.maintxt}}</p>
