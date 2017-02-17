@@ -116,7 +116,7 @@ export default {
         http_getContent() {
             var _this = this;
             this.articleId = this.$route.params.articleId;
-            UTIL.AJAX_GET(
+            UTIL.AJAX_POST(
                 "article/getArticleById",
                 {
                     articleId: this.articleId

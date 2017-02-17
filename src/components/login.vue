@@ -17,6 +17,9 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 Vue.use(VueRouter);
 
+//公用方法
+import UTIL from './../util.js'
+
 export default {
 
     data () {
@@ -44,7 +47,7 @@ export default {
             }
 
             var _this = this;
-            this.UTIL.AJAX_POST(
+            UTIL.AJAX_POST(
                 "login/verify",
                 this.loginModel,
                 function(RE,r,s){

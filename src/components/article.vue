@@ -137,7 +137,8 @@ export default {
             // if(tagCloudId!="") {
             //     _params.tagCloudId = tagCloudId;
             // }
-            UTIL.AJAX_GET(
+            console.log(_params);
+            UTIL.AJAX_POST(
                 this.ajaxParams.pageUrl,
                 _params,
                 function(RE,r,s){

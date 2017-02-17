@@ -11,18 +11,19 @@ export default {
     AJAX_GET: function(url,_data,callback){
         Vue.http.get(
             store.state.baseUrl + url,
+            _data,
             {
-                emulateJSON : true,
-                async: false,
+                // emulateJSON : true,
+                // async: false,
                 headers: {
                     // "Content-Type":"application/x-www-form-urlencoded", //post默认以request payload提交data，改为form data形式
                     "Authorization": localStorage.accessToken || "" //身份验证，与后端约定每次请求附上token值验明是否登录
 
                 },
-                params: _data
-        })
+                // params: _data
+            }
+        )
         .then((response) => {
-            
             switch(response.data.meta.code) {
                 case "1001": //未登录
                     router.push({ path: '/login' }); //跳转到登录页
@@ -48,7 +49,7 @@ export default {
             store.state.baseUrl + url,
             data,
             {
-                emulateJSON : true,
+                // emulateJSON : true,
                 headers: {
                     // "Content-Type":"application/x-www-form-urlencoded", //post默认以request payload提交data，改为form data形式
                     "Authorization": localStorage.accessToken || "" //身份验证，与后端约定每次请求附上token值验明是否登录

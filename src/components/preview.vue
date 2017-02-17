@@ -34,6 +34,18 @@
             </div>
             <!-- /文章正文 -->
         </div>
+
+        <div class="ui-pop" v-if="showSuccessPop">
+            <div class="popwrap">
+                <div class="pop-body">
+                    <p class="maintxt">文章创建成功！</p>
+                </div>
+                <div class="pop-footer">
+                    <a class="ui-btn ui-btn-white" @click="backToList">返回我的文章列表</a>
+                    <a class="ui-btn ui-btn-main" @click="viewArticle">查看文章</a>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -47,6 +59,7 @@ export default {
     data () {
         return {
             article: {}, //文章
+            showSuccessPop: false, //显示成功弹窗
         }
     },
     created: function(){
@@ -56,13 +69,31 @@ export default {
     methods: {
         //创建文章并保存到数据库
         submitCreate: function(){
-            this.article.origin = this.article.origin.id;
-            this.article.category = this.article.category.categoryId;
-
+            var _this = this;
+            UTIL.AJAX_POST(
+                "article/save",
+                this.article,
+                function(RE,r,s){
+                    if(RE.meta.code == "0000") { //请求成功
+                        _this.showSuccessPop = true; //显示成功弹窗
+                        _this.$store.commit('setEditArticle',''); //清空数据
+                        _this.article.articleId = RE.datas.articleId;
+                    }
+                }
+            )  
         },
         //返回修改
         backToEditor: function(){
             this.$router.push({ name: 'myartCreate' });
+        },
+        //返回我的文章列表
+        backToList: function(){
+            this.showSuccessPop = false;
+            this.$router.push({ name: 'myartList' });
+        },
+        viewArticle: function(){
+            this.showSuccessPop = false;
+            this.$router.push({ name: 'articleDetail', params: {articleId: this.article.articleId} });
         }
     }
 }

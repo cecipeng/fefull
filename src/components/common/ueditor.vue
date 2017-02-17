@@ -95,9 +95,14 @@ export default {
             elementPathEnabled: false, //是否启用元素路径
             wordCount: false //是否开启字数统计
         });
-        this.ue.ready(function() {
-            ue.setContent(this.content);
-        });
+        
+    },
+    created: function(){
+//         if(this.content == "") {
+//             this.content = '编辑正文';
+//         }
+// console.log(this.content);
+//         this.ue.setContent(this.content);
     },
     methods: {
         //获取编辑器内容，可在其他组件调用
