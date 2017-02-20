@@ -103,10 +103,16 @@ export default {
             ],
             result: { //表单结果
                 title: "", //文章标题
-                origin: {}, //是否原创
+                origin: {
+                    originId: 0,
+                    originName: ""
+                }, //是否原创
                 maintxt: "", //文章正文内容
                 cover: "", //封面图
-                category: {}, //所属分类
+                category: {
+                    categoryId: 0,
+                    categoryName: ""
+                }, //所属分类
                 tagclouds: [], //所属标签云
                 reprint: "" //转载自
             },
@@ -162,6 +168,7 @@ export default {
                 this.isCheck[i] = false;
             }
             this.initResult(this.$store.state.editArticle);
+            console.log(this.result.category.categoryName);
         }
         else { //未传入数据，判断为新建，所有表单重置为初始值
             for(var i = 0; i < this.$store.state.tagcloudData.length; i++) { //复选框默认全不选

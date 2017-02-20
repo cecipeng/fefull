@@ -94,7 +94,16 @@ export default {
     data () {
         return {
             articleId: 0, //文章ID
-            article: {}, //文章
+            article: {
+                origin: {
+                    originId: 0,
+                    originName: ""
+                },
+                category: {
+                    categoryId: 0,
+                    categoryName: ""
+                }
+            }, //文章
             allTagcloud: [], //标签云
             similar: [] //相似文章
         }
@@ -116,6 +125,7 @@ export default {
         http_getContent() {
             var _this = this;
             this.articleId = this.$route.params.articleId;
+
             UTIL.AJAX_POST(
                 "article/getArticleById",
                 {

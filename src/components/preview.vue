@@ -26,7 +26,7 @@
                 
                 <div class="articlewrap">
                     <blockquote v-if="article.origin.id!=1">转载自：<span class="link">{{article.reprint}}</span></blockquote>
-                    <div class="articletxt">{{article.maintxt}}</div>
+                    <div class="articletxt" v-html="article.maintxt"></div>
                 </div>
                 <div class="tagwrap">
                     <a v-for="item in article.tagclouds" :data-tagcloudId="item.tagcloudId" class="btn-tag">{{item.tagcloudName}}</a>

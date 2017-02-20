@@ -21,6 +21,9 @@ export default {
         
     },
     mounted: function(){
+        if(!this.content || this.content.length == 0) {
+            this.content = "初始值";
+        }
         this.ue = UE.getEditor('ueditor', {
             //UEDITOR_HOME_URL: __dirname + "/static/libs/ueditor/",
             toolbars: [
@@ -90,25 +93,27 @@ export default {
                 ]
             ], //工具栏
             zIndex: 0, //编辑器在页面上的z-index层级
-            initialContent: '欢迎使用ueditor!', //初始化编辑器的内容
+            initialContent: this.content, //初始化编辑器的内容
             initialFrameHeight: 400, //编辑器高度
             elementPathEnabled: false, //是否启用元素路径
             wordCount: false //是否开启字数统计
         });
-        
     },
-    created: function(){
-//         if(this.content == "") {
-//             this.content = '编辑正文';
-//         }
-// console.log(this.content);
-//         this.ue.setContent(this.content);
-    },
+//     created: function(){
+// //         if(this.content == "") {
+// //             this.content = '编辑正文';
+// //         }
+// // console.log(this.content);
+// //         this.ue.setContent(this.content);
+//     },
     methods: {
         //获取编辑器内容，可在其他组件调用
         getUeditor: function(){
             return this.ue.getContent();
         }
+    },
+    destroyed: function(){
+        this.ue.destroy();
     }
     
 }
