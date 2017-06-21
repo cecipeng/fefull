@@ -19,7 +19,7 @@ const store = new Vuex.Store({
         showPop: false, //是否显示弹窗，是，最外层overflow:hidden
         strict: false, //是否启用严格模式
         editArticle: "", //正在编辑的文章
-        baseUrl: "http://wnet.ittun.com/fefull/api/" //接口地址
+        baseUrl: "http://seazy.ngrok.cc/fefull/api/" //接口地址
         // ajaxMessage: "me" //接口返回信息
     },
     mutations: {
