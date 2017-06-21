@@ -70,6 +70,7 @@ export default {
         //创建文章并保存到数据库
         submitCreate: function(){
             var _this = this;
+            
             UTIL.AJAX_POST(
                 "article/save",
                 this.article,

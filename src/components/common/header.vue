@@ -45,7 +45,7 @@
                     </a>
                     <div class="dropdown" v-show="showDropdown">
                         <ul class="droplist">
-                            <li><a @click="$router.push({ path: '/usercenter' })" class="dropitem">个人中心</a></li>
+                            <li><a @click="$router.push({ path: '/usercenter/myartList' })" class="dropitem">个人中心</a></li>
                             <li><a @click="showDropdown = false;loginOut()" class="dropitem">退出登录</a></li>
                         </ul>
                     </div>

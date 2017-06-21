@@ -44,8 +44,9 @@
     	        </div>
     	    </div>
     	    <div class="tab-body layout-wrapper">
+                <comLoadingMod v-if="showloading"></comLoadingMod>
                 <comListArticle :artlist="curArtList"></comListArticle>
-                <comPage :Pages="Pages" @changePage="changePage" ></comPage> 
+                <comPage :Pages="Pages" @changePage="changePage" v-if="showpage"></comPage> 
     	    </div>
     	</div>
     	<!-- /ui-tab --> 
@@ -56,6 +57,7 @@
 import comSearch from './../common/search'
 import comTagcloud from './../common/tagcloud'
 import comListArticle from './../common/list-art'
+import comLoadingMod from './../common/loading-mod'
 import comPage from './../common/page'
 
 //临时数据
@@ -73,6 +75,8 @@ export default {
         return {
             showDropdown1: false, //显示下拉菜单
             showDropdown2: false, //显示下拉菜单
+            showpage: false, //显示分页
+            showloading: true, //显示正在加载
             curArtList: [], //显示的列表
             originArtList: [], //默认排序的列表
             ajaxParams: { //ajax请求参数
@@ -92,7 +96,7 @@ export default {
             curIndex: 0 //初始tab显示第一条
         }
     },
-    components: { comSearch,comTagcloud,comListArticle,comPage },
+    components: { comSearch,comTagcloud,comListArticle,comPage,comLoadingMod },
     created: function(){
         //获取（公用数据）文章分类
         this.$store.commit('http_articleSort');
@@ -131,17 +135,13 @@ export default {
             //如果有传条件查询（文章分类、标签云）,请求参数带上条件
             _params.categoryId = categoryId!="" ? categoryId : "";
             _params.tagCloudId = tagCloudId!="" ? tagCloudId : "";
-            // if(categoryId!="") {
-            //     _params.categoryId = categoryId;
-            // }
-            // if(tagCloudId!="") {
-            //     _params.tagCloudId = tagCloudId;
-            // }
-            console.log(_params);
             UTIL.AJAX_POST(
                 this.ajaxParams.pageUrl,
                 _params,
                 function(RE,r,s){
+                    //请求成功后不显示正在加载
+                    _this.showloading = false;
+
                     if(RE.meta.code == "0000") { //请求成功
                         //文章列表
                         _this.originArtList = RE.datas.reList;
@@ -152,6 +152,11 @@ export default {
                         _this.Pages.nowPage = RE.datas.nowPage; //当前页
                         _this.Pages.allPage = RE.datas.totalPage; //总页数
 
+                        //页数大于1时显示分页
+                        if(_this.Pages.allPage > 1) {
+                            _this.showpage = true;
+                        }
+                        else _this.showpage = false;
                     }
                     else { 
                         console.log("FEFull：获取文章列表失败，"+RE.meta.message);

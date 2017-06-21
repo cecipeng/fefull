@@ -60,11 +60,12 @@
                     <label class="form-label">文章标签：</label>
                     <div class="form-con">
                         <ul class="checkboxwrap">
-                            <li class="form-checkbox" v-for="(item, index) in allTagcloud" :data-id="item.tagcloudId" :class="{'check':isCheck[index]}" @click="isCheck[index] = !isCheck[index]">
+                            <li class="form-checkbox" v-for="(item, index) in allTagcloud" :data-id="item.tagcloudId" :class="{'check':isCheck[index]}">
                                 <span class="checkbox-txt">{{item.tagcloudName}}</span>
-                                <input type="checkbox" class="form-hidden" :value="item.tagcloudId" v-model="result.tagclouds">
+                                <input type="checkbox" class="form-hidden" :value="item.tagcloudId" v-model="result.tagclouds" @click="isCheck[index] = !isCheck[index]">
                             </li>
                         </ul>
+                        <p>{{result.tagclouds}}</p>
                     </div>
                     <p class="form-tip">{{formStatus.tagclouds.tiptxt}}</p> 
                 </div> 
@@ -202,6 +203,7 @@ export default {
         },
         preview: function(){
             if(this.validate()) { //表单验证通过
+            
                 this.$store.commit('setEditArticle',this.result);
                 this.$router.push({ name: 'preview'})
             }
@@ -209,7 +211,6 @@ export default {
         //验证表单
         validate: function(){
             this.result.maintxt = this.$refs.getContent.getUeditor(); //获取富文本内容
-            
             if( //不能为空判断
                 this.validateEmpty(this.result.title, this.formStatus.title) &&//标题
                 this.validateEmpty(this.result.reprint, this.formStatus.reprint) &&//转载地址
