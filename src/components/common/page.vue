@@ -22,7 +22,7 @@ export default {
             current: 0, //当前页
             allPage: 0, //总页数
             pageSize: 0, //每页显示几条数据
-            showItem: 9, //显示页数
+            showItem: 9, //显示页数，可配置
             showFirstPage: false, //显示第一页和省略号
             showLastPage: false //显示最后一页和省略号
     	}

@@ -37,16 +37,16 @@
 </template>
 
 <script>
-import comSearch from './common/search'
-import comTagcloud from './common/tagcloud'
-import comListArticle from './common/list-art'
-import comPage from './common/page'
+import comSearch from './../common/search'
+import comTagcloud from './../common/tagcloud'
+import comListArticle from './../common/list-art'
+import comPage from './../common/page'
 
 //临时数据
-import dataArtList from './../data_artlist_tab2.js'
+import dataArtList from './../../data_artlist_tab2.js'
 
 //公用方法
-import UTIL from './../util.js'
+import UTIL from './../../util.js'
 
 export default {
     

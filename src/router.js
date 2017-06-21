@@ -3,15 +3,15 @@ import VueRouter from 'vue-router' //router
 
 import store from './store.js'
 
-import Home from './components/home'
-import Article from './components/article'
-import ArticleDetail from './components/articleDetail'
-import Search from './components/searchResult'
-import Usercenter from './components/usercenter'
-import MyartCreate from './components/myartCreate'
-import MyartList from './components/myartList'
-import Login from './components/login'
-import Preview from './components/preview'
+import Home from './components/home/home'
+import Article from './components/article/article'
+import ArticleDetail from './components/article/articleDetail'
+import Search from './components/article/searchResult'
+import Usercenter from './components/usercenter/usercenter'
+import MyartCreate from './components/usercenter/myartCreate'
+import MyartList from './components/usercenter/myartList'
+import Login from './components/login/login'
+import Preview from './components/usercenter/preview'
 
 Vue.use(VueRouter);
 

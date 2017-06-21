@@ -89,8 +89,8 @@
 </template>
 <script>
 
-import Ueditor from './common/ueditor.vue';
-import UploadImg from './common/uploadImg.vue';
+import Ueditor from './../common/ueditor.vue';
+import UploadImg from './../common/uploadImg.vue';
 
 export default {
 

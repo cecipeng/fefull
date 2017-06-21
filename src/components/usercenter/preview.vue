@@ -52,7 +52,7 @@
 <script>
 
 //公用方法
-import UTIL from './../util.js'
+import UTIL from './../../util.js'
 
 export default {
 

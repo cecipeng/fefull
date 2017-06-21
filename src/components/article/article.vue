@@ -53,18 +53,18 @@
 </template>
 
 <script>
-import comSearch from './common/search'
-import comTagcloud from './common/tagcloud'
-import comListArticle from './common/list-art'
-import comPage from './common/page'
+import comSearch from './../common/search'
+import comTagcloud from './../common/tagcloud'
+import comListArticle from './../common/list-art'
+import comPage from './../common/page'
 
 //临时数据
-import dataArtList from './../data_artlist_tab1.js'
-import dataArtList2 from './../data_artlist_tab2.js'
-import tagcloudList from './../data_tagcloud.js'
+import dataArtList from './../../data_artlist_tab1.js'
+import dataArtList2 from './../../data_artlist_tab2.js'
+import tagcloudList from './../../data_tagcloud.js'
 
 //公用方法
-import UTIL from './../util.js'
+import UTIL from './../../util.js'
 
 
 export default {
@@ -179,7 +179,6 @@ export default {
             }
             else
             if(type == 2) { //热门排序
-                console.log(this.curArtList[0].title);
                 for(var i = 0; i<list.length; i++) {
                     for(var j = list.length - 1; j>0 ;j--) {
 
@@ -191,7 +190,6 @@ export default {
                     }
                 }
                 this.curArtList = list;
-                console.log(this.curArtList[0].title);
             }
         }
     }

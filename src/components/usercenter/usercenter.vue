@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import comUserheader from './common/userhead.vue';
+import comUserheader from './../common/userhead.vue';
 
 
 export default {
