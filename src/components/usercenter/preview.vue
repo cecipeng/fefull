@@ -1,5 +1,5 @@
 <template>
-    <div class="mod-article">
+    <div class="layout-mod mod-article">
         <!-- 详情页头部 -->
         <div class="detail-header">
             <div class="layout-wrapper">

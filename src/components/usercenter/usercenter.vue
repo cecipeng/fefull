@@ -1,5 +1,5 @@
 <template>
-    <div class="mod-usercenter">
+    <div class="layout-mod mod-usercenter">
     	<div class="sideby">
             <div href="###" class="logo"></div>
             <div class="slideby-con">

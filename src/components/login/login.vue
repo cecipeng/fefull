@@ -1,5 +1,5 @@
 <template>
-    <div class="mod-login">
+    <div class="layout-mod mod-login">
     	<div class="formbox">
             <input type="text" v-model="loginModel.userName" class="form-input form-input-wide inp-username" placeholder="请输入">
             <input type="text" v-model="loginModel.password" class="form-input form-input-wide inp-pwd" placeholder="请输入">

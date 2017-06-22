@@ -1,5 +1,5 @@
 <template>
-    <div class="mod-article">
+    <div class="layout-mod mod-article">
     	<!-- ui-tab -->
     	<div class="ui-tab ui-tab1">
     	    <div class="tab-head">
@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import comSearch from './../common/search'
+import comSearch from './search'
 import comTagcloud from './../common/tagcloud'
 import comListArticle from './../common/list-art'
 import comLoadingMod from './../common/loading-mod'
@@ -84,6 +84,7 @@ export default {
                 params: { //请求参数
                     nowPage: 1,
                     pageSize: 9,
+                    sort: 1, //排序方式：最新1（默认），热门2
                     categoryId: "", //文章分类ID，需要时添加
                     tagCloudId: "" //标签云ID，需要时添加
                 },
@@ -127,14 +128,16 @@ export default {
         //     this.curArtList = this.originArtList;
         // },
         //获取文章列表
-        http_article: function(nowPage,categoryId,tagCloudId){
-            var _this = this;
-            var _params = this.ajaxParams.params;
-
-            _params.nowPage = nowPage;
-            //如果有传条件查询（文章分类、标签云）,请求参数带上条件
+        http_article: function(nowPage,categoryId,tagCloudId,sort){
+            const _this = this;
+            const _params = this.ajaxParams.params;
+            
+            //参数设置  
             _params.categoryId = categoryId!="" ? categoryId : "";
             _params.tagCloudId = tagCloudId!="" ? tagCloudId : "";
+            _params.nowPage = nowPage ? nowPage : 1;
+            _params.sort= sort ? sort : 1;
+
             UTIL.AJAX_POST(
                 this.ajaxParams.pageUrl,
                 _params,
@@ -197,6 +200,7 @@ export default {
                 this.curArtList = list;
             }
         }
+        
     }
 }
 </script>

@@ -19,36 +19,41 @@ Vue.use(VueRouter);
 import UTIL from './util.js'
 
 const routes = [
-    {   path: '/home',name:'home',component: Home},
-    {   path: '/article',name:'article',component: Article},
-    {   path: '/articleDetail/:articleId',name:'articleDetail',component: ArticleDetail},
-    {   path: '/preview',name:'preview',component: Preview},
-    {   path: '/search/:keyword/:type',name:'search',component: Search},
-    {   path: '/login',name:'login',component: Login},
-    {   path: '/usercenter',name:'usercenter',component: Usercenter,
-        children: [
-            {
-                path: '/usercenter/myartCreate',name:'myartCreate',component: MyartCreate,
+    { path: '/home', name: 'home', component: Home },
+    { path: '/article', name: 'article', component: Article },
+    { path: '/articleDetail/:articleId', name: 'articleDetail', component: ArticleDetail },
+    { path: '/preview', name: 'preview', component: Preview },
+    { path: '/search/:key', name: 'search', component: Search },
+    { path: '/login', name: 'login', component: Login },
+    {
+        path: '/usercenter',
+        name: 'usercenter',
+        component: Usercenter,
+        children: [{
+                path: '/usercenter/myartCreate',
+                name: 'myartCreate',
+                component: MyartCreate,
             },
             {
-                path: '/usercenter/myartList',name:'myartList',component: MyartList,
+                path: '/usercenter/myartList',
+                name: 'myartList',
+                component: MyartList,
             }
         ],
         beforeEnter: (to, from, next) => {
-            if(isLogin()) {
+            if (isLogin()) {
                 next();
-            }
-            else {
+            } else {
                 router.push({ path: '/login' });
             }
         },
     },
-    { path: '/',name:'default',redirect:'/article'} //设置默认页
-  ];
+    { path: '/', name: 'default', redirect: '/article' } //设置默认页
+];
 
 const router = new VueRouter({
-	mode: 'history',
-	base: __dirname,
+    mode: 'history',
+    base: __dirname,
     routes
 });
 
@@ -58,14 +63,13 @@ router.beforeEach((to, from, next) => {
     next();
 })
 
-function isLogin(){
+function isLogin() {
     //去后台校验token
     const localStorage = window.localStorage;
-    if(localStorage.userId) {
+    if (localStorage.userId) {
         console.log("router：登录成功");
         return true;
-    }
-    else {
+    } else {
         console.log("router：登录失败");
         return false;
     }

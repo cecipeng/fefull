@@ -1,5 +1,5 @@
 <template>
-    <div class="mod-home">
+    <div class="layout-mod mod-home">
     mod-home
     </div>
 </template>

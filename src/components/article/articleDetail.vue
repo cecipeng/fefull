@@ -1,5 +1,5 @@
 <template>
-    <div class="mod-article">
+    <div class="layout-mod mod-article">
         <!-- 详情页头部 -->
         <div class="detail-header">
             <div class="layout-wrapper">
@@ -20,7 +20,7 @@
                 <comUserheader stylesize="" :userData="article.author"></comUserheader>
                 <div class="btnwrap">
                     <a href="###" class="ui-btn ui-btn-sub"><i class="comment"></i>评论</a>
-                    <a href="###" class="ui-btn ui-btn-sub"><i class="fav"></i>收藏（{{article.fav}}）</a>
+                    <a href="###" class="ui-btn ui-btn-sub" @click="addFav()"><i class="fav"></i>收藏（{{article.fav}}）</a>
                 </div>
                 <!-- 相似文章 -->
                 <div class="similar">
@@ -117,6 +117,24 @@ export default {
                 }
             );
             this.similar = dataArtList; //临时处理
+        },
+        addFav(){
+            var _this = this;
+            UTIL.AJAX_POST(
+                "article/collection",
+                {
+                    articleId: this.articleId
+                },
+                function(RE,r,s){
+                    if(RE.meta.code == "0000") { //请求成功
+                    console.log("dsdfs")
+                        _this.article.fav++;
+                    }
+                    else { 
+                        console.log("FEFull：获取文章详情失败，"+RE.meta.message);
+                    }
+                }
+            );
         }
     }
 }
