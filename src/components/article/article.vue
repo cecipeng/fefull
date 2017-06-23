@@ -22,8 +22,7 @@
                         </a>
                         <div class="dropdown" v-show="showDropdown1">
                             <ul class="droplist">
-                                <li><a @click="orderList(0);showDropdown1 = false" class="dropitem">默认</a></li>
-                                <li><a @click="orderList(1);showDropdown1 = false" class="dropitem">最新</a></li>
+                                <li><a @click="orderList(1);showDropdown1 = false" class="dropitem">最新（默认）</a></li>
                                 <li><a @click="orderList(2);showDropdown1 = false" class="dropitem">热门</a></li>
                             </ul>
                         </div>
@@ -169,35 +168,20 @@ export default {
         },
         //分页组件传回：请求跳转到第几页
         changePage(idx){ 
-            this.http_article(idx,this.ajaxParams.params.categoryId,this.ajaxParams.params.tagCloudId);
+            this.http_article(idx,this.ajaxParams.params.categoryId,this.ajaxParams.params.tagCloudId,this.ajaxParams.params.sort);
         },
         showPage: function(){
 
         },
         //列表排序
         orderList: function(type){
-            const list = this.originArtList;
-
-            if(type == 0) { //默认排序
-                this.curArtList = this.originArtList;
+            this.http_article(1,this.ajaxParams.params.categoryId,this.ajaxParams.params.tagCloudId,type);
+            if(type == 0) { //默认最新排序
+                
             }
             else
-            if(type == 1) { //最新排序
-
-            }
-            else
-            if(type == 2) { //热门排序
-                for(var i = 0; i<list.length; i++) {
-                    for(var j = list.length - 1; j>0 ;j--) {
-
-                        if(list[j].fav < list[j-1].fav) {
-                            const temp = list[j-1];
-                            list[j-1] = list[j];
-                            list[j] = temp;
-                        }
-                    }
-                }
-                this.curArtList = list;
+            if(type == 1) { //热门排序
+                
             }
         }
         

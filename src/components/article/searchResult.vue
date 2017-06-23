@@ -27,6 +27,7 @@
     	        </div>
     	    </div>
     	    <div class="tab-body layout-wrapper">
+		<comLoadingMod v-if="showloading"></comLoadingMod>
                 <comListArticle :artlist="curArtList"></comListArticle>
                 <comPage :Pages="Pages" @changePage="changePage"  v-if="showpage"></comPage> 
     	    </div>
@@ -40,6 +41,7 @@
 import comSearch from './search'
 import comTagcloud from './../common/tagcloud'
 import comListArticle from './../common/list-art'
+import comLoadingMod from './../common/loading-mod'
 import comPage from './../common/page'
 
 //公用方法
@@ -53,13 +55,14 @@ export default {
             curArtList: [], //显示的列表
             showDropdown2: false, //显示标签云下拉菜单
             showpage: false, //显示分页
+	        showloading: true, //显示正在加载
             ajaxParams: { //ajax请求参数
                 pageUrl: "article/queryPage", //请求地址
                 params: { //请求参数
                     nowPage: 1,
                     pageSize: 9,
                     sort: 1, //排序方式：最新1（默认），热门2
-                    tagcloudId: "", //标签云id
+                    tagCloudId: "", //标签云id
                     keyword: "" //关键字
                 },
             },
@@ -71,7 +74,7 @@ export default {
         }
     },
     
-    components: { comSearch,comTagcloud,comListArticle,comPage },
+    components: { comSearch,comTagcloud,comListArticle,comPage,comLoadingMod },
     created: function(){
         //获取标签云列表
         this.$store.commit('http_tagcloud');
@@ -105,7 +108,7 @@ export default {
             }
             else this.keyword = "未知";
         },
-        http_search(nowPage,sort) {
+        http_search(nowPage,keyword,tagCloudId,sort) {
             const key = this.$route.params.key;
             const _this = this;
             const _params = this.ajaxParams.params;
@@ -114,7 +117,7 @@ console.log(key.tagcloudId+key.keyword)
             this.showTitle(key);
 
             //参数设置  
-            _params.tagcloudId = key.tagcloudId ? key.tagcloudId : "";
+            _params.tagCloudId = key.tagcloudId ? key.tagcloudId : "";
             _params.keyword = key.keyword ? key.keyword : "";
             _params.nowPage = nowPage ? nowPage : 1;
             _params.sort= sort ? sort : 1;
@@ -146,7 +149,7 @@ console.log(key.tagcloudId+key.keyword)
         },
         //分页组件传回：请求跳转到第几页
         changePage(idx){ 
-            this.http_search(idx);
+            this.http_search(idx,this.ajaxParams.params.keyword,this.ajaxParams.params.tagCloudId,this.ajaxParams.params.sort);
         },
     }
 }

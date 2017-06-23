@@ -10,14 +10,11 @@ export default {
     props: ['loadingTxt'],
     data () {
     	return {
-            txt: "正在加载中..."
+            txt: ""
     	}
     },
     created: function(){
-    	if(this.loadingTxt) {
-            console.log(this.txt);
-    		this.txt = this.loadingTxt;
-    	}
+		this.txt = this.loadingTxt || "正在加载中...";
 	},
     methods: {
     	
