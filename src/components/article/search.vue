@@ -2,12 +2,13 @@
 	<div class="com-search ui-dropdown">
 		<p class="selector">
 			<input type="text" v-model="searchWord" @keyup="inputing()">
-			<router-link tag="a" class="btn-search" :to="{ name: 'search', params: { key: {'keyword': searchWord} }}"></router-link>
+			<!--<router-link tag="a" class="btn-search" :to="{ name: 'search', params: { key: {'keyword': searchWord} }}"></router-link>-->
+			<a class="btn-search" @click="searching"></a>
 		</p>
 		<div class="dropdown" v-if="showDropdown">
 			<p class="noresult" v-if="showNoResult">无结果</p>
 			<ul class="droplist" v-else>
-				<li v-for="item in searchResult.reList"><router-link tag="a" class="dropitem" :to="{ name: 'articleDetail', params: { articleId: item.articleId }}" :data-id="item.articleId">{{item.title}}</router-link></li>
+				<li v-for="item in searchResult"><router-link tag="a" class="dropitem" :to="{ name: 'articleDetail', params: { articleId: item.articleId }}" :data-id="item.articleId">{{item.title}}</router-link></li>
 			</ul>
 		</div>
 	</div>
@@ -40,22 +41,28 @@ export default {
 		//输入中实时显示下拉菜单
 		inputing: function(){
 			if(this.searchWord != "") {
-				this.ajaxParams.params.keyword = this.searchWord;
 				this.http_search();
 			}
 			else {
 				this.showDropdown = false; //无内容不显示下拉菜单
 			}
 		},
+		searching: function(){
+			this.showDropdown = false;
+			this.$emit("searching",this.searchWord);
+			this.$router.push({name: 'search', params: { key: {'keyword': this.searchWord} }})
+			
+		},
 		//搜索
         http_search() {
 			const _this = this;
+			this.ajaxParams.params.keyword = this.searchWord;
             UTIL.AJAX_POST(
                 this.ajaxParams.pageUrl,
                 this.ajaxParams.params,
                 function(RE,r,s){
                     if(RE.meta.code == "0000") { //请求成功
-                        _this.searchResult = RE.datas;
+                        _this.searchResult = RE.datas.reList;
 
 						_this.showDropdown = true; //有返回结果显示下拉菜单
 						if(_this.searchResult.length == 0) {

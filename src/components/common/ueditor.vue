@@ -23,10 +23,18 @@ export default {
     },
     mounted: function(){
         if(!this.ueContent || this.ueContent.length == 0) {
-            this.ueContent = "初始值";
+            this.ueContent = "";
+        }
+        UE.Editor.prototype.getActionUrl=function(action){
+            //console.log(action)
+            if(action == 'config'){
+                return "/static/libs/ueditor/config.json";
+            } else {
+                return "http://seazy.ngrok.cc/fefull/api/ueditor/doExec?action=" + (action || '');
+            }
         }
         this.ue = UE.getEditor('ueditor', {
-            //UEDITOR_HOME_URL: __dirname + "/static/libs/ueditor/",
+            UEDITOR_HOME_URL: "/static/libs/ueditor/",
             toolbars: [
                 [
                     'fullscreen', //全屏

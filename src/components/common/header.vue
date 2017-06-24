@@ -39,7 +39,7 @@
                 <div class="header-userdrop ui-dropdown" v-if="showUserHeader" @mouseleave="showDropdown = false">
                     <a class="selector" @mouseenter="showDropdown = true">
                         <!-- com-userhead -->
-                        <comUserheader stylesize="" :userData="$store.state.loginUser"></comUserheader>
+                        <comUserheader stylesize="s" :userData="$store.state.loginUser"></comUserheader>
                         <!-- /com-userhead -->
                         <i class="dropdown-arrow"></i>
                     </a>
@@ -102,9 +102,8 @@ export default {
 
 <style lang="scss">
 .header-userdrop {
-    padding: 15px 0;
     .dropdown {
-        top: 80px;
+        top: 38px;
     }
 }
 

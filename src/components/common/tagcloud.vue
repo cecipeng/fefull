@@ -1,6 +1,6 @@
 <template>
 	<ul class="com-tagcloud">
-		<li v-for="item in tagcloudList"><router-link tag="a" class="item" :to="{ name: 'search', params: { key: {'tagcloudId': item.tagcloudId} }}">{{item.tagcloudName}}</router-link></li>
+		<li v-for="item in tagcloudList"><a class="item" @click="searching(item.tagcloudId)">{{item.tagcloudName}}</a></li>
 	</ul>
 </template>
 
@@ -13,6 +13,10 @@ export default {
 	},
 	props: [ 'tagcloudList' ],
 	methods: {
+		searching(id){
+			this.$emit("searching",id);
+			this.$router.push({name: 'search', params: { key: {'tagcloudId': id} }})
+		}
 	}
 }	
 </script>

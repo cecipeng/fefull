@@ -85,7 +85,7 @@ export default {
                     pageSize: 9,
                     sort: 1, //排序方式：最新1（默认），热门2
                     categoryId: "", //文章分类ID，需要时添加
-                    tagCloudId: "" //标签云ID，需要时添加
+                    tagcloudId: "" //标签云ID，需要时添加
                 },
             },
             Pages: { //分页组件传入参数，数据由后端提供
@@ -127,13 +127,13 @@ export default {
         //     this.curArtList = this.originArtList;
         // },
         //获取文章列表
-        http_article: function(nowPage,categoryId,tagCloudId,sort){
+        http_article: function(nowPage,categoryId,tagcloudId,sort){
             const _this = this;
             const _params = this.ajaxParams.params;
             
             //参数设置  
             _params.categoryId = categoryId!="" ? categoryId : "";
-            _params.tagCloudId = tagCloudId!="" ? tagCloudId : "";
+            _params.tagcloudId = tagcloudId!="" ? tagcloudId : "";
             _params.nowPage = nowPage ? nowPage : 1;
             _params.sort= sort ? sort : 1;
 
@@ -168,14 +168,14 @@ export default {
         },
         //分页组件传回：请求跳转到第几页
         changePage(idx){ 
-            this.http_article(idx,this.ajaxParams.params.categoryId,this.ajaxParams.params.tagCloudId,this.ajaxParams.params.sort);
+            this.http_article(idx,this.ajaxParams.params.categoryId,this.ajaxParams.params.tagcloudId,this.ajaxParams.params.sort);
         },
         showPage: function(){
 
         },
         //列表排序
         orderList: function(type){
-            this.http_article(1,this.ajaxParams.params.categoryId,this.ajaxParams.params.tagCloudId,type);
+            this.http_article(1,this.ajaxParams.params.categoryId,this.ajaxParams.params.tagcloudId,type);
             if(type == 0) { //默认最新排序
                 
             }
