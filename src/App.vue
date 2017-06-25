@@ -1,5 +1,6 @@
 <template>
     <div id="app" :style="$store.state.showPop?'overflow:hidden':''">
+        
         <!-- header -->
         <div class="layout-header">
             <comHeader></comHeader>

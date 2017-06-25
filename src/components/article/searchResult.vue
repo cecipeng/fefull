@@ -185,16 +185,6 @@ export default {
 </script>
 
 <style lang="scss">
-    .listtit {
-        float: left;
-        height: 72px;
-        line-height: 72px;
-        font-size: 16px;
-        color: #2f2a52;
-        .result {
-            color: red;
-            font-size: 20px;
-        }
-    }
+    
 
 </style>

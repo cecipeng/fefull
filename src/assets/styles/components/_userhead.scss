@@ -26,15 +26,15 @@
 			right: 0;
 			@extend %iconfont;
 			@extend %icon-head;
-			background-color: $grey-border;
+			background-color: $border;
 			color: #fff;
-			z-index: $zindex-behind;
+			z-index: $zindex-down;
 		}
 		img {
 			position: relative;
 			width: 100%;
 			height: 100%;
-			z-index: $zindex-font;
+			z-index: $zindex-up;
 		}
 	}
 	.name {
@@ -46,6 +46,7 @@
 		color: rgba(255,255,255,.75);
 	}
 	&[data-style-size="s"] {
+		line-height: 30px;
 		.head {
 			width: 30px;
 			height: 30px;
@@ -53,7 +54,7 @@
 		.name {
 			margin-left: 5px;
 			line-height: 30px;
-			color: $grey-fz;
+			color: $fz;
 		}
 	}
 	&[data-style-size="ver"] {
@@ -63,7 +64,7 @@
 			margin: 0 auto;
 			width: 78px;
 			height: 78px;
-			border: 4px solid rgba(255,255,255,.15);
+			border: 4px solid rgba(255,255,255,.35);
 			box-shadow: 0 -2px 5px rgba(0,0,0,.1);
 		}
 		.name {

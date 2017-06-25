@@ -10,7 +10,7 @@
 	display: inline-block;
 	vertical-align: middle;
 	position: relative;
-	width: 250px;
+	width: 200px;
 	.selector {
 		position: relative;
 		padding: 0;
@@ -18,12 +18,12 @@
 		input {
 			display: block;
 			width: 100%;
-			height: 40px;
-			line-height: 38px;
-			padding: 0 50px 0 16px;
-			border-radius: 4px;
-			border: 1px solid $grey-border;
-			// background-color: $grey-border;
+			height: 32px;
+			line-height: 30px;
+			padding: 0 40px 0 12px;
+			border-radius: $radius;
+			border: 1px solid $border;
+			// background-color: $border;
 			@include transition(border-color);
 			&:focus {
 				border-color: $main;
@@ -36,16 +36,16 @@
 			position: absolute;
 			right: 0;
 			top: 0;
-			width: 40px;
-			height: 40px;
-			line-height: 40px;
-			border-radius: 4px;
-			font-size: 26px;
+			width: 32px;
+			height: 32px;
+			line-height: 32px;
+			border-radius: $radius;
+			font-size: 20px;
 			color: #fff;
-			background-color: $grey-border;
+			background-color: $main;
 			@extend %iconfont;
 			@extend %icon-search;
-			@include hover(background-color,$main-light,$main-dark);
+			@include hover(background-color,$main-l,$main-d);
 		}
 	}
 	.dropdown {

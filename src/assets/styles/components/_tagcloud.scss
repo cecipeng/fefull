@@ -8,19 +8,25 @@
 //--------------------- 标签云 ---------------------//
 
 .com-tagcloud {
+	@extend %cf;
+	padding: 10px 2px 0 6px;
 	> li {
 		float: left;
 	}
 	.item {
 		display: block;
-		height: 36px;
-		line-height: 36px;
+		height: 30px;
+		line-height: 30px;
 		padding: 0 12px;
-		margin: 10px 5px;
-		background-color: $grey-bg;
+		margin: 0 5px 10px;
+		background-color: $bg;
 		font-size: 14px;
-		color: $grey-fz;
+		color: $fz;
 		cursor: pointer;
-		@include hover(background-color,lighten($grey-bg,2%),darken($grey-bg,5%));
+		@include hover(background-color,$main-l,$main-d);
+		&:hover,
+		&:active {
+			color: #fff;
+		}
 	}
 }

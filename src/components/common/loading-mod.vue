@@ -1,5 +1,6 @@
 <template>
 	<div class="com-loading-mod">
+        <div class="bounceball"></div>
 		<div class="loading-txt">{{txt}}</div>
 	</div>
 </template>

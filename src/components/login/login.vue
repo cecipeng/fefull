@@ -61,7 +61,7 @@ export default {
                         r.push({ path: '/home' });
                         s.commit('getLoginInfor');
                     }
-                    else { 
+                    else if(RE.meta.code == "2001") {  //账号或密码错误
                         _this.errortip = RE.meta.message;
                         _this.isLogining = false;
                     }

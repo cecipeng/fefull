@@ -5,7 +5,7 @@
         </div>
         <div class="createbox">
             <!-- 文章标题 -->
-            <div class="createtit"><span class="num">1/</span>文章标题</div>
+            <div class="createtit"><span class="num">1/&nbsp;</span>文章标题</div>
             <div class="arttitwrap">
                 <div class="ui-formrow arttitbox" :class="{'form-error':formStatus.title.status===1}">
                     <!-- 是否原创 -->
@@ -36,7 +36,7 @@
             <!-- /文章标题 -->
 
             <!-- 文章正文 -->
-            <div class="createtit"><span class="num">2/</span>文章正文</div>
+            <div class="createtit"><span class="num">2/&nbsp;</span>文章正文</div>
             <div class="ui-formrow ui-formnolabel" :class="{'form-error':formStatus.maintxt.status===1}">
                 <Ueditor :content="result.maintxt" ref="getContent"></Ueditor>
                 <p class="form-tip">{{formStatus.maintxt.tiptxt}}</p>
@@ -44,7 +44,7 @@
             <!-- /文章正文 -->
 
             <!-- 文章设置 -->
-            <div class="createtit"><span class="num">3/</span>文章设置</div>
+            <div class="createtit"><span class="num">3/&nbsp;</span>文章设置</div>
             <div class="artsetting">
 
                 <div class="ui-formrow ui-forminline">

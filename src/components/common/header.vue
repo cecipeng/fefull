@@ -12,13 +12,13 @@
                         <li>
                             <router-link class="item" to="/article">文章</router-link>
                         </li>
-                        <!-- <li id="ui-dropdown">
-                            <a class="item selector">资源库<i class="dropdown-arrow"></i></a>
-                            <div class="dropdown">
+                         <li id="ui-dropdown" @mouseleave="showMenu = false">
+                            <a class="item selector" :class="{on:showMenu ==true}" @mouseenter="showMenu = true">资源库<i class="dropdown-arrow"></i></a>
+                            <div class="dropdown" v-show="showMenu">
                                 <ul class="droplist">
-                                    <li><a href="###" class="dropitem">基础库下载</a></li>
-                                    <li><a href="###" class="dropitem">插件库</a></li>
-                                    <li><a href="###" class="dropitem">实例分享</a></li>
+                                    <li><a @click="showMenu = false" href="###" class="dropitem">基础库下载</a></li>
+                                    <li><a @click="showMenu = false" href="###" class="dropitem">插件库</a></li>
+                                    <li><a @click="showMenu = false" href="###" class="dropitem">实例分享</a></li>
                                 </ul>
                             </div>
                         </li>
@@ -30,7 +30,7 @@
                         </li>
                         <li>
                             <a class="item">项目管理</a>
-                        </li> -->
+                        </li> 
                     </ul>
                 </div>
                 <!-- /mainmenu -->
@@ -67,8 +67,9 @@ export default {
     components: { comUserheader },
     data () {
         return {
-            showDropdown: false, //显示下拉菜单
-            noHeaderRouter: /(usercenter)|(login)|(preview)/ //不需要头部的页面路由
+            showDropdown: false, //显示用户下拉菜单
+            showMenu: false, //显示导航二级菜单
+            noHeaderRouter: /(usercenter)|(login)|(preview)|(pageError)/ //不需要头部的页面路由
         }
     },
     created: function(){
@@ -103,7 +104,7 @@ export default {
 <style lang="scss">
 .header-userdrop {
     .dropdown {
-        top: 38px;
+        // top: 38px;
     }
 }
 

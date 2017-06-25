@@ -6,7 +6,7 @@
                 <div class="headerbox">
                     <h1 class="article-tit">{{article.title}}<span class="tag-origin" v-if="article.origin.originId==1">{{article.origin.originName}}</span></h1>
                     <div class="subcon">
-                        <p class="article-date">发表于<em class="date">{{article.publishedDate}}</em></p>
+                        <p class="article-date"><em class="date">{{article.publishedDate}}</em></p>
                         <p class="article-date" :data-categoryId="article.category.categoryId">分类：<em class="date">{{article.category.categoryName}}</em></p>
                     </div>
                 </div>
@@ -19,8 +19,8 @@
             <div class="layout-sideby">
                 <comUserheader stylesize="" :userData="article.author"></comUserheader>
                 <div class="btnwrap">
-                    <a href="###" class="ui-btn ui-btn-sub"><i class="comment"></i>评论</a>
-                    <a href="###" class="ui-btn ui-btn-sub" @click="addFav()"><i class="fav"></i>收藏（{{article.fav}}）</a>
+                    <a href="###" class="ui-btn ui-btn-main" @click="addFav()"><i class="fav"></i>收藏（{{article.fav}}）</a>
+                    <a href="###" class="ui-btn ui-btn-white"><i class="comment"></i>评论</a>
                 </div>
                 <!-- 相似文章 -->
                 <div class="similar">
@@ -47,7 +47,7 @@
                     <div class="articletxt" v-html="article.maintxt"></div>
                 </div>
                 <div class="tagwrap">
-                    <a v-for="item in article.tagclouds" :data-tagcloudId="item.tagcloudId" class="btn-tag">{{item.tagcloudName}}</a>
+                    <a v-for="item in article.tagclouds" class="btn-tag" @click="searching(item.tagcloudId)">{{item.tagcloudName}}</a>
                 </div>
             </div>
             <!-- /文章正文 -->
@@ -97,7 +97,11 @@ export default {
         this.allTagcloud = this.$store.state.tagcloudData;
     },
     methods: {
-        
+        //点击标签搜索相关文章
+        searching(id){
+			this.$emit("searching",id);
+			this.$router.push({name: 'search', params: { key: {'tagcloudId': id} }})
+		},
         http_getContent() {
             var _this = this;
             this.articleId = this.$route.params.articleId;
@@ -146,7 +150,6 @@ export default {
         .article-date {
             display: inline-block;
             vertical-align: middle;
-            margin: 0 8px;
         }
     }
     

@@ -7,15 +7,18 @@
 
 //文章列表页
 .mod-article {
-    background-color: $grey-bg;
+    background-color: $bg-l;
+    padding-top: $header-h;
     .ui-tab {
         .tab-head {
-            height: 72px;
-            background-color: #fff;
-            box-shadow: 0 1px 2px #ddd;
+            margin-top: 15px;
+            height: 50px;
+            // background-color: #fff;
+            // box-shadow: 0 1px 2px #ddd;
             .layout-wrapper {
                 height: 100%;
                 @extend %vm;
+                border-bottom: 1px solid $border;
             }
             .tabmenu {
                 float: left;
@@ -23,8 +26,33 @@
                 vertical-align: bottom;
                 li {
                     margin-bottom: -1px;
-                    height: 100%;
-                    line-height: 72px;
+                    height: 50px + 1px;
+                    line-height: 50px + 1px;
+                }
+            }
+            .ui-dropdown {
+                .selector {
+                    position: relative;
+                    .dropdown-arrow {
+                        position: absolute;
+                        top: 50%;
+                        right: 7px;
+                        margin-top: -3px;
+                        width: 13px;
+                        height: 7px;
+                        line-height: 7px;
+                        font-size: 10px;
+                        color: $fz;
+                        content: "";
+                        @extend %iconfont;
+                        @extend %icon-arrow3;
+                    }
+                }
+                &.tagcloud {
+                    .dropdown {
+                        left: auto;
+                        width: 300px;
+                    }
                 }
             }
         }
@@ -35,25 +63,25 @@
     //详情页
     .detail-header {
         position: relative;
-        height: 200px;
+        height: 400px;
         @include bgurl('default-article-topbg.jpg',
         $x: center, $y: center);
-        &:before {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            content: "";
-            background-color: rgba(47, 42, 82, 0.7);
-            z-index: $zindex-behind;
-        }
+        // &:before {
+        //     position: absolute;
+        //     left: 0;
+        //     top: 0;
+        //     width: 100%;
+        //     height: 100%;
+        //     content: "";
+        //     background-color: rgba(47, 42, 82, 0.7);
+        //     z-index: $zindex-down;
+        // }
         .layout-wrapper {
             position: relative;
             height: 100%;
             @extend %vm;
             text-align: center;
-            z-index: $zindex-font;
+            z-index: $zindex-up;
         }
         .headerbox {
             display: inline-block;
@@ -68,24 +96,33 @@
         }
         .tag-origin {
             display: inline-block;
-            vertical-align: middle;
-            min-width: 45px;
-            height: 24px;
-            line-height: 24px;
-            margin-left: 10px;
+            vertical-align: top;
+            min-width: 40px;
+            height: 20px;
+            line-height: 20px;
+            margin-left: 20px;
             padding: 0 9px;
             text-align: center;
-            font-size: 14px;
+            font-size: 12px;
             color: #fff;
             background-color: $sub;
+            border-radius: $radius;
+        }
+        .subcon {
+            margin-top: 20px;
         }
         .article-date {
             padding-top: 16px;
-            line-height: 20px;
-            font-size: 14px;
-            color: #999;
+            line-height: 14px;
+            font-size: 12px;
+            color: #fff;
+            padding: 0 16px;
+            border-right: 1px solid rgba(255,255,255,.3); 
+            &:last-child {
+                border-right: none;
+            }
             .date {
-                margin-left: 10px;
+                margin-left: 6px;
                 color: #fff;
                 font-weight: lighter;
             }
@@ -99,26 +136,34 @@
         background-color: #fff;
         box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
         padding: $padding;
+        padding-top: 50px;
         overflow: hidden;
         min-height: 600px;
         .tagwrap {
-            padding-left: 25px;
+            margin-top: 30px;
             &:before {
-                position: absolute;
-                left: 0;
-                top: 0;
+                display: inline-block;
+                vertical-align: middle;
                 width: 20px;
                 height: 20px;
+                line-height: 20px;
+                margin-right: 6px;
                 font-size: 14px;
+                color: $fz-l;
                 @extend %iconfont;
                 @extend %icon-tag;
             }
             .btn-tag {
                 display: inline-block;
                 vertical-align: middle;
+                margin-right: 6px;
                 line-height: 20px;
                 font-size: 12px;
-                color: #999;
+                color: $fz;
+                border-bottom: 1px dashed $border;
+                cursor: pointer;
+                @include hover(color,$main,$main-d);
+                @include hover(border-bottom-color,$main,$main-d);
             }
         }
         //////////////文章内容
@@ -128,16 +173,16 @@
             line-height: 20px;
             margin-bottom: 35px;
             font-size: 14px;
-            color: $grey-fz-light;
-            border-left: 4px solid $grey-border;
-            background-color: $grey-bg;
+            color: $fz-l;
+            border-left: 4px solid $border;
+            background-color: $bg-l;
         }
         //正文
         p {
             margin-bottom: 25px;
             line-height: 24px;
             font-size: 14px;
-            color: $grey-fz;
+            color: $fz;
             text-align: left;
         }
         //图片
@@ -162,7 +207,7 @@
             font-size: 20px;
             color: $main;
             font-weight: bold;
-            border-bottom: 1px solid $grey-border;
+            border-bottom: 1px solid $border;
         }
         //二级标题
         h3 {
@@ -195,7 +240,7 @@
             margin: 0 3px;
             padding: 0 4px;
             line-height: 22px;
-            border: 1px solid $grey-border;
+            border: 1px solid $border;
             background-color: #ddd;
             border-radius: 2px;
             @extend %wb;
@@ -213,7 +258,7 @@
                 margin-bottom: 10px;
                 line-height: 24px;
                 font-size: 14px;
-                color: $grey-fz;
+                color: $fz;
             }
         }
         //有序列表
@@ -225,7 +270,7 @@
                 margin-bottom: 10px;
                 line-height: 24px;
                 font-size: 14px;
-                color: $grey-fz;
+                color: $fz;
             }
         }
         //代码片段通用
@@ -234,6 +279,7 @@
         float: right;
         width: 200px;
         padding: $padding 20px;
+        padding-top: 50px;
         // background-color: #fafafa;
         .sidetitle {
             display: inline-block;
@@ -241,35 +287,44 @@
             line-height: 38px;
             margin-bottom: 10px;
             font-size: 18px;
-            color: $grey-fz-dark;
-            border-bottom: 3px solid $grey-border;
+            color: $fz-d;
+            border-bottom: 3px solid $border;
         }
         .com-userhead {
             margin-bottom: 25px;
             .name {
                 font-size: 16px;
-                color: $grey-fz;
+                color: $fz;
             }
         }
         .btnwrap {
             margin-bottom: 30px;
-            .ui-btn-sub {
+            .ui-btn {
                 display: block;
                 margin-bottom: 14px;
+                padding-left: 40px;
+                text-align: left;
+                &:hover {
+                    .comment {
+                        color: $main;
+                    }
+                }
             }
             .comment {
                 @extend %iconfont;
                 @extend %icon-edit;
                 margin-right: 10px;
                 font-size: 18px;
-                color: $grey-fz-light;
+                color: $fz-l;
+                @include transition;
             }
             .fav {
                 @extend %iconfont;
                 @extend %icon-star;
                 margin-right: 10px;
                 font-size: 18px;
-                color: $grey-fz-light;
+                color: #fff;
+                
             }
         }
         //相似文章
@@ -281,13 +336,24 @@
                 display: block;
                 line-height: 30px;
                 font-size: 14px;
-                color: $grey-fz;
+                color: $fz;
                 @extend %tof;
                 &:hover {
                     text-decoration: underline;
                     color: $main;
                 }
             }
+        }
+    }
+    .listtit {
+        float: left;
+        height: 50px;
+        line-height: 50px;
+        font-size: 14px;
+        color: $fz-l;
+        .result {
+            color: $main;
+            font-size: 18px;
         }
     }
 }

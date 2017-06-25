@@ -66,8 +66,7 @@ import tagcloudList from './../../data_tagcloud.js'
 
 //公用方法
 import UTIL from './../../util.js'
-
-
+            
 export default {
 
     data () {
@@ -75,7 +74,7 @@ export default {
             showDropdown1: false, //显示下拉菜单
             showDropdown2: false, //显示下拉菜单
             showpage: false, //显示分页
-            showloading: true, //显示正在加载
+            showloading: false, //显示正在加载
             curArtList: [], //显示的列表
             originArtList: [], //默认排序的列表
             ajaxParams: { //ajax请求参数
@@ -137,6 +136,12 @@ export default {
             _params.nowPage = nowPage ? nowPage : 1;
             _params.sort= sort ? sort : 1;
 
+            //请求时显示正在加载
+            _this.showloading = true;
+
+
+
+
             UTIL.AJAX_POST(
                 this.ajaxParams.pageUrl,
                 _params,
@@ -191,9 +196,6 @@ export default {
 
 <style lang="scss">
     .ui-dropdown.tagcloud {
-        .dropdown {
-            left: auto;
-            width: 300px;
-        }
+        
     }
 </style>

@@ -19,10 +19,10 @@
 		min-width: 68px;
 		height: 40px;
 		line-height: 40px;
-		font-size: 16px;
+		font-size: 14px;
 		color: #fff;
 		background-color: $main;
-		@include hover(background-color,$main-light,$main-dark);
+		@include hover(background-color,$main-l,$main-l);
 		&[data-size="size-l"] {
 			
 		}
@@ -39,7 +39,7 @@
 		font-size: 16px;
 		color: #fff;
 		background-color: $sub;
-		@include hover(background-color,$sub-light,$sub-dark);
+		@include hover(background-color,$sub-l,$sub-l);
 		&[data-size="size-l"] {
 			
 		}
@@ -54,11 +54,11 @@
 		height: 36px;
 		line-height: 34px;
 		font-size: 14px;
-		color: $grey-fz;
-		border: 1px solid $grey-border;
+		color: $fz;
+		border: 1px solid $border;
 		background-color: #fff;
 		border-radius: 3px;
-		@include hovers((border-color,$main,$main-dark)(color,$main,$main-dark));
+		@include hovers((border-color,$main,$main-l)(color,$main,$main-l));
 	}
 	
 	//不可点击

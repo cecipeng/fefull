@@ -8,14 +8,19 @@
 .mod-usercenter {
 	height: 100%;
 	position: relative;
-	padding: 10px 10px 10px 250px;
-	background-color: #ddd;
+	padding-left: 210px;
+
+	background: #4CB8C4;  /* fallback for old browsers */
+	background: -webkit-linear-gradient(to top, #3CD3AD, #4CB8C4);  /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to top, #3CD3AD, #4CB8C4); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
 	.sideby {
 		position: absolute;
-		left: 10px;
+		left: 0px;
 		top: 0;
-		bottom: 10px;
-		width: 240px;
+		bottom: 0px;
+		width: 210px;
+		padding-left: 10px;
 		padding-top: 130px;//
 		.logo {
 			position: absolute;
@@ -29,10 +34,9 @@
 			position: relative;
 			height: 100%;
 			padding-top: 80px;
-			background-color: $grey-bg-dark;
-			border-radius: 10px;
-			border-bottom-right-radius: 0px;
-			border-top-right-radius: 0px;
+			background-color: $bg-d;
+			border-top-left-radius: 10px;
+			background-color: $nav;
 			.com-userhead {
 				position: absolute;
 				left: 0;
@@ -47,24 +51,27 @@
 		li {
 			line-height: 50px;
 			padding-left: 82px;
-			font-size: 16px;
+			font-size: 14px;
 			color: #ffffff;
 			text-align: left;
 			border-top: 1px solid #303030;
+			cursor: pointer;
 			&.on {
-				// background-color: $grey-bg-darker;
-				background-color: #fff;
-				margin-left: -6px;
+				// background-color: $bg-der;
+				background-color: $nav-l;
+				// margin-left: -6px;
 				color: $main;
-				border-top-left-radius: 5px;
-				border-bottom-left-radius: 5px;
+				// border-top-left-radius: 5px;
+				// border-bottom-left-radius: 5px;
+			}
+			&:hover {
+				color: $main;
 			}
 		}
 	}
 	.mainby {
 		background-color: #fff;
-		border-radius: 10px;
-		border-bottom-left-radius: 0;
+		// border-top-left-radius: 10px;
 		height: 100%;
 		overflow-y: auto;
 		overflow-x: hidden;
@@ -84,7 +91,7 @@
 			padding-left: 20px;
 			font-size: 18px;
 			text-align: left;
-			color: $grey-fz-dark;
+			color: $fz-d;
 			@include bgurl('user-header.png');
 			background-position: left center;
 			.font-l {
@@ -104,7 +111,7 @@
 				line-height: 20px;
 				margin-bottom: 10px;
 				font-size: 14px;
-				color: $grey-fz-light;
+				color: $fz-l;
 				.num {
 					font-size: 20px;
 					margin-right: 2px;
@@ -128,12 +135,12 @@
 				position: absolute;
 				left: 0px;
 				top: 0px;
-				border-right: 1px solid $grey-border;
+				border-right: 1px solid $border;
 			}
 			.inp-arttit {
 				padding-left: 120px;
 				font-size: 16px;
-				color: $grey-fz-dark;
+				color: $fz-d;
 				// font-weight: bold;
 			}
 		}
@@ -147,7 +154,7 @@
 		    	line-height: 24px;
 		    	padding: 0 10px;
 		    	font-size: 14px;
-		    	color: $grey-fz;
+		    	color: $fz;
 		    	border-radius: 3px;
 		    	margin-right: 6px;
 		    	cursor: pointer;
@@ -186,13 +193,13 @@
 			td {
 				line-height: 40px;
 				font-size: 12px;
-				color: $grey-fz;
-				border: 1px solid $grey-border;
+				color: $fz;
+				border: 1px solid $border;
 				text-align: center;
 			}
 			thead td {
 				font-weight: bold;
-				background-color: $grey-bg;
+				background-color: $bg;
 			}
 			.btn-ctrl {
 				display: inline-block;
@@ -202,8 +209,8 @@
 				line-height: 28px;
 				@extend %iconfont;
 				font-size: 20px;
-				color: $grey-fz;
-				@include hover(color,$main,$main-dark);
+				color: $fz;
+				@include hover(color,$main,$main-d);
 				&.ctrl-view {
 					@extend %icon-view;
 				}

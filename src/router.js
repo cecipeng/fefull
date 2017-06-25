@@ -7,6 +7,7 @@ import Home from './components/home/home'
 import Article from './components/article/article'
 import ArticleDetail from './components/article/articleDetail'
 import Search from './components/article/searchResult'
+import PageError from './components/common/PageError'
 import Usercenter from './components/usercenter/usercenter'
 import MyartCreate from './components/usercenter/myartCreate'
 import MyartList from './components/usercenter/myartList'
@@ -24,6 +25,7 @@ const routes = [
     { path: '/articleDetail/:articleId', name: 'articleDetail', component: ArticleDetail },
     { path: '/preview', name: 'preview', component: Preview },
     { path: '/search/:key', name: 'search', component: Search },
+    { path: '/pageError', name: 'pageError', component: PageError },
     { path: '/login', name: 'login', component: Login },
     {
         path: '/usercenter',

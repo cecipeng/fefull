@@ -1,7 +1,7 @@
 <template>
     <div class="layout-mod mod-usercenter">
     	<div class="sideby">
-            <div href="###" class="logo"></div>
+            <router-link class="logo" to="/home">首页</router-link>
             <div class="slideby-con">
                 <comUserheader stylesize="ver" :userData="$store.state.loginUser"></comUserheader>
                 <ul class="slideMenu">

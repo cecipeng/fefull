@@ -34,13 +34,15 @@
         content: "";
     }
 }
-%vm-css3 {
-    transform: translate(-50%);
-    margin-left: 50%;
-    margin-top: 50%;
-}
 
 //--------------------- mixin ---------------------//
+
+// rem
+$fzrem: 30; 
+@function torem($px, $basefzrem:$fzrem){
+    @return $px / $basefzrem * 1rem;
+}
+
 
 // 设置透明度 0~100
 @mixin opacity($s) {
@@ -56,10 +58,11 @@
     border-width: $xsize $ysize;
     border-color: transparent;
     border-#{$d}-color: $color;
+    border-style: solid;
 }
 
-// 绝对定位居中
-@mixin abm($left:-50%,$top:-50%) {
+// 绝对定位水平垂直居中
+@mixin middle($left:-50%,$top:-50%) {
     position: absolute;
     left: 50%;
     top: 50%;
@@ -120,12 +123,25 @@
 
 
 // 背景图片
-@mixin bgurl($url, $repeat:no-repeat, $x:left, $y:top, $xsize:auto, $ysize: 100%) {
+@mixin bgurl($url, $repeat:no-repeat, $x:left, $y:top) {
     background: url('assets/images/#{$url}') $repeat $x $y; 
-    background-size: $xsize $ysize;
 }
 
-
+// sprites背景图片
+@mixin sp($x:0,$y:0,$name:icon,$repeat:no-repeat) {
+	background: url('assets/images/sprites-#{$name}.png') $repeat $x $y;
+}
+// sprites背景图片（带二态）。注：图片名称已固定，可修改
+@mixin sp2($x:0,$y:0,$repeat:no-repeat) {
+	background: url('assets/images/sprites-normal.png') $repeat $x $y; 
+	transition: all 0.3s ease-out;	
+	&:hover {
+		background-image: url('assets/images/sprites-hover.png');
+	}
+	&:active {
+		background-image: url('assets/images/sprites-active.png');
+	}
+}
 
 // Gradients
 @mixin linear-gradient($start, $end, $to:bottom) {

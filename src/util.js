@@ -5,6 +5,15 @@ import router from './router.js'
 
 Vue.use(VueResource);
 
+Vue.http.interceptors.push((request, next) => {
+    next((response) => {
+        if(!response.ok) {
+            router.push({ path: '/pageError' }); //跳转到登录页
+        }
+        else return response;
+    });
+});
+
 export default {
     
     // 公用get请求
@@ -39,12 +48,13 @@ export default {
             }
         })
         .catch(function(response) {
-            // console.log("FEFull："+response.data.meta.message);
+            console.log("FEFull："+response.statusText);
         })
     },
 
     // 公用post请求
-    AJAX_POST: function(url,data,callback){
+    AJAX_POST: function(url,data,callback,showLoading){
+  
         Vue.http.post(
             store.state.baseUrl + url,
             data,
@@ -62,15 +72,16 @@ export default {
                     router.push({ path: '/login' }); //跳转到登录页
                     break;
                 case "1002": //请求参数错误
+                    console.log("FEFull："+response.data.meta.message);
                     break;
                 case "1003": //网络异常
-                    break;
+                    console.log("FEFull："+response.data.meta.message);
                 default: //请求成果,或其他业务返回码
                     callback(response.data, router, store);
             }
         })
         .catch(function(response) {
-            console.log(response);
+            console.log("FEFull："+response.statusText);
         })
     }
 }

@@ -106,7 +106,6 @@ export default {
         .article-date {
             display: inline-block;
             vertical-align: middle;
-            margin: 0 8px;
         }
     }
 </style>

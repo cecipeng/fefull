@@ -10,7 +10,7 @@
 .com-header {
 	height: $header-h;
 	@extend %cf;
-	background-color: $grey-bg-dark;
+	background-color: $nav;
 	.layout-wrapper {
 		height: 100%;
 	}
@@ -23,6 +23,12 @@
 	.frbox {
 		float: right;
 	}
+	//头部下拉菜单特殊处理
+	.ui-dropdown {
+		.dropdown {
+			background-color: $nav-l;
+		}
+	}
 	//logo
 	.logo {
 		display: inline-block;
@@ -34,6 +40,31 @@
 		color: #fff;
 		@include bgurl('logo.png');
 		@include hover(transform,scale(1.07),scale(1.07));
+	}
+	//下拉菜单
+	.header-userdrop {
+		padding: 10px 0;
+		.com-userhead .name {
+			color: #fff;
+			font-size: 14px;
+		}
+		.selector {
+			line-height: 30px;
+		}
+		.dropdown {
+			top: $header-h;
+			border: none;
+			left: auto;
+			right: 50%;
+			margin-right: -50px;
+			width: 100px;
+			.dropitem {
+				color: #fff;
+				font-size: 12px;
+				@include hover(background,none,none);
+				@include hover(color,$main-l,$main);
+			}
+		}
 	}
 	//退出
 	.btn-sign {
@@ -67,48 +98,64 @@
 		.item {
 			position: relative;
 			display: block;
-			padding: 0 28px;
+			padding: 0 20px;
 			height: $header-h;
 			line-height: $header-h;
-			font-size: 16px;
+			font-size: 14px;
 			color: #fff;
 			cursor: pointer;
+			// font-weight: lighter;
 			@extend %tof;
-			@include hover(background-color,rgba(255, 255, 255, 0.1),rgba(255, 255, 255, 0.2));
+			@include hover(background-color,$nav-l,$nav-l);
 			&.router-link-active {
-				background-color: rgba(255, 255, 255, 0.2);
+				color: $main;
+			}
+			&.selector {
+				position: relative;
+				padding-right: 33px;
+				&.on {
+					background-color: $nav-l;
+				}
 			}
 		}
 		.dropdown-arrow {
-			display: inline-block;
-			vertical-align: middle;
+			position: absolute;
+			top: 50%;
+			right: 15px;
+			margin-top: -4px;
 			width: 13px;
 			height: 7px;
-			line-height: $header-h;
-			margin-left: 10px;
+			line-height: 7px;
+			font-size: 10px;
 			content: "";
 			@extend %iconfont;
 			@extend %icon-arrow3;
 		}
 		.dropdown {
-			display: none;
 			position: absolute;
 			left: 50%;
 			top: $header-h;
-			width: 160px;
-			margin-left: -80px;
-			background-color: $main-dark;
+			width: 140px;
+			margin-left: -70px;
+			padding-top: 5px;
 			z-index: $zindex-dd;
+			background-color: $nav-l;
 			.dropitem {
 				display: block;
-				height: 40px;
-				line-height: 40px;
-				font-size: 14px;
-				color: rgba(255,255,255,.6);
+				height: 36px;
+				line-height: 36px;
+				color: #fff;
+				font-size: 12px;
 				text-align: center;
 				@extend %tof;
-				@include hover(background-color,lighten($main-dark,3%),darken($main-dark,3%));
+				@include hover(color,$main-l,$main);
 			}
+		}
+	}
+	//头部下拉菜单特殊处理
+	.ui-dropdown {
+		.dropdown {
+			background-color: $nav-l;
 		}
 	}
 }
