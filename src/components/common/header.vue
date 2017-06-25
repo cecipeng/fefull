@@ -26,7 +26,7 @@
                             <a class="item">在线编辑器</a>
                         </li>
                         <li>
-                            <a class="item">网址导航</a>
+                            <router-link class="item" to="/navigation">网址导航</router-link>
                         </li>
                         <li>
                             <a class="item">项目管理</a>

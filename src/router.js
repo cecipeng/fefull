@@ -13,6 +13,7 @@ import MyartCreate from './components/usercenter/myartCreate'
 import MyartList from './components/usercenter/myartList'
 import Login from './components/login/login'
 import Preview from './components/usercenter/preview'
+import Navigation from './components/navigation/navigation'
 
 Vue.use(VueRouter);
 
@@ -50,6 +51,7 @@ const routes = [
             }
         },
     },
+    { path: '/navigation', name: 'navigation', component: Navigation },
     { path: '/', name: 'default', redirect: '/article' } //设置默认页
 ];
 

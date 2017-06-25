@@ -1,0 +1,72 @@
+@charset "UTF-8";
+
+//-----------------------------------------------------
+// author:  590000
+//-----------------------------------------------------
+
+
+//--------------------- 样式1 ---------------------//
+.ui-maintitle {
+	position: relative;
+	border-bottom: 1px solid $border-d;
+	padding-left: 30px;
+	@extend %cf;
+	text-align: right;
+	height: 30px;
+	overflow: hidden;
+	@extend %iconfont;
+	&:before {
+		position: absolute;
+		left: 0;
+		bottom: -3px;
+		width: 30px;
+		height: 30px;
+		line-height: 30px;
+		font-size: 28px;
+		color: $fz-l;
+		text-align: left;
+	}
+	.maintitle {
+		float: left;
+		height: 30px;
+		line-height: 47px;
+		font-size: 20px;
+		color: $fz-d;
+		@include transition(transform);
+		cursor: default;
+		&:hover {
+			transform: translateY(-10px);
+		}
+	}
+	.frbox {
+		display: inline-block;
+		vertical-align: middle;
+	}
+	.btn-editor {
+		display: inline-block;
+		vertical-align: top;
+		width: 30px;
+		height: 30px;
+		line-height: 47px;
+		text-align: center;
+		font-size: 26px;
+		color: $fz-l;
+		@extend %iconfont;
+		@extend %icon-edit;
+		@include transition(all);
+		&:hover {
+			color: $main;
+			transform: translateY(-10px);
+		}
+		&:active {
+			transform: translateY(-10px);
+			color: $main-d;
+		}
+	}
+	&.maintitle-mynav {
+		@extend %icon-bussinessman;
+	}
+	&.maintitle-online {
+		
+	}
+}

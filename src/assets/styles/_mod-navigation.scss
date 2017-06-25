@@ -1,0 +1,21 @@
+@charset "UTF-8";
+
+/*
+ * module:  mod-navigation
+ * author:  590000
+ */
+
+//网址导航
+.mod-navigation {
+    background-color: $bg-l;
+    padding-top: $header-h;
+    .navigation-box {
+        padding: 30px 0;
+        background-color: #fff;
+    }
+    .layout-wrapper {
+        .navigation-box {
+            background: none;
+        }
+    }
+}
