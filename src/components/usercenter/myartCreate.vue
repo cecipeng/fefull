@@ -251,12 +251,12 @@ export default {
         height: 38px;
         .selector {
             width: 110px;
-            
+            line-height: 38px;
             
             text-align: center;
         }
         .dropdown {
-            top: 39px;
+            top: 38px;
             margin-right: -1px;
         }
     }

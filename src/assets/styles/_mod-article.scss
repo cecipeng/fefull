@@ -131,6 +131,7 @@
     .detail-container {
         // background-color: #fafafa;
         @extend %cf;
+        padding-bottom: 50px;
     }
     .layout-mainby {
         background-color: #fff;
@@ -354,6 +355,14 @@
         .result {
             color: $main;
             font-size: 18px;
+        }
+    }
+
+    //预览
+    &.article-preview {
+        padding-top: 0;
+        .detail-container {
+            padding-bottom: 120px;
         }
     }
 }

@@ -1,5 +1,5 @@
 <template>
-    <div class="layout-mod mod-page404">
+    <div class="layout-mod mod-pageError">
     	404
     </div>
 </template>

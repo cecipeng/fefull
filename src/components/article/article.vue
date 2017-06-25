@@ -44,6 +44,7 @@
     	    </div>
     	    <div class="tab-body layout-wrapper">
                 <comLoadingMod v-if="showloading"></comLoadingMod>
+                <comError :text="showError.text" :type="showError.type" v-if="showError.show"></comError>
                 <comListArticle :artlist="curArtList"></comListArticle>
                 <comPage :Pages="Pages" @changePage="changePage" v-if="showpage"></comPage> 
     	    </div>
@@ -57,12 +58,9 @@ import comSearch from './search'
 import comTagcloud from './../common/tagcloud'
 import comListArticle from './../common/list-art'
 import comLoadingMod from './../common/loading-mod'
+import comError from './../common/error'
 import comPage from './../common/page'
 
-//临时数据
-import dataArtList from './../../data_artlist_tab1.js'
-import dataArtList2 from './../../data_artlist_tab2.js'
-import tagcloudList from './../../data_tagcloud.js'
 
 //公用方法
 import UTIL from './../../util.js'
@@ -76,7 +74,11 @@ export default {
             showpage: false, //显示分页
             showloading: false, //显示正在加载
             curArtList: [], //显示的列表
-            originArtList: [], //默认排序的列表
+            showError: { //缺省图
+                show: false, //是否显示
+                type: "", //错误类型
+                text: "" //错误提示文字
+            },
             ajaxParams: { //ajax请求参数
                 pageUrl: "article/queryPage", //请求地址
                 params: { //请求参数
@@ -95,7 +97,7 @@ export default {
             curIndex: 0 //初始tab显示第一条
         }
     },
-    components: { comSearch,comTagcloud,comListArticle,comPage,comLoadingMod },
+    components: { comSearch,comTagcloud,comListArticle,comPage,comLoadingMod,comError },
     created: function(){
         //获取（公用数据）文章分类
         this.$store.commit('http_articleSort');
@@ -121,10 +123,6 @@ export default {
             this.curIndex = idx;
             this.http_article(1,categoryId); //默认切换tab后都显示第一页
         },
-        // rendList: function(data){
-        //     this.originArtList = data;
-        //     this.curArtList = this.originArtList;
-        // },
         //获取文章列表
         http_article: function(nowPage,categoryId,tagcloudId,sort){
             const _this = this;
@@ -139,8 +137,11 @@ export default {
             //请求时显示正在加载
             _this.showloading = true;
 
+            //列表置空
+            this.curArtList = "";
 
-
+            //隐藏“无结果”
+            this.showError.show = false;
 
             UTIL.AJAX_POST(
                 this.ajaxParams.pageUrl,
@@ -151,8 +152,7 @@ export default {
 
                     if(RE.meta.code == "0000") { //请求成功
                         //文章列表
-                        _this.originArtList = RE.datas.reList;
-                        _this.curArtList = _this.originArtList;
+                        _this.curArtList = RE.datas.reList;
 
                         //分页响应数据，存储在对象Pages中传入分页组件
                         _this.Pages.pageSize = RE.datas.pageSize; //一页显示数量
@@ -164,6 +164,13 @@ export default {
                             _this.showpage = true;
                         }
                         else _this.showpage = false;
+
+                        //无搜索结果
+                        if(RE.datas.reList.length==0) {
+                            _this.showError.show = true;
+                            _this.showError.type = "empty";
+                        }
+                        else _this.showError.show = false;
                     }
                     else { 
                         console.log("FEFull：获取文章列表失败，"+RE.meta.message);
@@ -174,9 +181,6 @@ export default {
         //分页组件传回：请求跳转到第几页
         changePage(idx){ 
             this.http_article(idx,this.ajaxParams.params.categoryId,this.ajaxParams.params.tagcloudId,this.ajaxParams.params.sort);
-        },
-        showPage: function(){
-
         },
         //列表排序
         orderList: function(type){

@@ -28,7 +28,7 @@
     	    </div>
     	    <div class="tab-body layout-wrapper">
 		        <comLoadingMod v-if="showloading"></comLoadingMod>
-                <comEmpty v-if="showempty"></comEmpty>
+                <comError :text="showError.text" :type="showError.type" v-if="showError.show"></comError>
                 <comListArticle :artlist="curArtList"></comListArticle>
                 <comPage :Pages="Pages" @changePage="changePage"  v-if="showpage"></comPage> 
     	    </div>
@@ -43,7 +43,7 @@ import comSearch from './search'
 import comTagcloud from './../common/tagcloud'
 import comListArticle from './../common/list-art'
 import comLoadingMod from './../common/loading-mod'
-import comEmpty from './../common/empty'
+import comError from './../common/error'
 import comPage from './../common/page'
 
 //公用方法
@@ -58,7 +58,11 @@ export default {
             showDropdown2: false, //显示标签云下拉菜单
             showpage: false, //显示分页
 	        showloading: false, //显示正在加载
-            showempty: false, //显示内容为空
+            showError: { //缺省图
+                show: false, //是否显示
+                type: "", //错误类型
+                text: "" //错误提示文字
+            },
             ajaxParams: { //ajax请求参数
                 pageUrl: "article/queryPage", //请求地址
                 params: { //请求参数
@@ -77,7 +81,7 @@ export default {
         }
     },
     
-    components: { comSearch,comTagcloud,comListArticle,comPage,comLoadingMod,comEmpty },
+    components: { comSearch,comTagcloud,comListArticle,comPage,comLoadingMod,comError },
     created: function(){
         //获取标签云列表
         this.$store.commit('http_tagcloud');
@@ -136,7 +140,7 @@ export default {
             this.curArtList = "";
 
             //隐藏“无结果”
-            this.showempty = false;
+            this.showError.show = false;
 
             //标题栏显示
             this.showTitle(_params);
@@ -147,6 +151,7 @@ export default {
                 this.ajaxParams.pageUrl,
                 _params,
                 function(RE,r,s){
+                    //请求成功后不显示正在加载
                     _this.showloading = false;
                     
                     if(RE.meta.code == "0000") { //请求成功
@@ -166,9 +171,10 @@ export default {
 
                         //无搜索结果
                         if(RE.datas.reList.length==0) {
-                            _this.showempty = true;
+                            _this.showError.show = true;
+                            _this.showError.type = "empty";
                         }
-                        else _this.showempty = false;
+                        else _this.showError.show = false;
                     }
                     else { 
                         console.log("FEFull：搜索失败，"+RE.meta.message);
