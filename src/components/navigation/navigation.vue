@@ -23,13 +23,15 @@
                 </div>
             </div>
         </div>
-            
+
+        <comModal :modalOpt="modal1"></comModal>    
     </div>
 </template>
 
 <script>
 
 import comListNavigation from './../common/list-navigation'
+import comModal from './../common/modal'
 
 //公用方法
 import UTIL from './../../util.js'
@@ -38,10 +40,12 @@ export default {
 
     data () {
         return {
-            
+            modal1: {
+                title: 1123
+            }
         }
     },
-    components: { comListNavigation },
+    components: { comListNavigation,comModal },
     created: function(){
         
     },

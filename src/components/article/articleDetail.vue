@@ -20,7 +20,7 @@
                 <comUserheader stylesize="" :userData="article.author"></comUserheader>
                 <div class="btnwrap">
                     <a href="###" class="ui-btn ui-btn-main" @click="addFav()"><i class="fav"></i>收藏（{{article.fav}}）</a>
-                    <a href="###" class="ui-btn ui-btn-white"><i class="comment"></i>评论</a>
+                    <a href="###" class="ui-btn ui-btn-default"><i class="comment"></i>评论</a>
                 </div>
                 <!-- 相似文章 -->
                 <div class="similar">

@@ -16,7 +16,7 @@
         <div class="detail-container layout-wrapper">
             <!-- 预览提交 -->
             <div class="previewfix">
-                <a class="ui-btn ui-btn-white" @click="$router.push({ name: 'myartCreate' })">返回修改</a>
+                <a class="ui-btn ui-btn-default" @click="$router.push({ name: 'myartCreate' })">返回修改</a>
                 <a class="ui-btn ui-btn-main" @click="submitCreate">创建文章</a>
             </div>
             <!-- /预览提交 -->
@@ -41,7 +41,7 @@
                     <p class="maintxt">文章创建成功！</p>
                 </div>
                 <div class="pop-footer">
-                    <a class="ui-btn ui-btn-white" @click="backToList">返回我的文章列表</a>
+                    <a class="ui-btn ui-btn-default" @click="backToList">返回我的文章列表</a>
                     <a class="ui-btn ui-btn-main" @click="viewArticle">查看文章</a>
                 </div>
             </div>

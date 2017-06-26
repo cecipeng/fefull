@@ -1,7 +1,7 @@
 <template>
 	<div class="com-uploadImg">
         <div class="uploadbtn">
-            <a href="###" class="ui-btn ui-btn-white btn-upload">上传封面<input type="file" class="form-hidden" @change="fileChange"></a>
+            <a href="###" class="ui-btn ui-btn-default btn-upload">上传封面<input type="file" class="form-hidden" @change="fileChange"></a>
         </div>
         <div class="imgpreview" v-if="image.length >0">
             <img :src="image" alt="">
