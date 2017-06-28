@@ -12,86 +12,98 @@
 	top: 0;
 	right: 0;
 	bottom: 0;
+	background-color: rgba(0,0,0,.5);
 	z-index: $zindex-modal;
+	&.nomask {
+		background-color: none;
+	}
 
-	.popwrap {
+	.modal-dialog {
 		position: absolute;
 		left: 50%;
-		top: 50%;
-		.btn-closepop {
+		transform: translateX(-50%);
+		box-shadow: 0 1px 3px rgba(0,0,0,.3);
+		background-color: #fff;
+
+		&.modal-dialog-small {
+			width: 30%;
+		}
+		&.modal-dialog-large {
+			width: 90%;
+		}
+		&.modal-dialog-full {
+			width: 100%;
+		}
+		.close-modal {
 			position: absolute;
-			right: 20px;	//
-			top: 14px;	//
-			width: 20px;	//
-			height: 20px;	//
+			right: 10px;	
+			top: 10px;
+			width: 20px;
+			height: 20px;
+			@extend %iconfont;
+			@extend %icon-guanbijiantou;
+			cursor: pointer;
 			// @include bgurl('pop-closeicon.png',$y:0,$xsize:100%,$ysize:auto);	//
-			opacity: 0.7;	//
+			color: $fz;
+			font-size: 16px;
+			z-index: $zindex-modal + 1;
 			&:hover {
-				opacity: 1;	//
+				color: $fz-l;
 			}
 			&:active {
-				opacity: 1;	//
-				background-position: 0 -20px;	//
+				color: $fz
 			}
 		}
 		//关闭按钮的三种位置：最外层
-		> .btn-closepop {
-			width: 36px;
-			height: 36px;
-			// @include bgurl('pop-closeicon-large.png',$y:0,$xsize:100%,$ysize:auto);
-			&:active {
-				opacity: 1;
-				background-position: 0 -36px;
-			}
-		}
-		//关闭按钮的三种位置：pop-header中
-		.pop-header .btn-closepop {
+		> .close-modal {
 			
 		}
+		//关闭按钮的三种位置：pop-header中
+		.modal-header .close-modal {
+			color: #fff;
+			&:hover {
+				opacity: .75;
+			}
+			&:active {
+				opacity: .5;
+			}
+		}
 		//关闭按钮的三种位置：pop-body中
-		.pop-body .btn-closepop {
+		.modal-body .close-modal {
 
 		}
 	}
 
 
 	///////////////////////////////// 默认弹窗样式（可删）
-	.popwrap {
-		width: 520px;
-		margin-left: -260px;
-		margin-top: -100px;
-		border: 1px solid $border;
-		background-color: #fff;
-		box-shadow: 0 2px 4px rgba(7, 0, 2, 0.1);
-		
-	}
-	.pop-header {
+	.modal-header {
 		position: relative;
-		height: 48px;
+		height: 40px;
 		padding: 0 20px;
-		background-color: #57a2ff;
-		.poptit {
+		background-color: $nav;
+		.title {
 			float: left;
-			line-height: 48px;
+			line-height: 40px;
 			font-size: 16px;
 			color: #fff;
 		}
 	}
-	.pop-body {
-		padding: 32px 20px 47px;
-		.maintxt {
+	.modal-body {
+		padding: 30px 20px;
+		.notice {
 			line-height: 25px;
 			font-size: 14px;
 			color: $fz-d;
 			text-align: center;
 		}
 	}
-	.pop-footer {
-		padding: 0 20px 27px;
+	.modal-footer {
+		padding: 15px 20px;
 		text-align: right;
+		border-top: 1px solid $border-l;
 		.ui-btn {
 			min-width: 106px;
-			margin: 0 6px;
+			margin-left: 10px;
 		}
 	}
 	&[data-size="size-s"] {
