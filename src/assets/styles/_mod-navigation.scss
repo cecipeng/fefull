@@ -18,4 +18,224 @@
             background: none;
         }
     }
+
+    //编辑弹窗
+    .navigation-modal-edit {
+        
+        
+        .edit-maintitle {
+            margin: 10px 0;
+            padding-left: 10px;
+            line-height: 22px;
+            font-size: 20px;
+            color: $fz-d;
+            border-left: 4px solid $border-d;
+        }
+        .mynav-sort {
+            margin-bottom: 10px;
+            padding-top: 20px;
+            border-top: 1px dashed $border;
+            &:nth-child(2) {
+                border-top: none;
+                .mynav-sort-list li:first-child {
+                    .item-edit {
+                        display: block;
+                    }
+                }
+            }
+        }
+        //我的导航
+        .navigation-mynav {
+            position: relative;
+            padding: 10px 20px;
+            
+            //添加按钮
+            .btn-add-navigation {
+                position: absolute;
+                top: 40px;
+                right: 20px;
+                color: $main;
+                border-color: $main;
+                font-weight: bold;
+                &:before {
+                    display: inline-block;
+                    vertical-align: top;
+                    line-height: 38px;
+                    @extend %iconfont;
+                    @extend %icon-add;
+                    margin-right: 5px;
+                }
+                &:hover {
+                    background-color: $main;
+                    color: #fff;
+                }
+                &:active {
+                    background-color: $main-d;
+                    color: #fff;
+                    border-color: $main-d;
+                }
+            }
+            .mynav-sort-title.ui-formrow {
+                padding-left: 100px;
+                .form-label {
+                    width: 90px;
+                }
+                .form-input {
+                    width: 150px;
+                }
+            }
+        }
+        .mynav-sort-list {
+            padding-left: 100px;
+            @extend %cf;
+            li {
+                float: left;
+                width: 150px;
+                background-color: #fff;
+                height: 30px;
+                padding-left: 10px;
+                border-radius: 3px;
+                margin-right: 15px;
+                margin-bottom: 15px;
+                background-color: $bg-l;
+                &:hover {
+                    .item-edit {
+                        display: block;
+                    }
+                }
+                
+            }
+            .item-title {
+                line-height: 30px;
+                font-size: 14px;
+                color: #333;
+                @extend %tof;
+            }
+            .item-edit {
+                display: none;
+                float: right;
+                @extend %cf;
+                a {
+                    display: block;
+                    float: left;
+                    width: 30px;
+                    height: 30px;
+                    line-height: 30px;
+                    font-size: 18px;
+                    color: #fff;
+                    background-color: $bg-d;
+                    @extend %iconfont;
+                    &:hover {
+                        background-color: $main;
+                    }
+                    &:active {
+                        background-color: $main-d;
+                    }
+                }
+                .btn-edit {
+                    @extend %icon-edit1;
+                }
+                .btn-del {
+                    @extend %icon-shanchu;
+                }
+            }
+        }
+        //公共导航
+        .navigation-sysnav {
+            background-color: $bg-l;
+            padding: 10px 20px;
+            box-shadow: inset 0 1px 5px rgba(0, 0, 0, 0.1);
+        }
+        .sysnav-sort {
+            position: relative;
+            padding-left: 100px;
+            &:nth-child(2) {
+                margin-top: 20px;
+                li:first-child {
+                    .item-edit {
+                        display: block;
+                    }
+                }
+            }
+            .sysnav-sort-text {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 90px;
+                height: 30px;
+                line-height: 30px;
+                font-size: 14px;
+                color: $fz;
+                text-align: right;
+            }
+        }
+        .sysnav-sort-list {
+            @extend %cf;
+            
+            li {
+                float: left;
+                width: 150px;
+                background-color: #fff;
+                height: 30px;
+                padding-left: 10px;
+                border-radius: 3px;
+                margin-right: 15px;
+                margin-bottom: 15px;
+                &:hover {
+                    .item-edit {
+                        display: block;
+                    }
+                }
+                &.isFav {
+                    position: relative;
+                    &:before {
+                        position: absolute;
+                        right: 0;
+                        bottom: 0;
+                        width: 20px;
+                        height: 20px;
+                        font-size: 20px;
+                        @extend %iconfont;
+                        @extend %icon-xuanzejiaobiao;
+                        color: $main;
+                    }
+                    .item-edit {
+                        display: none;
+                    }
+                }
+                
+            }
+            .item-title {
+                line-height: 30px;
+                font-size: 14px;
+                color: #333;
+                @extend %tof;
+            }
+            .item-edit {
+                display: none;
+                float: right;
+                @extend %cf;
+                a {
+                    display: block;
+                    float: left;
+                    width: 30px;
+                    height: 30px;
+                    line-height: 30px;
+                    font-size: 18px;
+                    color: #fff;
+                    background-color: $bg-d;
+                    @extend %iconfont;
+                    &:hover {
+                        background-color: $main;
+                    }
+                    &:active {
+                        background-color: $main-d;
+                    }
+                }
+                .btn-add {
+                    @extend %icon-add;
+                }
+            }
+        }
+    }
 }

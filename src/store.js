@@ -19,7 +19,9 @@ const store = new Vuex.Store({
         showPop: false, //是否显示弹窗，是，最外层overflow:hidden
         strict: false, //是否启用严格模式
         editArticle: "", //正在编辑的文章
-        baseUrl: "http://seazy.ngrok.cc/fefull/api/" //接口地址
+        baseUrl: "http://seazy.ngrok.cc/fefull/api/", //接口地址
+        modalZindex: 102, //弹窗z-index，初始值为102
+        modalMask: 0 //是否显示弹窗遮罩,每打开一个弹窗+1，每关闭一个弹窗-1，当值为0表示无弹窗了，设置遮罩不显示
         // ajaxMessage: "me" //接口返回信息
     },
     mutations: {
@@ -80,8 +82,15 @@ const store = new Vuex.Store({
         //存储正在编辑的文章内容
         setEditArticle: function(state,con){
             state.editArticle = con;
+        },
+        //更新弹窗层级
+        setModalZindex: function(state,con){
+            state.modalZindex += con;
+        },
+        //设置弹窗遮罩是否显示
+        setModalMask: function(state,con){ //传入的con参数：增加一个：1；减少一个：-1
+            state.modalMask += con;
         }
-        
     }
 });
 

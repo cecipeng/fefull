@@ -1,5 +1,5 @@
 <template>
-	<div class="ui-modal" v-show="show" :class="[modal.customClass, modal.showMask]">
+	<div class="ui-modal" v-show="show" :class="[modal.customClass]" :style="{'z-index': zindex}">
 		<div class="modal-dialog" :class="modal.size" :style="{top: modal.top}">
 
 			<a class="close-modal" v-if="modal.showCloseBtn" @click="closeModal()"></a>
@@ -14,7 +14,7 @@
 			<!--/头部-->
 
 			<!--内容区域-->
-			<div class="modal-body" :style="{height: modal.bodyHeight}">
+			<div class="modal-body" :style="{'max-height': modal.bodyHeight}">
 				<slot name="body">
 					<p class="notice">{{modal.text}}</p>
 				</slot>
@@ -38,7 +38,8 @@
 export default {
 	data: function(){
 		return {
-			show: false    //是否显示弹窗
+			show: false,    //是否显示弹窗
+			zindex: 102 //弹窗层级，初始值为102
 		}
 	},
 	props: [ "modalOpt" ],
@@ -62,7 +63,7 @@ export default {
 
 				size: "modal-dialog-" + (_modal.size ? _modal.size : "small"), //弹窗大小,支持：small/large/full
 				top: _modal.top ? _modal.top : "15%", //CSS 中的 top 值（仅在 size 不为 full 时有效）
-				showMask: ((typeof _modal.showMask === 'undefined') || (_modal.showMask === true)) ? "" : "nomask", //是否显示遮罩层，默认：显示(为空)
+				// showMask: ((typeof _modal.showMask === 'undefined') || (_modal.showMask === true)) ? "" : "nomask", //是否显示遮罩层，默认：显示(为空)
 				bodyHeight: _modal.bodyHeight ? _modal.bodyHeight : "auto", //内容区域固定高度，超过出现滚动条。设置为null表示不固定高度，默认：不固定高度
 				customClass: _modal.customClass ? _modal.customClass : "" //弹窗自定义类名，用于控制特殊样式，默认：无
 			};
@@ -71,9 +72,22 @@ export default {
 	methods: {
 		closeModal(){
 			this.show = false;
+
+			//设置弹窗遮罩可见，层级+1
+			this.$store.commit('setModalMask',-1);
+
+			//设置弹窗层级：状态管理中+2
+			this.$store.commit('setModalZindex',-2);
 		},
 		showModal() {
 			this.show = true;
+
+			//设置弹窗层级：状态管理中+2
+			this.$store.commit('setModalZindex',2);
+			this.zindex = this.$store.state.modalZindex;
+
+			//设置弹窗遮罩可见，层级+1
+			this.$store.commit('setModalMask',1);
 		}
 	}
 }	

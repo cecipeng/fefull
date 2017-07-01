@@ -15,6 +15,7 @@
 
         <comLoginPop></comLoginPop>
         
+        <div class="com-modalMask" v-if="showModalMask" :style="{'z-index': modalZindex}"></div>   
     </div>
 </template>
 
@@ -25,6 +26,19 @@ import comLoginPop from './components/common/login-pop';
 export default {
     components: {
         comHeader,comLoginPop
+    },
+    data() {
+        return {
+            
+        }
+    },
+    computed: {
+        showModalMask () {
+            return this.$store.state.modalMask > 0 ? true : false;
+        },
+        modalZindex () {
+            return this.$store.state.modalZindex - 1;
+        }
     }
 }
 </script>

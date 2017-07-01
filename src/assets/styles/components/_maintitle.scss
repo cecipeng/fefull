@@ -8,8 +8,8 @@
 //--------------------- 样式1 ---------------------//
 .ui-maintitle {
 	position: relative;
-	border-bottom: 1px solid $border-d;
-	padding-left: 30px;
+	border-bottom: 1px solid $border;
+	
 	@extend %cf;
 	text-align: right;
 	height: 30px;
@@ -64,6 +64,7 @@
 		}
 	}
 	&.maintitle-mynav {
+		padding-left: 30px;
 		@extend %icon-bussinessman;
 	}
 	&.maintitle-online {
