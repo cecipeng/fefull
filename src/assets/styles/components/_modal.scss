@@ -12,28 +12,13 @@
 	top: 0;
 	right: 0;
 	bottom: 0;
-	background-color: rgba(0,0,0,.5);
 	z-index: $zindex-modal;
-	&.nomask {
-		background-color: none;
-	}
-
 	.modal-dialog {
 		position: absolute;
 		left: 50%;
 		transform: translateX(-50%);
 		box-shadow: 0 1px 3px rgba(0,0,0,.3);
 		background-color: #fff;
-
-		&.modal-dialog-small {
-			width: 30%;
-		}
-		&.modal-dialog-large {
-			width: 90%;
-		}
-		&.modal-dialog-full {
-			width: 100%;
-		}
 		.close-modal {
 			position: absolute;
 			right: 10px;	
@@ -43,39 +28,20 @@
 			@extend %iconfont;
 			@extend %icon-guanbijiantou;
 			cursor: pointer;
-			// @include bgurl('pop-closeicon.png',$y:0,$xsize:100%,$ysize:auto);	//
-			color: $fz;
+			color: $fz-l;
 			font-size: 16px;
 			z-index: $zindex-modal + 1;
 			&:hover {
-				color: $fz-l;
+				color: $fz;
 			}
 			&:active {
-				color: $fz
+				color: $fz-d;
 			}
-		}
-		//关闭按钮的三种位置：最外层
-		> .close-modal {
-			
-		}
-		//关闭按钮的三种位置：pop-header中
-		.modal-header .close-modal {
-			color: #fff;
-			&:hover {
-				opacity: .75;
-			}
-			&:active {
-				opacity: .5;
-			}
-		}
-		//关闭按钮的三种位置：pop-body中
-		.modal-body .close-modal {
-
 		}
 	}
 
 
-	///////////////////////////////// 默认弹窗样式（可删）
+	///////////////////////////////// 默认弹窗样式
 	.modal-header {
 		position: relative;
 		height: 40px;
@@ -111,10 +77,22 @@
 	}
 	///////////////////////////////// 可配置
 	//是否显示遮罩
-	&.showmask {
-		background: rgba(0,0,0,0.74);
+	background-color: rgba(0,0,0,.75);
+	&.nomask {
+		background: none;
 	}
 	
-	
+	//弹窗尺寸
+	.modal-dialog {
+		&.modal-dialog-small {
+			width: 30%;
+		}
+		&.modal-dialog-large {
+			width: 80%;
+		}
+		&.modal-dialog-full {
+			width: 100%;
+		}
+	}
 	
 }

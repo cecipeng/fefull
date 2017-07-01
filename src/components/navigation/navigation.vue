@@ -6,7 +6,7 @@
                 <div class="ui-maintitle maintitle-mynav">
                     <h4 class="maintitle">我的导航</h4>      
                     <div class="frbox">
-                        <a href="###" class="btn-editor" @click="showModal1=true"></a>    
+                        <a href="###" class="btn-editor" @click="$refs.showModal1.showModal()"></a>    
                     </div>  
                 </div>
                 <comListNavigation></comListNavigation>
@@ -24,10 +24,14 @@
             </div>
         </div>
 
-        <comModal v-if="showModal1" :modalOpt="{
-            title: 1123,
-            text: "12"
-        }"></comModal>    
+        <comModal ref="showModal1" :modalOpt='{
+            title: "管理常用网址",
+            size: "large",
+        }'>
+            <div slot="body" class="navigation-modal-edit">
+                
+            </div>
+        </comModal>    
     </div>
 </template>
 
@@ -43,7 +47,7 @@ export default {
 
     data () {
         return {
-            showModal1: true
+
         }
     },
     components: { comListNavigation,comModal },
