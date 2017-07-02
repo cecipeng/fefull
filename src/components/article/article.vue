@@ -80,7 +80,6 @@ export default {
                 text: "" //错误提示文字
             },
             ajaxParams: { //ajax请求参数
-                pageUrl: "article/queryPage", //请求地址
                 params: { //请求参数
                     nowPage: 1,
                     pageSize: 9,
@@ -107,7 +106,6 @@ export default {
 
         //获取文章列表，默认获取全部分类下的第一页
         this.http_article(1);
-
     },
     computed: {
         allTablist() { //文章分类
@@ -144,7 +142,7 @@ export default {
             this.showError.show = false;
 
             UTIL.AJAX_POST(
-                this.ajaxParams.pageUrl,
+                UTIL.AJAX_URL().article,
                 _params,
                 function(RE,r,s){
                     //请求成功后不显示正在加载
@@ -165,7 +163,7 @@ export default {
                         }
                         else _this.showpage = false;
 
-                        //无搜索结果
+                        //无请求结果
                         if(RE.datas.reList.length==0) {
                             _this.showError.show = true;
                             _this.showError.type = "empty";
@@ -173,6 +171,16 @@ export default {
                         else _this.showError.show = false;
                     }
                     else { 
+                        //请求错误，除code等于0000外，其他code都在页面调用error组件展示错误信息
+                        if(RE.meta.code == "1002") {
+                            _this.showError.show = true;
+                            _this.showError.type = "";
+                            _this.showError.text = "请求参数错误";
+                        }
+                        if(RE.meta.code == "1003") {
+                            _this.showError.show = true;
+                            _this.showError.type = "weberror";
+                        }
                         console.log("FEFull：获取文章列表失败，"+RE.meta.message);
                     }
                 }
@@ -199,7 +207,5 @@ export default {
 </script>
 
 <style lang="scss">
-    .ui-dropdown.tagcloud {
-        
-    }
+
 </style>

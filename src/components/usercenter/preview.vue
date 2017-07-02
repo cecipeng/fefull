@@ -72,7 +72,7 @@ export default {
             var _this = this;
             
             UTIL.AJAX_POST(
-                "article/save",
+                UTIL.AJAX_URL().articleAdd,
                 this.article,
                 function(RE,r,s){
                     if(RE.meta.code == "0000") { //请求成功

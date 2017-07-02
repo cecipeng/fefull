@@ -19,7 +19,6 @@ const store = new Vuex.Store({
         showPop: false, //是否显示弹窗，是，最外层overflow:hidden
         strict: false, //是否启用严格模式
         editArticle: "", //正在编辑的文章
-        baseUrl: "http://seazy.ngrok.cc/fefull/api/", //接口地址
         modalZindex: 102, //弹窗z-index，初始值为102
         modalMask: 0 //是否显示弹窗遮罩,每打开一个弹窗+1，每关闭一个弹窗-1，当值为0表示无弹窗了，设置遮罩不显示
         // ajaxMessage: "me" //接口返回信息
@@ -31,7 +30,7 @@ const store = new Vuex.Store({
     	//获取文章分类
     	http_articleSort: function(state){
             UTIL.AJAX_GET(
-                "article/categories",
+                UTIL.AJAX_URL().articleCategories,
                 "",
                 function(RE,r,s){
                     if(RE.meta.code == "0000") { //请求成功
@@ -46,7 +45,7 @@ const store = new Vuex.Store({
         //获取标签云列表
         http_tagcloud: function(state){
             UTIL.AJAX_GET(
-                "article/tags",
+                UTIL.AJAX_URL().articleTags,
                 "",
                 function(RE,r,s){
                     if(RE.meta.code == "0000") { //请求成功

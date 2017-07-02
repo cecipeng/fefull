@@ -127,6 +127,34 @@
                 font-weight: lighter;
             }
         }
+        .tagwrap {
+            display: inline-block;
+            vertical-align: middle;
+            &:before {
+                display: inline-block;
+                vertical-align: middle;
+                width: 20px;
+                height: 20px;
+                line-height: 20px;
+                margin-right: 6px;
+                font-size: 14px;
+                color: #fff;
+                @extend %iconfont;
+                @extend %icon-tag;
+            }
+            .btn-tag {
+                display: inline-block;
+                vertical-align: middle;
+                margin-right: 6px;
+                line-height: 20px;
+                font-size: 12px;
+                color: #fff;
+                border-bottom: 1px dashed $border;
+                cursor: pointer;
+                @include hover(color,$main,$main-d);
+                @include hover(border-bottom-color,$main,$main-d);
+            }
+        }
     }
     .detail-container {
         // background-color: #fafafa;
@@ -140,33 +168,7 @@
         padding-top: 50px;
         overflow: hidden;
         min-height: 600px;
-        .tagwrap {
-            margin-top: 30px;
-            &:before {
-                display: inline-block;
-                vertical-align: middle;
-                width: 20px;
-                height: 20px;
-                line-height: 20px;
-                margin-right: 6px;
-                font-size: 14px;
-                color: $fz-l;
-                @extend %iconfont;
-                @extend %icon-tag;
-            }
-            .btn-tag {
-                display: inline-block;
-                vertical-align: middle;
-                margin-right: 6px;
-                line-height: 20px;
-                font-size: 12px;
-                color: $fz;
-                border-bottom: 1px dashed $border;
-                cursor: pointer;
-                @include hover(color,$main,$main-d);
-                @include hover(border-bottom-color,$main,$main-d);
-            }
-        }
+        
         //////////////文章内容
         //引用
         blockquote {
@@ -331,6 +333,12 @@
         //相似文章
         .similar {
             margin-bottom: 30px;
+            .com-tagcloud {
+                padding-left: 0;
+            }
+            .item {
+                margin-left: 0;
+            }
         }
         .similarlist {
             .item {

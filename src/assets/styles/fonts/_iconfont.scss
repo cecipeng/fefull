@@ -3,11 +3,11 @@
 //--------------------- iconfont ---------------------//
 //
 @font-face {font-family: "iconfont";
-  src: url('./assets/styles/fonts/iconfont.eot?t=1498400322082'); /* IE9*/
-  src: url('./assets/styles/fonts/iconfont.eot?t=1498400322082#iefix') format('embedded-opentype'), /* IE6-IE8 */
-  url('./assets/styles/fonts/iconfont.woff?t=1498400322082') format('woff'), /* chrome, firefox */
-  url('./assets/styles/fonts/iconfont.ttf?t=1498400322082') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-  url('./assets/styles/fonts/iconfont.svg?t=1498400322082#iconfont') format('svg'); /* iOS 4.1- */
+  src: url('./assets/styles/fonts/iconfont.eot?t=1498984666324'); /* IE9*/
+  src: url('./assets/styles/fonts/iconfont.eot?t=1498984666324#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('./assets/styles/fonts/iconfont.woff?t=1498984666324') format('woff'), /* chrome, firefox */
+  url('./assets/styles/fonts/iconfont.ttf?t=1498984666324') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('./assets/styles/fonts/iconfont.svg?t=1498984666324#iconfont') format('svg'); /* iOS 4.1- */
 }
 
 %iconfont {
@@ -33,7 +33,9 @@
 %icon-guanbijiantou:before { content: "\e86e"; }
 %icon-shanchu:before { content: "\e8c1"; }
 %icon-add:before { content: "\e61e"; }
-
+%icon-menu:before { content: "\e616"; }
+%icon-menu1:before { content: "\e666"; }
+%icon-hot:before { content: "\e67c"; }
 
 .icon-comments:before { content: "\e69b"; }
 

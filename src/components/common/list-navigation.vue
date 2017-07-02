@@ -4,8 +4,8 @@
 			<li v-for="item in list">
 				<a target="_blank" class="item" :href="item.navigatorUrl" :class="{isFav: item.isFavor==1}">
 					<div class="list-title">
-						<p class="title" :data-id="item.navigatorId">{{item.navigatorName}}</p>
 						<span class="list-go">Go</span>
+						<p class="title" :data-id="item.navigatorId">{{item.navigatorName}}</p>
 					</div>
 					<div class="list-maintxt">{{item.description}}</div>
 				</a>

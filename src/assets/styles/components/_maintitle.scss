@@ -8,66 +8,55 @@
 //--------------------- 样式1 ---------------------//
 .ui-maintitle {
 	position: relative;
-	border-bottom: 1px solid $border;
-	
 	@extend %cf;
 	text-align: right;
 	height: 30px;
 	overflow: hidden;
-	@extend %iconfont;
-	&:before {
-		position: absolute;
-		left: 0;
-		bottom: -3px;
-		width: 30px;
-		height: 30px;
-		line-height: 30px;
-		font-size: 28px;
-		color: $fz-l;
-		text-align: left;
-	}
 	.maintitle {
 		float: left;
 		height: 30px;
-		line-height: 47px;
+		line-height: 30px;
 		font-size: 20px;
 		color: $fz-d;
-		@include transition(transform);
-		cursor: default;
-		&:hover {
-			transform: translateY(-10px);
-		}
 	}
 	.frbox {
 		display: inline-block;
 		vertical-align: middle;
 	}
-	.btn-editor {
-		display: inline-block;
-		vertical-align: top;
-		width: 30px;
-		height: 30px;
-		line-height: 47px;
-		text-align: center;
-		font-size: 26px;
-		color: $fz-l;
-		@extend %iconfont;
-		@extend %icon-edit;
-		@include transition(all);
-		&:hover {
+	
+	///////////////// 一级
+	&[data-style='style1'] {
+		padding-left: 35px;
+		.maintitle {
 			color: $main;
-			transform: translateY(-10px);
 		}
-		&:active {
-			transform: translateY(-10px);
-			color: $main-d;
-		}
-	}
-	&.maintitle-mynav {
-		padding-left: 30px;
-		@extend %icon-bussinessman;
-	}
-	&.maintitle-online {
 		
+		&:before {
+			position: absolute;
+			left: 0;
+			bottom: 0;
+			width: 30px;
+			height: 30px;
+			line-height: 30px;
+			font-size: 28px;
+			color: $main;
+			text-align: left;
+			@extend %iconfont;
+		}
+	}
+
+	///////////////// 二级
+	&[data-style='style2'] {
+		// border-bottom: 1px solid lighten($border,3%);
+		.maintitle {
+			line-height: 30px;
+			color: $fz-l;
+			font-size: 16px;
+			// @include transition(transform);
+			cursor: default;
+			// &:hover {
+			// 	transform: translateY(-10px);
+			// }
+		}
 	}
 }

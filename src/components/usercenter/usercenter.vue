@@ -6,7 +6,7 @@
                 <comUserheader stylesize="ver" :userData="$store.state.loginUser"></comUserheader>
                 <ul class="slideMenu">
                     <router-link class="item on" tag="li" to="/usercenter/myartList">我的文章</router-link>
-                    <li>我的文章</li>
+                    <router-link class="item on" tag="li" to="/usercenter/favorartList">收藏的文章</router-link>
                 </ul>
             </div>
         </div>

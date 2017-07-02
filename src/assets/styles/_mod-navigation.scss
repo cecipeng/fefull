@@ -10,12 +10,120 @@
     background-color: $bg-l;
     padding-top: $header-h;
     .navigation-box {
-        padding: 30px 0;
+        padding-bottom: 0;
+        padding-top: 15px;
         background-color: #fff;
+        //缩图模式
+        &.listsmall {
+            padding-bottom: 0;
+            padding-top: 15px;
+            .com-list-navigation {
+                .menulist {
+                    > li {
+                        width: 12.5%;
+                        .item {
+                            height: auto;
+                            padding: 10px;
+                        }
+                        .list-maintxt {
+                            display: none;
+                        }
+                        .list-title {
+                            border-bottom: none;
+                            margin-bottom: 0;
+                        }
+                        .title {
+                            height: 24px;
+                            line-height: 24px;
+                            font-size: 16px;
+                        }
+                        .list-go {
+                            font-size: 16px;
+                        }
+                    }
+                }
+            }
+        }
+        .layout-wrapper {
+            padding-bottom: 10px;
+        }
+    }
+    //公共导航中特定样式
+    .navigation-box-sysnav {
+        .item {
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
+		    border: 1px solid $border-l;
+        }
+        //显示标示
+        .item.isFav {
+            &:after {
+                position: absolute;
+                top: 0;
+                right: 0;
+                height: 18px;
+                line-height: 18px;
+                font-size: 12px;
+                color: #fff;
+                padding: 0 5px 0 10px;
+                background-color: $main;
+                content:"已收藏";
+                border-radius: 0 0 0 20px;
+            }
+        }
     }
     .layout-wrapper {
+        padding-top: 30px;
         .navigation-box {
             background: none;
+            
+        }
+    }
+    .maintitle-sysnav {
+        @extend %icon-hot;
+    }
+    .maintitle-mynav {
+		@extend %icon-bussinessman;
+        .btn-editor {
+            float: left;
+            margin-left: 15px;
+            .edit {
+                @extend %iconfont;
+                @extend %icon-edit;
+                margin-right: 5px;
+                font-size: 18px;
+            }
+        }
+        .viewwrap {
+            float: left;
+            @extend %cf;
+            display: inline-block;
+            border: 1px solid $border;
+		    background-color: #fff;
+            border-radius: $radius;
+        }
+        .btn-view {
+            display: inline-block;
+            float: left;
+            width: 28px;
+            height: 28px;
+            line-height: 28px;
+            @extend %iconfont;
+            color: $fz;
+            font-size: 16px;
+            &:hover {
+                color: $main;
+            }
+            &.on {
+                background-color: $main-d;
+                color: #fff;
+            }
+        }
+        .btn-view-small {
+            @extend %icon-menu1;
+        }
+        .btn-view-large {
+            @extend %icon-menu;
         }
     }
 
@@ -56,7 +164,6 @@
                 right: 20px;
                 color: $main;
                 border-color: $main;
-                font-weight: bold;
                 &:before {
                     display: inline-block;
                     vertical-align: top;
@@ -236,6 +343,36 @@
                     @extend %icon-add;
                 }
             }
+        }
+    }
+    //添加导航弹窗
+    .modal-addNav {
+        .modal-dialog {
+            min-width: 420px;
+        }
+        .modal-body {
+            padding: 20px 0 10px;
+            background-color: $bg-l;
+        }
+        .formwrap {
+            width: 380px;
+            margin: 0 auto;
+        }
+        .ui-formrow {
+            padding-left: 70px;
+        }
+        .form-label {
+            width: 60px;
+        }
+        .form-input {
+            width: 100%;
+        }
+        .ui-dropdown {
+            display: block;
+        }
+        .btn-rel-category {
+            width: 100%;
+            background-color: #fff;
         }
     }
 }

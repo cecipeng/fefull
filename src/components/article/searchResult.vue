@@ -64,7 +64,6 @@ export default {
                 text: "" //错误提示文字
             },
             ajaxParams: { //ajax请求参数
-                pageUrl: "article/queryPage", //请求地址
                 params: { //请求参数
                     nowPage: 1,
                     pageSize: 9,
@@ -148,7 +147,7 @@ export default {
             console.log(_params)
 
             UTIL.AJAX_POST(
-                this.ajaxParams.pageUrl,
+                UTIL.AJAX_URL().article,
                 _params,
                 function(RE,r,s){
                     //请求成功后不显示正在加载
@@ -177,6 +176,16 @@ export default {
                         else _this.showError.show = false;
                     }
                     else { 
+                        //请求错误，除code等于0000外，其他code都在页面调用error组件展示错误信息
+                        if(RE.meta.code == "1002") {
+                            _this.showError.show = true;
+                            _this.showError.type = "";
+                            _this.showError.text = "请求参数错误";
+                        }
+                        if(RE.meta.code == "1003") {
+                            _this.showError.show = true;
+                            _this.showError.type = "weberror";
+                        }
                         console.log("FEFull：搜索失败，"+RE.meta.message);
                     }
                 }

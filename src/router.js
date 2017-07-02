@@ -11,6 +11,7 @@ import PageError from './components/common/PageError'
 import Usercenter from './components/usercenter/usercenter'
 import MyartCreate from './components/usercenter/myartCreate'
 import MyartList from './components/usercenter/myartList'
+import FavorartList from './components/usercenter/favorartList'
 import Login from './components/login/login'
 import Preview from './components/usercenter/preview'
 import Navigation from './components/navigation/navigation'
@@ -41,6 +42,11 @@ const routes = [
                 path: '/usercenter/myartList',
                 name: 'myartList',
                 component: MyartList,
+            },
+            {
+                path: '/usercenter/favorartList',
+                name: 'favorartList',
+                component: FavorartList,
             }
         ],
         beforeEnter: (to, from, next) => {

@@ -1,5 +1,5 @@
 <template>
-	<div class="com-error">
+	<div class="com-error" :class="errorSize">
 		<div class="error" :class="errorType">{{errorTxt}}</div>
 	</div>
 </template>
@@ -7,11 +7,12 @@
 <script>
 
 export default {
-    props: ['text','type'],
+    props: ['text','type','size'],
     data () {
     	return {
             errorTxt: "",
-            errorType: ""
+            errorType: "",
+            errorSize: ""
     	}
     },
     created: function(){
@@ -32,6 +33,7 @@ export default {
             default: this.errorTxt = this.text || "未知错误";
         }
         
+        this.errorSize = this.size || "";
     },
     methods: {
     	

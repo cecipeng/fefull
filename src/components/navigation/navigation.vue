@@ -3,16 +3,19 @@
 
     	<div class="navigation-box">
             <div class="layout-wrapper">
-                <div class="ui-maintitle maintitle-mynav">
+                <div class="ui-maintitle maintitle-mynav" data-style='style1'>
                     <h4 class="maintitle">我的导航</h4>      
                     <div class="frbox">
-                        <a href="###" class="btn-editor" @click="$refs.showModal1.showModal()"></a>    
+                        <p class="viewwrap">
+                            <a href="###" class="btn-view btn-view-large" :class="{'on':viewIndex==0}" @click="viewIndex = 0" title="详细"></a>  
+                            <a href="###" class="btn-view btn-view-small" :class="{'on':viewIndex==1}" @click="viewIndex = 1" title="缩略"></a>
+                        </p>
+                        <a href="###" class="ui-btn ui-btn-default btn-editor" data-size="size-s" @click="$refs.showModal1.showModal()"><i class="edit"></i>编辑</a>  
                     </div>  
                 </div>
-                <div v-if="memberList === false">未登录</div>
-                <div v-if="(memberList !== false && memberList.length==0)">为空</div>
-                <div class="navigation-box" v-for="item in memberList" v-if="(memberList !== false && memberList.length>0)">
-                    <div class="ui-maintitle maintitle-online">
+                <comError :text="showError.text" :type="showError.type" v-if="showError.show" size="smallCol"></comError>
+                <div class="navigation-box" :class="[viewIndex == 1 ? 'listsmall' : '']" v-for="item in memberList" v-else>
+                    <div class="ui-maintitle" data-style='style2'>
                         <h4 class="maintitle" :data-id="item.categoryId">{{item.categoryName}}</h4>     
                     </div>
                     <comListNavigation :list="item.navigators"></comListNavigation>
@@ -20,9 +23,12 @@
             </div>
         </div>
 
-        <div class="layout-wrapper">
-            <div class="navigation-box" v-for="item in sysList">
-                <div class="ui-maintitle maintitle-online">
+        <div class="layout-wrapper navigation-box-sysnav">
+            <div class="ui-maintitle maintitle-sysnav" data-style='style1'>
+                <h4 class="maintitle">热门导航</h4>  
+            </div>
+            <div class="navigation-box" :class="[viewIndex == 1 ? 'listsmall' : '']" v-for="item in sysList">
+                <div class="ui-maintitle" data-style='style2'>
                     <h4 class="maintitle" :data-id="item.categoryId">{{item.categoryName}}</h4>     
                 </div>
                 <comListNavigation :list="item.navigators"></comListNavigation>
@@ -140,8 +146,47 @@
 
         <comModal ref="showModal2" :modalOpt='{
             confirmButtonText: "保存",
-         
+            title: "编辑导航",
+            customClass: "modal-addNav"
         }'> 
+            <div slot="body" class="formwrap">
+                <div class="ui-formrow">
+                    <label class="form-label">分类</label>
+                    <div class="form-con">
+                        <!--<comDropdown :reltext="curEditElement.category.categoryName" ref="handleClose">-->
+                        <comDropdown reltext="11111" ref="handleClose">
+                            <a slot="rel" class="btn-rel btn-rel-category">
+                                <span class="selector-btn">ffsfsdf</span>
+				                <i class="dropdown-arrow"></i>
+                            </a>
+                            <ul slot="list" class="droplist">
+                                <li v-for="(item, index) in memberList"><a @click="$refs.handleClose.handleClose()" class="dropitem" :data-id="item.categoryId">{{item.categoryName}}</a></li>
+                            </ul>
+                        </comDropdown>
+                    </div>
+                </div>
+                <div class="ui-formrow" :class="{'form-error':formStatus.navigatorName.status===1}">
+                    <label class="form-label">导航名称</label>
+                    <div class="form-con">
+                        <input type="text" class="form-input" v-model="curEditElement.navigatorName">
+                    </div>
+                    <p class="form-tip">{{formStatus.navigatorName.tiptxt}}</p>
+                </div>
+                <div class="ui-formrow" :class="{'form-error':formStatus.navigatorUrl.status===1}">
+                    <label class="form-label">导航地址</label>
+                    <div class="form-con">
+                        <input type="text" class="form-input" v-model="curEditElement.navigatorUrl">
+                    </div>
+                    <p class="form-tip">{{formStatus.navigatorUrl.tiptxt}}</p>
+                </div>
+                <div class="ui-formrow" :class="{'form-error':formStatus.description.status===1}">
+                    <label class="form-label">导航简介</label>
+                    <div class="form-con">
+                        <textarea type="text" class="form-input" v-model="curEditElement.description"></textarea>
+                    </div>
+                    <p class="form-tip">{{formStatus.description.tiptxt}}</p>
+                </div>
+            </div>
         </comModal> 
     </div>
 </template>
@@ -150,6 +195,8 @@
 
 import comListNavigation from './../common/list-navigation'
 import comModal from './../common/modal'
+import comError from './../common/error'
+import comDropdown from './../common/dropdown'
 import store from './../../store.js'
 
 //公用方法
@@ -159,11 +206,50 @@ export default {
 
     data () {
         return {
+            // showDropdown: false, //添加导航弹窗中，显示分类下拉菜单
+            curEditElement: { //绑定当前编辑的导航内容：更新值
+                category: {
+                    categoryId: 0,
+                    categoryName: ""
+                }, //所属分类
+                navigatorName: "",
+                navigatorUrl: "",
+                description: ""
+            },
+            orgEditElement: { //绑定当前编辑的导航内容：原始值
+                category: {
+                    categoryId: 0,
+                    categoryName: ""
+                }, //所属分类
+                navigatorName: "",
+                navigatorUrl: "",
+                description: ""
+            },
+            formStatus: {
+                navigatorName: {
+                    status: 0, //1:error; 2:correct
+                    tiptxt: ""
+                },
+                navigatorUrl: {
+                    status: 0,
+                    tiptxt: ""
+                },
+                description: {
+                    status: 0,
+                    tiptxt: ""
+                }
+            },
             sysList: "", //公共导航列表
             memberList: "", //用户导航列表
+            showError: { //缺省图
+                show: false, //是否显示
+                type: "", //错误类型
+                text: "" //错误提示文字
+            },
+            viewIndex: 1 //列表显示类型，0:大卡片，1:小卡片
         }
     },
-    components: { comListNavigation,comModal },
+    components: { comListNavigation,comModal,comError,comDropdown },
     created: function(){
         // this.http_comNavigation()
     },
@@ -178,11 +264,11 @@ export default {
 
         //已登录的请求地址和未登录的请求地址
         if(store.state.loginUser.isLogining) { //已登录接口
-            url = "navigator/member";
+            url = UTIL.AJAX_URL().navMember;
             sort = 1;
         }
         else { //未登录接口
-            url = "navigator/system";
+            url = UTIL.AJAX_URL().navSystem;
             sort = 0;
         }
 
@@ -193,14 +279,29 @@ export default {
             function(RE,r,s){
                 if(RE.meta.code == "0000") { //请求成功
                     next(vm => {
+                        
+                        
                         if(sort===0) {//未登录数据
                             vm.sysList = RE.datas;
                             vm.memberList = false;
+                            vm.showError.show = true;//提示未登录
+                            vm.showError.type = "weberror";
+                            vm.showError.text = "未登录，无法查看个人收藏导航，请先登录～";
+
                         }
                         else if(sort===1) {//已登录数据
                             vm.sysList = RE.datas.system;
-                            vm.memberList = RE.datas.member;
+                            
+                            if(RE.datas.member==0) { //内容为空时，显示无内容缺省图
+                                vm.showError.show = true;
+                                vm.showError.type = "empty";
+                            }
+                            else {
+                                vm.showError.show = false;
+                                vm.memberList = RE.datas.member;
+                            }
                         }
+
                     });
                 }
                 else { 
@@ -211,14 +312,19 @@ export default {
         );
     },
     methods: {
-
+        //列表显示方式切换
+        changeView: function(idx){
+            this.viewIndex = idx;
+        },
     }
 }
 </script>
 
 <style lang="scss">
-.ui-maintitle {
-    margin-bottom: 30px;
+
+.ui-maintitle[data-style="style2"] {
+    margin-bottom: 10px;
 }
+
 
 </style>
