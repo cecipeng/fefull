@@ -138,6 +138,11 @@
             font-size: 20px;
             color: $fz-d;
             border-left: 4px solid $border-d;
+            .subtitle {
+                padding-left: 10px;
+                font-size: 14px;
+                color: $fz-l;
+            }
         }
         .mynav-sort {
             margin-bottom: 10px;
@@ -371,8 +376,41 @@
             display: block;
         }
         .btn-rel-category {
-            width: 100%;
+            text-align: center;
             background-color: #fff;
+        }
+        //新建分类
+        .addcategory {
+            
+            border-top: 1px solid $border;
+            background-color: $bg-l;
+        }
+        .btn-addcategory {
+            display: block;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            color: $fz-l;
+            font-size: 12px;
+            cursor: pointer;
+            &:hover {
+                color: $main;
+            }
+        }
+        .add-editbox {
+            padding: 10px;
+            .btn-add-commit {
+                float: right;
+                min-width: 0;
+                margin-left: 6px;
+            }
+            .add-input {
+                overflow: hidden;
+                .form-input {
+                    height: 30px;
+                    line-height: 28px;
+                }
+            }
         }
     }
 }

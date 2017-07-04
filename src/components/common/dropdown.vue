@@ -1,24 +1,22 @@
 <template>
-	<div class="ui-dropdown" @mouseleave="handleMouseLeave" @mouseenter="handleMouseEnter">
+	<div class="ui-dropdown" :placement="placement"  @mouseleave="handleMouseLeave" @mouseenter="handleMouseEnter">
 		<div class="dropdown-rel" @click="handleClick">
 			<slot name="rel">
 				<a class="btn-rel">
-					<span class="selector-btn">{{reltext}}</span>
+					<span class="selector-btn" :data-id="reltextId">{{reltextName}}</span>
 					<i class="dropdown-arrow"></i>
 				</a>
 			</slot>
 		</div>
-		<div class="dropdown-list" v-show="show">
-			<slot name="list">
-				<!--<ul class="droplist">
-					<li v-for="(item, index) in droplist"><a @click="handleClose(item)" class="dropitem">{{}}</a></li>
-				</ul>-->
-			</slot>
+		<div class="dropdown-list" v-show="show" :style="{width: width}">
+			<slot name="list"></slot>
 		</div>
 	</div>
 </template>
 
 <script>
+
+
 //公用方法
 import UTIL from './../../util.js'
 
@@ -29,29 +27,35 @@ export default {
 		}
 	},
 	props: {
-		trigger: {
+		trigger: { //触发方式
 			validator (value) {
 				return UTIL.oneOf(value, ['click', 'hover']);
 			},
 			default: 'hover'
 		},
-		position: {
+		placement: { //位置
 			validator (value) {
 				return UTIL.oneOf(value, ['top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left', 'left-start', 'left-end', 'right', 'right-start', 'right-end']);
 			},
 			default: 'bottom'
 		},
-		width: {
+		width: { //下拉菜单宽度
 			default: '100%'
 		},
-		reltext: {
-			default: '下拉菜单'
+		reltextId: { //rel显示内容id值
+			default: ''
 		},
-		droplist: {
-
+		reltextName: { //rel显示文字
+			default: '下拉菜单'
 		}
 	},
 	created() {
+	},
+	mounted () {
+		this.$on('itemClickDropdown', function(val) {
+			this.show = false;
+			this.$emit('itemClickParent', val);
+		}.bind(this));
 	},
 	methods: {
 		//点击显示／隐藏：click方式
@@ -79,14 +83,7 @@ export default {
 			this.timeout = setTimeout(() => {
 				this.show = false;
 			}, 250);
-		},
-// 		changeShowDropdown: function(){
-// 			this.show = !this.show;
-// 		},
-// 		orderList: function(orderId){
-// 			this.show = false;
-// console.log(orderId);
-// 		}
+		}
 	}
 }
 </script>

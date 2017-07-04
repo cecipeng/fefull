@@ -36,7 +36,6 @@
         </div>
 
         <!--弹窗：编辑导航-->
-        
         <comModal ref="showModal1" :modalOpt='{
             showHeader: false,
             size: "large",
@@ -48,93 +47,39 @@
             <div slot="body" class="navigation-modal-edit">
                 <!--我的导航-->
                 <div class="navigation-mynav">
-                    <p class="edit-maintitle">管理常用网址</p>
-                    <div class="mynav-sort">
+                    <p class="edit-maintitle">我的导航</p>
+                    <div class="mynav-sort" v-for="item in memberList">
                         <div class="ui-formrow mynav-sort-title">
                             <label class="form-label">分类：</label>
                             <div class="form-con">
-                                <input type="text" class="form-input">
+                                <input type="text" class="form-input" v-model="item.categoryName">
                             </div>
                         </div>
                         <ul class="mynav-sort-list">
-                            <li>
+                            <li v-for="list in item.navigators">
                                 <p class="item-edit">
-                                    <a href="###" class="btn-edit"></a>
+                                    <a href="###" class="btn-edit" @click="openModal2(list,item.categoryId,item.categoryName)"></a>
                                     <a href="###" class="btn-del"></a>
                                 </p>
-                                <p class="item-title">sdf</p>
-                            </li>
-                            <li>
-                                <p class="item-edit">
-                                    <a href="###" class="btn-edit"></a>
-                                    <a href="###" class="btn-del"></a>
-                                </p>
-                                <p class="item-title">sdf</p>
+                                <p class="item-title" :data-id="list.navigatorId">{{list.navigatorName}}</p>
                             </li>
                         </ul>
                     </div>
-                    <div class="mynav-sort">
-                        <div class="ui-formrow mynav-sort-title">
-                            <label class="form-label">分类：</label>
-                            <div class="form-con">
-                                <input type="text" class="form-input">
-                            </div>
-                        </div>
-                        <ul class="mynav-sort-list">
-                            <li>
-                                <p class="item-edit">
-                                    <a href="###" class="btn-edit"></a>
-                                    <a href="###" class="btn-del"></a>
-                                </p>
-                                <p class="item-title">sdf</p>
-                            </li>
-                            <li>
-                                <p class="item-edit">
-                                    <a href="###" class="btn-edit"></a>
-                                    <a href="###" class="btn-del"></a>
-                                </p>
-                                <p class="item-title">sdf</p>
-                            </li>
-                        </ul>
-                    </div>
-                    <a class="btn-add-navigation ui-btn ui-btn-default" @click="$refs.showModal2.showModal()">添加导航</a>    
+                    <a class="btn-add-navigation ui-btn ui-btn-default" @click="openModal2()">添加导航</a>    
                 </div>  
                 <!--／我的导航-->     
 
                 <!--公共导航-->
                 <div class="navigation-sysnav">
-                    <p class="edit-maintitle">热门导航推荐</p>
-                    <div class="sysnav-sort">
-                        <p class="sysnav-sort-text">宠物：</p>
+                    <p class="edit-maintitle">热门导航推荐<span class="subtitle">（点击添加到我的导航）</span></p>
+                    <div class="sysnav-sort" v-for="item in sysList">
+                        <p class="sysnav-sort-text" :data-id="item.categoryId">{{item.categoryName}}：</p>
                         <ul class="sysnav-sort-list">
-                            <li>
+                            <li v-for="list in item.navigators">
                                 <p class="item-edit">
                                     <a href="###" class="btn-add"></a>
                                 </p>
-                                <p class="item-title">sdf</p>
-                            </li>
-                            <li>
-                                <p class="item-edit">
-                                    <a href="###" class="btn-add"></a>
-                                </p>
-                                <p class="item-title">sdf</p>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="sysnav-sort">
-                        <p class="sysnav-sort-text">宠物：</p>
-                        <ul class="sysnav-sort-list">
-                            <li>
-                                <p class="item-edit">
-                                    <a href="###" class="btn-add"></a>
-                                </p>
-                                <p class="item-title">sdf</p>
-                            </li>
-                            <li class="isFav">
-                                <p class="item-edit">
-                                    <a href="###" class="btn-add"></a>
-                                </p>
-                                <p class="item-title">sdf</p>
+                                <p class="item-title" :data-id="list.navigatorId">{{list.navigatorName}}</p>
                             </li>
                         </ul>
                     </div>
@@ -152,15 +97,21 @@
             <div slot="body" class="formwrap">
                 <div class="ui-formrow">
                     <label class="form-label">分类</label>
-                    <div class="form-con">
-                        <!--<comDropdown :reltext="curEditElement.category.categoryName" ref="handleClose">-->
-                        <comDropdown reltext="11111" ref="handleClose">
+                    <div class="form-con" style="width: 70%">
+                        <comDropdown trigger="hover" placement="bottom" @itemClickParent="itemClickCall">
                             <a slot="rel" class="btn-rel btn-rel-category">
-                                <span class="selector-btn">ffsfsdf</span>
+                                <span class="selector-btn" :data-id="curEditElement.categoryId">{{curEditElement.categoryName}}</span>
 				                <i class="dropdown-arrow"></i>
                             </a>
                             <ul slot="list" class="droplist">
-                                <li v-for="(item, index) in memberList"><a @click="$refs.handleClose.handleClose()" class="dropitem" :data-id="item.categoryId">{{item.categoryName}}</a></li>
+                                <comDropdownItem v-for="(item, index) in memberList" class="dropitem" :val="item.categoryId">{{item.categoryName}}</comDropdownItem>
+                                <li class="addcategory">
+                                    <a class="btn-addcategory" @click="addcategory=false" v-if="addcategory">新建分类...</a>
+                                    <div class="add-editbox" v-if="!addcategory">
+                                        <a class="btn-add-commit ui-btn ui-btn-main" data-size="size-s" @click="http_addcategory">创建</a>
+                                        <p class="add-input"><input type="text" class="form-input" v-model="addcategoryText"></p>
+                                    </div>
+                                </li>
                             </ul>
                         </comDropdown>
                     </div>
@@ -197,6 +148,7 @@ import comListNavigation from './../common/list-navigation'
 import comModal from './../common/modal'
 import comError from './../common/error'
 import comDropdown from './../common/dropdown'
+import comDropdownItem from './../common/dropdown-item'
 import store from './../../store.js'
 
 //公用方法
@@ -208,19 +160,15 @@ export default {
         return {
             // showDropdown: false, //添加导航弹窗中，显示分类下拉菜单
             curEditElement: { //绑定当前编辑的导航内容：更新值
-                category: {
-                    categoryId: 0,
-                    categoryName: ""
-                }, //所属分类
+                categoryId: 0, //所属分类
+                categoryName: "",
                 navigatorName: "",
                 navigatorUrl: "",
                 description: ""
             },
             orgEditElement: { //绑定当前编辑的导航内容：原始值
-                category: {
-                    categoryId: 0,
-                    categoryName: ""
-                }, //所属分类
+                categoryId: 0, //所属分类
+                categoryName: "",
                 navigatorName: "",
                 navigatorUrl: "",
                 description: ""
@@ -246,10 +194,16 @@ export default {
                 type: "", //错误类型
                 text: "" //错误提示文字
             },
-            viewIndex: 1 //列表显示类型，0:大卡片，1:小卡片
+            viewIndex: 1, //列表显示类型，0:大卡片，1:小卡片
+            dropdown: {//编辑弹窗中，选择分类显示文字
+                id: "",
+                name: "选择分类" 
+            },
+            addcategory: true, //新建分类，点击变为false，开始编辑
+            addcategoryText: "", //新建分类名称
         }
     },
-    components: { comListNavigation,comModal,comError,comDropdown },
+    components: { comListNavigation,comModal,comError,comDropdown,comDropdownItem },
     created: function(){
         // this.http_comNavigation()
     },
@@ -316,6 +270,43 @@ export default {
         changeView: function(idx){
             this.viewIndex = idx;
         },
+        //下拉菜单回调事件
+        itemClickCall(val){
+            console.log(val);
+            this.memberList.forEach((x)=>{
+                if(x.categoryId == val) {
+                    this.curEditElement.categoryId = x.categoryId;
+                    this.curEditElement.categoryName = x.categoryName;
+                    console.log(this.curEditElement.categoryName);
+                    return;
+                }
+            })
+            
+        },
+        //新建分类
+        http_addcategory(){
+            this.addcategory = true;
+            //添加到数据库
+            //重新获取数据
+        },
+        //点击展开添加弹窗
+        openModal2(item,categoryId,categoryName){
+            this.initEditElement(item,categoryId,categoryName);
+            this.$refs.showModal2.showModal();
+        },
+        //
+        initEditElement(item,categoryId,categoryName){
+            this.orgEditElement.categoryId = categoryId ? categoryId : "";
+            this.orgEditElement.categoryName = categoryName ? categoryName : "--选择分类--";
+            this.orgEditElement.navigatorName = item ? item.navigatorName : "";
+            this.orgEditElement.navigatorUrl = item ? item.navigatorUrl : "";
+            this.orgEditElement.description = item ? item.description : "";
+
+            for(var i in this.orgEditElement) {
+                this.curEditElement[i] = this.orgEditElement[i];
+            }
+        }
+
     }
 }
 </script>

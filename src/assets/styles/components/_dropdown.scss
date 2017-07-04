@@ -44,23 +44,21 @@
 	.dropdown-list {
 		// display: none;
 		position: absolute;
-		left: 0;
-		right: 0;
-		top: 36px;
 		max-height: 406px;		//
 		border: 1px solid $border;
 		background-color: #fff;
+		transform: translateX(-50%);
 		overflow-y: auto;
 		overflow-x: hidden;
+		text-align: center;
 		z-index: $zindex-dd;
 		.dropitem {
 			display: block;
 			height: 30px;
 			line-height: 30px;
-			padding: 0 10px;
+			padding: 0 15px;
 			font-size: 14px;
 			color: $fz;
-			text-align: center;
 			@extend %tof;
 			cursor: pointer;
 			transition: color 0.3s ease-out, background-color 0.3s ease-out;
@@ -74,4 +72,75 @@
 			}
 		}
 	}	
+
+	///////// 位置
+	//下
+	&[placement^="bottom"] .dropdown-list {
+		top: 36px;
+	}
+	&[placement="bottom"] .dropdown-list {
+		left: 50%;
+	}
+	&[placement="bottom-start"] .dropdown-list {
+		left: 0;
+		transform: none;
+		text-align: left;
+	}
+	&[placement="bottom-end"] .dropdown-list {
+		right: 0;
+		transform: none;
+		text-align: right;
+	}
+
+	//上
+	&[placement^="top"] .dropdown-list {
+		bottom: 36px;
+	}
+	&[placement="top"] .dropdown-list {
+		left: 50%;
+	}
+	&[placement="top-start"] .dropdown-list {
+		left: 0;
+		transform: none;
+		text-align: left;
+	}
+	&[placement="top-end"] .dropdown-list {
+		right: 0;
+		transform: none;
+		text-align: right;
+	}
+
+	//左
+	&[placement^="left"] .dropdown-list {
+		right: 100%;
+	}
+	&[placement="left"] .dropdown-list {
+		top: 50%;
+		transform: translateY(-50%);
+	}
+	&[placement="left-start"] .dropdown-list {
+		top: 0;
+		transform: none;
+	}
+	&[placement="left-end"] .dropdown-list {
+		bottom: 0;
+		transform: none;
+	}
+
+	//右
+	&[placement^="right"] .dropdown-list {
+		left: 100%;
+	}
+	&[placement="right"] .dropdown-list {
+		top: 50%;
+		transform: translateY(-50%);
+	}
+	&[placement="right-start"] .dropdown-list {
+		top: 0;
+		transform: none;
+	}
+	&[placement="right-end"] .dropdown-list {
+		bottom: 0;
+		transform: none;
+	}
 }
