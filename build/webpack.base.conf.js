@@ -10,6 +10,18 @@ var cssSourceMapDev = (env === 'development' && config.dev.cssSourceMap)
 var cssSourceMapProd = (env === 'production' && config.build.productionSourceMap)
 var useCssSourceMap = cssSourceMapDev || cssSourceMapProd
 
+var lang = require('highlight.js-async-webpack/src/file.lang.hljs.js');
+
+var _entry= {
+    back_end: './src/back-end/index.js', // 原始入口 
+    vue: ['vue']
+};
+console.log("gfddf:"+lang);
+console.log("gfddf2:"+_entry.back_end);
+for (var i = 0; i < lang.length; i++) {
+    _entry[lang[i]] = ['mavon-editor/dist/js/' + lang[i] + '.js']
+}
+
 module.exports = {
   entry: {
     app: './src/main.js'

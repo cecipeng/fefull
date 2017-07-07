@@ -2,7 +2,17 @@
     <div class="myartList">
     	<div class="ui-user-header">
             <h2 class="user-header"><em class="font-l">我</em>的文章</h2>
-            <router-link class="ui-btn ui-btn-main" tag="a" :to="{ name: 'myartCreate'}">创建文章</router-link>
+			<comDropdown trigger="hover" placement="bottom">
+				<a slot="rel" class="btn-rel">
+					<span class="ui-btn ui-btn-main">新建</span>
+					<i class="dropdown-arrow"></i>
+				</a>
+				<div slot="list" class="droplist">
+					<router-link class="dropitem" tag="a" :to="{ name: 'myartCreate'}">新建文章</router-link>
+					<router-link class="dropitem" tag="a" :to="{ name: 'myartCreateMarkdown'}">新建Markdown</router-link>
+				</div>
+			</comDropdown>
+            
         </div>
         <div class="listbox">
 			<table class="artlist">
@@ -44,10 +54,10 @@
 </template>
 
 <script>
-
+import comDropdown from './../common/dropdown'
 
 export default {
-
+	components: { comDropdown },
     data () {
         return {
            

@@ -10,6 +10,7 @@ import Search from './components/article/searchResult'
 import PageError from './components/common/PageError'
 import Usercenter from './components/usercenter/usercenter'
 import MyartCreate from './components/usercenter/myartCreate'
+import MyartCreateMarkdown from './components/usercenter/myartCreateMarkdown'
 import MyartList from './components/usercenter/myartList'
 import FavorartList from './components/usercenter/favorartList'
 import Login from './components/login/login'
@@ -37,6 +38,11 @@ const routes = [
                 path: '/usercenter/myartCreate',
                 name: 'myartCreate',
                 component: MyartCreate,
+            },
+            {
+                path: '/usercenter/myartCreateMarkdown',
+                name: 'myartCreateMarkdown',
+                component: MyartCreateMarkdown,
             },
             {
                 path: '/usercenter/myartList',
