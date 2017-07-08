@@ -8,7 +8,7 @@
 				</a>
 			</slot>
 		</div>
-		<div class="dropdown-list" v-show="show" :style="{width: width}">
+		<div class="dropdown-list" v-show="show" :style="{width: width,top: top}">
 			<slot name="list"></slot>
 		</div>
 	</div>
@@ -32,6 +32,9 @@ export default {
 				return UTIL.oneOf(value, ['click', 'hover']);
 			},
 			default: 'hover'
+		},
+		top: { //下拉菜单高度
+			default: '36px'
 		},
 		placement: { //位置
 			validator (value) {

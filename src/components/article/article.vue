@@ -15,30 +15,28 @@
     	            <!-- /com-search -->
 
     	            <!-- 排序 -->
-                    <div class="ui-dropdown" @mouseleave="showDropdown1=false">
-                        <a class="selector" @mouseenter="showDropdown1=true">
+                    <comDropdown trigger="hover" placement="bottom" width="120px" top="35px">
+                        <a slot="rel" class="selector">
                             排序方式
                             <i class="dropdown-arrow"></i>
                         </a>
-                        <div class="dropdown" v-show="showDropdown1">
-                            <ul class="droplist">
-                                <li><a @click="orderList(1);showDropdown1 = false" class="dropitem">最新（默认）</a></li>
-                                <li><a @click="orderList(2);showDropdown1 = false" class="dropitem">热门</a></li>
-                            </ul>
-                        </div>
-                    </div>
+                        <ul slot="list" class="droplist">
+                            <li><a @click="orderList(1)" class="dropitem">最新（默认）</a></li>
+                            <li><a @click="orderList(2)" class="dropitem">热门</a></li>
+                        </ul>
+                    </comDropdown>
     	            <!-- /排序 -->
     	            
                     <!-- com-tagcloud -->
-                    <div class="ui-dropdown tagcloud"  @mouseleave="showDropdown2=false">
-                        <a class="selector" @mouseenter="showDropdown2=true">
+                    <comDropdown trigger="hover" placement="bottom-end" width="320px" top="35px">
+                        <a slot="rel" class="selector">
                             标签云
                             <i class="dropdown-arrow"></i>
                         </a>
-                        <div class="dropdown" v-show="showDropdown2">
+                        <ul slot="list" class="droplist">
                             <comTagcloud :tagcloudList="allTagcloud"></comTagcloud>  
-                        </div>
-                    </div>
+                        </ul>
+                    </comDropdown>
                     <!-- /com-tagcloud -->
     	        </div>
     	    </div>
@@ -58,6 +56,7 @@ import comSearch from './search'
 import comTagcloud from './../common/tagcloud'
 import comListArticle from './../common/list-art'
 import comLoadingMod from './../common/loading-mod'
+import comDropdown from './../common/dropdown'
 import comError from './../common/error'
 import comPage from './../common/page'
 
@@ -69,7 +68,6 @@ export default {
 
     data () {
         return {
-            showDropdown1: false, //显示下拉菜单
             showDropdown2: false, //显示下拉菜单
             showpage: false, //显示分页
             showloading: false, //显示正在加载
@@ -96,7 +94,7 @@ export default {
             curIndex: 0 //初始tab显示第一条
         }
     },
-    components: { comSearch,comTagcloud,comListArticle,comPage,comLoadingMod,comError },
+    components: { comSearch,comTagcloud,comListArticle,comPage,comLoadingMod,comError,comDropdown },
     created: function(){
         //获取（公用数据）文章分类
         this.$store.commit('http_articleSort');
@@ -207,5 +205,13 @@ export default {
 </script>
 
 <style lang="scss">
-
+.com-search,
+.ui-dropdown {
+    margin-left: 20px;
+}
+.ui-dropdown .selector {
+    position: relative;
+    display: block;
+    padding-right: 20px;
+}
 </style>

@@ -25,7 +25,7 @@
 	}
 	//头部下拉菜单特殊处理
 	.ui-dropdown {
-		.dropdown {
+		.dropdown-list {
 			background-color: $nav-l;
 		}
 	}
@@ -49,15 +49,13 @@
 			font-size: 14px;
 		}
 		.selector {
+			display: block;
+			padding-right: 24px;
 			line-height: 30px;
 		}
-		.dropdown {
-			top: $header-h;
+		.dropdown-list {
+			top: 40px;
 			border: none;
-			left: auto;
-			right: 50%;
-			margin-right: -50px;
-			width: 100px;
 			.dropitem {
 				color: #fff;
 				font-size: 12px;
@@ -131,7 +129,7 @@
 			@extend %iconfont;
 			@extend %icon-arrow3;
 		}
-		.dropdown {
+		.dropdown-list {
 			position: absolute;
 			left: 50%;
 			top: $header-h;
@@ -154,7 +152,7 @@
 	}
 	//头部下拉菜单特殊处理
 	.ui-dropdown {
-		.dropdown {
+		.dropdown-list {
 			background-color: $nav-l;
 		}
 	}

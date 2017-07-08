@@ -195,10 +195,6 @@ export default {
                 text: "" //错误提示文字
             },
             viewIndex: 1, //列表显示类型，0:大卡片，1:小卡片
-            dropdown: {//编辑弹窗中，选择分类显示文字
-                id: "",
-                name: "选择分类" 
-            },
             addcategory: true, //新建分类，点击变为false，开始编辑
             addcategoryText: "", //新建分类名称
         }
@@ -272,7 +268,6 @@ export default {
         },
         //下拉菜单回调事件
         itemClickCall(val){
-            console.log(val);
             this.memberList.forEach((x)=>{
                 if(x.categoryId == val) {
                     this.curEditElement.categoryId = x.categoryId;
@@ -294,7 +289,7 @@ export default {
             this.initEditElement(item,categoryId,categoryName);
             this.$refs.showModal2.showModal();
         },
-        //
+        //初始化新增导航弹窗
         initEditElement(item,categoryId,categoryName){
             this.orgEditElement.categoryId = categoryId ? categoryId : "";
             this.orgEditElement.categoryName = categoryName ? categoryName : "--选择分类--";

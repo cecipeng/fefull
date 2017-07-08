@@ -11,7 +11,7 @@
 	vertical-align: middle;
 	position: relative;
 	width: 200px;
-	.selector {
+	.search-selector {
 		position: relative;
 		padding: 0;
 		z-index: $zindex-dd + 1;
@@ -48,9 +48,35 @@
 			@include hover(background-color,$main-l,$main-d);
 		}
 	}
-	.dropdown {
-		top: 20px;
-		padding-top: 25px;
+	.search-dropdown {
+		position: absolute;
+		top: 31px;
+		left: 0;
+		width: 100%;
+		background-color: #fff;
+		border: 1px solid $border;
 		z-index: $zindex-dd;
+		overflow-y: auto;
+		overflow-x: hidden;
+		text-align: center;
+		.dropitem {
+			display: block;
+			height: 30px;
+			line-height: 30px;
+			padding: 0 15px;
+			font-size: 14px;
+			color: $fz;
+			@extend %tof;
+			cursor: pointer;
+			transition: color 0.3s ease-out, background-color 0.3s ease-out;
+			&:hover {
+				color: $fz-d;
+				background-color: #f4f6f8;
+			}
+			&:active {
+				color: blue;
+				background-color: #e2e9f0;
+			}
+		}
 	}
 }

@@ -1,13 +1,13 @@
 <template>
-	<div class="com-search ui-dropdown">
-		<p class="selector">
+	<div class="com-search">
+		<p class="search-selector">
 			<input type="text" v-model="searchWord" @keyup="inputing()">
 			<!--<router-link tag="a" class="btn-search" :to="{ name: 'search', params: { key: {'keyword': searchWord} }}"></router-link>-->
 			<a class="btn-search" @click="searching"></a>
 		</p>
-		<div class="dropdown" v-if="showDropdown">
+		<div class="search-dropdown" v-if="showDropdown">
 			<comError size="small" :text="showError.text" :type="showError.type" v-if="showError.show"></comError>
-			<ul class="droplist" v-else>
+			<ul class="search-droplist" v-else>
 				<li v-for="item in searchResult"><router-link tag="a" class="dropitem" :to="{ name: 'articleDetail', params: { articleId: item.articleId }}" :data-id="item.articleId">{{item.title}}</router-link></li>
 			</ul>
 		</div>

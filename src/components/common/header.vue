@@ -14,7 +14,7 @@
                         </li>
                          <li id="ui-dropdown" @mouseleave="showMenu = false">
                             <a class="item selector" :class="{on:showMenu ==true}" @mouseenter="showMenu = true">资源库<i class="dropdown-arrow"></i></a>
-                            <div class="dropdown" v-show="showMenu">
+                            <div class="dropdown-list" v-show="showMenu">
                                 <ul class="droplist">
                                     <li><a @click="showMenu = false" href="###" class="dropitem">基础库下载</a></li>
                                     <li><a @click="showMenu = false" href="###" class="dropitem">插件库</a></li>
@@ -36,19 +36,20 @@
                 <!-- /mainmenu -->
             </div>
             <div class="frbox">
-                <div class="header-userdrop ui-dropdown" v-if="showUserHeader" @mouseleave="showDropdown = false">
-                    <a class="selector" @mouseenter="showDropdown = true">
-                        <!-- com-userhead -->
-                        <comUserheader stylesize="s" :userData="$store.state.loginUser"></comUserheader>
-                        <!-- /com-userhead -->
-                        <i class="dropdown-arrow"></i>
-                    </a>
-                    <div class="dropdown" v-show="showDropdown">
-                        <ul class="droplist">
+                <div class="header-userdrop ui-dropdown" v-if="showUserHeader">
+                    
+                    <comDropdown trigger="hover" placement="bottom" width="100px">
+                        <a slot="rel" class="selector">
+                            <!-- com-userhead -->
+                            <comUserheader stylesize="s" :userData="$store.state.loginUser"></comUserheader>
+                            <!-- /com-userhead -->
+                            <i class="dropdown-arrow"></i>
+                        </a>
+                        <ul slot="list" class="droplist">
                             <li><a @click="$router.push({ path: '/usercenter/myartList' })" class="dropitem">个人中心</a></li>
-                            <li><a @click="showDropdown = false;loginOut()" class="dropitem">退出登录</a></li>
+                            <li><a @click="loginOut()" class="dropitem">退出登录</a></li>
                         </ul>
-                    </div>
+                    </comDropdown>
                 </div>
                 <div class="unlogin" v-else>
                     <router-link target="_blank" class="ui-btn ui-btn-default" to="/login">登录</router-link>
@@ -62,12 +63,12 @@
 <script>
 
 import comUserheader from './userhead.vue';
+import comDropdown from './dropdown'
 
 export default {
-    components: { comUserheader },
+    components: { comUserheader,comDropdown },
     data () {
         return {
-            showDropdown: false, //显示用户下拉菜单
             showMenu: false, //显示导航二级菜单
             noHeaderRouter: /(usercenter)|(login)|(preview)|(pageError)/ //不需要头部的页面路由
         }
@@ -107,6 +108,7 @@ export default {
         // top: 38px;
     }
 }
+
 
 </style>
 
