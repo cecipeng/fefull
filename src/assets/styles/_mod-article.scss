@@ -30,33 +30,15 @@
                     line-height: 50px + 1px;
                 }
             }
-            // .ui-dropdown {
-            //     .selector {
-            //         display: block;
-            //         position: relative;
-            //         padding-right: 20px;
-            //         .dropdown-arrow {
-            //             position: absolute;
-            //             top: 50%;
-            //             right: 7px;
-            //             margin-top: -3px;
-            //             width: 13px;
-            //             height: 7px;
-            //             line-height: 7px;
-            //             font-size: 10px;
-            //             color: $fz;
-            //             content: "";
-            //             @extend %iconfont;
-            //             @extend %icon-arrow3;
-            //         }
-            //     }
-            //     &.tagcloud {
-            //         .dropdown {
-            //             left: auto;
-            //             width: 300px;
-            //         }
-            //     }
-            // }
+            .ui-dropdown {
+                margin-left: 20px;
+                .selector {
+                    position: relative;
+                    display: block;
+                    padding-right: 20px;
+                    cursor: pointer;
+                }
+            }
         }
     }
     .com-list-article {
@@ -329,6 +311,13 @@
                 margin-right: 10px;
                 font-size: 18px;
                 color: #fff;
+                
+            }
+            .favfull {
+                @extend %iconfont;
+                @extend %icon-shoucang;
+                margin-right: 10px;
+                font-size: 18px;
                 
             }
         }

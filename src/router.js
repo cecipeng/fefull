@@ -35,12 +35,12 @@ const routes = [
         name: 'usercenter',
         component: Usercenter,
         children: [{
-                path: '/usercenter/myartCreate',
+                path: '/usercenter/myartCreate/:articleId',
                 name: 'myartCreate',
                 component: MyartCreate,
             },
             {
-                path: '/usercenter/myartCreateMarkdown',
+                path: '/usercenter/myartCreateMarkdown/:articleId',
                 name: 'myartCreateMarkdown',
                 component: MyartCreateMarkdown,
             },

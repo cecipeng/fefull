@@ -26,7 +26,8 @@
                 <div class="layout-sideby">
                     <comUserheader stylesize="" :userData="article.author"></comUserheader>
                     <div class="btnwrap">
-                        <a href="###" class="ui-btn ui-btn-main" @click="addFavor()"><i class="fav"></i>收藏（{{article.fav}}）</a>
+                        <a href="###" class="ui-btn ui-btn-main" @click="addFavor()" v-if="article.isCollection==0"><i class="fav"></i>收藏（{{article.fav}}）</a>
+                        <a href="###" class="ui-btn ui-btn-default" @click="removeFavor()" v-else><i class="favfull"></i>已收藏（{{article.fav}}）</a>
                         <a href="###" class="ui-btn ui-btn-default"><i class="comment"></i>评论</a>
                     </div>
                     <!-- 相似文章 -->
@@ -159,6 +160,7 @@ export default {
             );
             this.similar = dataArtList; //临时处理
         },
+        //点击收藏文章
         addFavor(){
             var _this = this;
             UTIL.AJAX_POST(
@@ -169,6 +171,7 @@ export default {
                 function(RE,r,s){
                     if(RE.meta.code == "0000") { //请求成功
                         _this.article.fav++;
+                        _this.article.isCollection = 1;
                     }
                     else { 
                         //请求错误，除code等于0000外，其他code都在页面调用error组件展示错误信息
@@ -178,7 +181,33 @@ export default {
                         if(RE.meta.code == "1003") {
                   
                         }
-                        console.log("FEFull：获取文章详情失败，"+RE.meta.message);
+                        console.log("FEFull：收藏文章失败，"+RE.meta.message);
+                    }
+                }
+            );
+        },
+        //取消收藏文章
+        removeFavor(){
+            var _this = this;
+            UTIL.AJAX_POST(
+                UTIL.AJAX_URL().removeFavor,
+                {
+                    articleId: this.articleId
+                },
+                function(RE,r,s){
+                    if(RE.meta.code == "0000") { //请求成功
+                        _this.article.fav--;
+                        _this.article.isCollection = 0;
+                    }
+                    else { 
+                        //请求错误，除code等于0000外，其他code都在页面调用error组件展示错误信息
+                        if(RE.meta.code == "1002") {
+                      
+                        }
+                        if(RE.meta.code == "1003") {
+                  
+                        }
+                        console.log("FEFull：收藏文章失败，"+RE.meta.message);
                     }
                 }
             );

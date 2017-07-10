@@ -96,6 +96,8 @@ export default {
             articleTags : "article/tags", //文章标签
             addFavor : "article/collection", //点击收藏文章
             removeFavor : "article/uncollection", //取消收藏文章
+            myarticle : "article/getMyArticles", //我创建的文章
+            myarticleDel : "article/delete", //删除我创建的文章
             favor : "article/queryCollectionPage", //我收藏的文章
             login : "login/verify", //登录验证
             navMember : "navigator/member", //导航列表（登录后）：获取系统和用户自定义导航
@@ -111,5 +113,43 @@ export default {
             }
         }
         return false;
+    },
+
+    //对象深度复制
+    cloneObject: function(obj) {
+       
+        // Handle the 3 simple types, and null or undefined
+        if (null == obj || "object" != typeof obj) return obj;
+        
+        // Handle Date
+        if (obj instanceof Date) {
+            var copy = new Date();
+            copy.setTime(obj.getTime());
+            return copy;
+        }
+        
+        // Handle Array
+        if (obj instanceof Array) {
+            var copy = [];
+            for (var i = 0, len = obj.length; i < len; ++i) {
+            copy[i] = cloneObject(obj[i]);
+            }
+            return copy;
+        }
+        
+        // Handle Object
+        if (obj instanceof Object) {    
+            var copy = {};
+            for (var attr in obj) {
+                if (obj.hasOwnProperty(attr)) {
+                    // copy[attr] = cloneObject(obj[attr]);
+                    copy[attr] = typeof obj[attr] === "Object" ? cloneObject(obj[attr]) : obj[attr];
+                }
+            }
+             
+            return copy;
+        }
+        
+        throw new Error("Unable to copy obj! Its type isn't supported.");
     }
 }

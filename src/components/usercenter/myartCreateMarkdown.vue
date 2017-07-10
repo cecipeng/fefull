@@ -1,7 +1,7 @@
 <template>
     <div class="myartCreate">
         <div id="editor">
-            <mavon-editor style="height: 100%" placeholder="xxx"></mavon-editor>
+            <mavon-editor v-model="value" style="height: 100%" placeholder="xxx"></mavon-editor>
         </div>
     </div>
 </template>
@@ -34,6 +34,11 @@ export default {
 </script>
 
 <style lang="scss">
-   
+   .myartCreate {
+       height: 100%
+   }
+   #editor {
+       height: 100%
+   }
 
 </style>

@@ -9,17 +9,15 @@
             <div class="arttitwrap">
                 <div class="ui-formrow arttitbox" :class="{'form-error':formStatus.title.status===1}">
                     <!-- 是否原创 -->
-                    <div class="ui-dropdown" @mouseleave="showDropdown=false">
-                        <a class="selector" @mouseenter="showDropdown=true">
+                    <comDropdown trigger="hover" placement="bottom" @itemClickParent="itemClickCall">
+                        <a slot="rel" class="selector">
                             <span class="origin">{{result.origin.originName}}</span>
                             <i class="dropdown-arrow"></i>
                         </a>
-                        <div class="dropdown" v-show="showDropdown">
-                            <ul class="droplist">
-                                <li v-for="(item, index) in originSource"><a @click="changeDropdown(item)" class="dropitem" :data-id="item.originId">{{item.originName}}</a></li>
-                            </ul>
-                        </div>
-                    </div>
+                        <ul slot="list" class="droplist">
+                            <li v-for="(item, index) in originSource"><a class="dropitem" :val="item">{{item.originName}}</a></li>
+                        </ul>
+                    </comDropdown>
                     <!-- /是否原创 -->
                     <input type="text" class="form-input form-input-wide inp-arttit" placeholder="请输入文章标题" v-model="result.title">
                     <p class="form-tip">{{formStatus.title.tiptxt}}</p>
@@ -56,7 +54,7 @@
                     </div>
                 </div>
 
-                <div class="ui-formrow ui-forminline" :class="{'form-error':formStatus.reprint.status===1}">
+                <div class="ui-formrow ui-forminline" :class="{'form-error':formStatus.tagclouds.status===1}">
                     <label class="form-label">文章标签：</label>
                     <div class="form-con">
                         <ul class="checkboxwrap">
@@ -65,18 +63,16 @@
                                 <input type="checkbox" class="form-hidden" :value="item.tagcloudId" v-model="result.tagclouds" @click="isCheck[index] = !isCheck[index]">
                             </li>
                         </ul>
-                        <p>{{result.tagclouds}}</p>
                     </div>
                     <p class="form-tip">{{formStatus.tagclouds.tiptxt}}</p> 
                 </div> 
 
-                <div class="ui-formrow ui-forminline" :class="{'form-error':formStatus.reprint.status===1}">
+                <div class="ui-formrow ui-forminline">
                     <span class="form-label">文章封面：</span>
                     <div class="form-con form-upload">
                         <uploadImg @exportImg = "getImg"></uploadImg>
                         <p class="upload-intro">仅支持JPG、GIF、PNG格式，图片尺寸为：350*200PX</p>
                     </div>
-                    <p class="form-tip">{{formStatus.cover.tiptxt}}</p>
                 </div>
 
             </div>
@@ -92,17 +88,21 @@
 
 import Ueditor from './../common/ueditor.vue';
 import UploadImg from './../common/uploadImg.vue';
+import comDropdown from './../common/dropdown'
+
+//公用方法
+import UTIL from './../../util.js'
 
 export default {
 
     data () {
         return {
-            showDropdown: false, //显示下拉菜单
             originSource: [ //是否原创源数据
                 { originId: 1, originName: '原创'},
                 { originId: 0, originName: '转载'}
             ],
             result: { //表单结果
+                articleId: "",
                 title: "", //文章标题
                 origin: {
                     originId: 0,
@@ -133,16 +133,12 @@ export default {
                 tagclouds: {
                     status: 0,
                     tiptxt: ""
-                },
-                cover: {
-                    status: 0,
-                    tiptxt: ""
                 }
             },
             isCheck: [],
         }
     },
-    components: { Ueditor,UploadImg },
+    components: { Ueditor,UploadImg,comDropdown },
     created: function(){
         //获取（公用数据）文章分类
         this.$store.commit('http_articleSort');
@@ -150,35 +146,22 @@ export default {
         //获取标签云列表
         this.$store.commit('http_tagcloud');
 
-        //重置表单：清空数据or赋值数据
-        if(typeof this.$store.state.editArticle == "object") { //有数据
-            var tagclouds = this.$store.state.editArticle.tagclouds;
-            var tag;
-
-            //标签复选框根据数据来渲染是否勾选
-            outer:
-            for(var i = 0; i < this.$store.state.tagcloudData.length; i++) {
-                tag = this.$store.state.tagcloudData[i];
-                inter:
-                for(var j = 0; j < tagclouds.length; j++) {
-                    if(tagclouds[j] == tag.tagcloudId) {
-                        this.isCheck[i] = true;
-                        continue outer;
-                    }
-                }
-                this.isCheck[i] = false;
-            }
-            this.initResult(this.$store.state.editArticle);
-            console.log(this.result.category.categoryName);
+        //重置表单：清空数据or赋值数据:根据路由传入的id
+        const articleId = this.$route.params.articleId;
+        if(articleId!=0) {
+            this.http_getContent(articleId);
         }
-        else { //未传入数据，判断为新建，所有表单重置为初始值
-            for(var i = 0; i < this.$store.state.tagcloudData.length; i++) { //复选框默认全不选
-                this.isCheck[i] = false;
-            }
-            this.result.origin = this.originSource[1]; //默认显示“原创”
-            this.result.category = this.$store.state.articleSortData[0]; //默认分类为第一个
-            this.initResult(this.result);
-        }
+        // else if(typeof this.$store.state.editArticle == "object") { //有数据
+        //     this.initResult(this.$store.state.editArticle);
+        // }
+        // else { //未传入数据，判断为新建，所有表单重置为初始值
+        //     for(var i = 0; i < this.$store.state.tagcloudData.length; i++) { //复选框默认全不选
+        //         this.isCheck[i] = false;
+        //     }
+        //     this.result.origin = this.originSource[1]; //默认显示“原创”
+        //     this.result.category = this.$store.state.articleSortData[0]; //默认分类为第一个
+        //     this.initResult(this.result);
+        // }
     },
     computed: {
         allTablist() { //文章分类
@@ -195,11 +178,28 @@ export default {
     methods: {
         //初始化表单
         initResult: function(re){
-            this.result = re;
-        },
-        changeDropdown: function(or){
-            this.showDropdown = false;
-            this.result.origin = or;
+            let tag;
+            //标签复选框根据数据来渲染是否勾选
+            outer:
+            for(var i = 0; i < this.$store.state.tagcloudData.length; i++) {
+                tag = this.$store.state.tagcloudData[i];
+                inter:
+                for(var j = 0; j < re.tagclouds.length; j++) {
+                    if(re.tagclouds[j] == tag.tagcloudId) {
+                        this.isCheck[i] = true;
+                        continue outer;
+                    }
+                }
+                this.isCheck[i] = false;
+            }           
+            // this.result = UTIL.cloneObject(re);
+            this.result = {}
+            for (var attr in re) {
+                if (re.hasOwnProperty(attr)) {
+                    this.result[attr] = re[attr];
+                }
+            }
+            console.log(this.result);
         },
         preview: function(){
             if(this.validate()) { //表单验证通过
@@ -223,6 +223,7 @@ export default {
         },
         //判断是否为空
         validateEmpty: function(re,st){
+            console.log(re.length);
             if(re.length == 0) {
                 st.status = 1;
                 st.tiptxt = "不能为空！";
@@ -237,7 +238,41 @@ export default {
         //获取上传图片
         getImg: function(img){
             this.result.cover = img;
-        }
+        },
+        //是否原创下拉菜单回调事件
+        itemClickCall(val){
+            console.log(val);
+            this.result.origin = val;
+            
+        },
+        //获取文章
+        http_getContent(articleId) {
+            var _this = this;
+
+            UTIL.AJAX_POST(
+                UTIL.AJAX_URL().articleDetail,
+                {
+                    articleId: articleId
+                },
+                function(RE,r,s){
+
+                    if(RE.meta.code == "0000") { //请求成功
+                        console.log(RE.datas);
+                        _this.initResult.call(_this,RE.datas);
+                    }
+                    else { 
+                        //请求错误，除code等于0000外，其他code都在页面调用error组件展示错误信息
+                        if(RE.meta.code == "1002") {
+                          
+                        }
+                        if(RE.meta.code == "1003") {
+                          
+                        }
+                        console.log("FEFull：获取文章详情失败，"+RE.meta.message);
+                    }
+                }
+            );
+        },
     }
 }
 </script>

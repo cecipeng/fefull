@@ -88,6 +88,11 @@ export default {
 
 			//设置弹窗遮罩可见，层级+1
 			this.$store.commit('setModalMask',1);
+		},
+		submit(){
+			this.closeModal();
+
+			this.$emit('modalSubmit');
 		}
 	}
 }	

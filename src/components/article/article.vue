@@ -205,13 +205,5 @@ export default {
 </script>
 
 <style lang="scss">
-.com-search,
-.ui-dropdown {
-    margin-left: 20px;
-}
-.ui-dropdown .selector {
-    position: relative;
-    display: block;
-    padding-right: 20px;
-}
+
 </style>
