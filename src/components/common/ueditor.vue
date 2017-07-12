@@ -20,13 +20,14 @@ export default {
     },
     created: function() {
         this.ueContent = this.content;
+        
     },
     mounted: function(){
         if(!this.ueContent || this.ueContent.length == 0) {
             this.ueContent = "";
         }
+        
         UE.Editor.prototype.getActionUrl=function(action){
-            //console.log(action)
             if(action == 'config'){
                 return "/static/libs/ueditor/config.json";
             } else {
@@ -107,19 +108,16 @@ export default {
             elementPathEnabled: false, //是否启用元素路径
             wordCount: false //是否开启字数统计
         });
+
     },
-//     created: function(){
-// //         if(this.ueContent == "") {
-// //             this.ueContent = '编辑正文';
-// //         }
-// // console.log(this.ueContent);
-// //         this.ue.setContent(this.ueContent);
-//     },
     methods: {
         //获取编辑器内容，可在其他组件调用
         getUeditor: function(){
             return this.ue.getContent();
-        }
+        },
+        setUeditor: function(txt){
+            this.ue.setContent(txt);
+        },
     },
     destroyed: function(){
         this.ue.destroy();

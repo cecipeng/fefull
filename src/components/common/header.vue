@@ -70,7 +70,7 @@ export default {
     data () {
         return {
             showMenu: false, //显示导航二级菜单
-            noHeaderRouter: /(usercenter)|(login)|(preview)|(pageError)/ //不需要头部的页面路由
+            noHeaderRouter: /(usercenter)|(myartCreate)|(myartCreateMarkdown)|(myartList)|(favorartList)|(login)|(preview)|(pageError)/ //不需要头部的页面路由
         }
     },
     created: function(){

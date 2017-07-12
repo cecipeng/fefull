@@ -16,7 +16,7 @@ Vue.http.interceptors.push((request, next) => {
 });
 
 //统一接口地址前缀
-const baseUrl = "http://seazy.ngrok.cc/fefull/api/";
+const baseUrl = "http://121.40.121.128:8090/api/";
 
 export default {
     
@@ -91,7 +91,7 @@ export default {
         return {
             article : "article/queryPage", //文章列表
             articleDetail : "article/getArticleById", //文章详情
-            articleAdd : "article/save", //创建文章
+            saveOrUpdate : "article/saveOrUpdate", //创建文章
             articleCategories : "article/categories", //文章分类
             articleTags : "article/tags", //文章标签
             addFavor : "article/collection", //点击收藏文章
@@ -113,43 +113,5 @@ export default {
             }
         }
         return false;
-    },
-
-    //对象深度复制
-    cloneObject: function(obj) {
-       
-        // Handle the 3 simple types, and null or undefined
-        if (null == obj || "object" != typeof obj) return obj;
-        
-        // Handle Date
-        if (obj instanceof Date) {
-            var copy = new Date();
-            copy.setTime(obj.getTime());
-            return copy;
-        }
-        
-        // Handle Array
-        if (obj instanceof Array) {
-            var copy = [];
-            for (var i = 0, len = obj.length; i < len; ++i) {
-            copy[i] = cloneObject(obj[i]);
-            }
-            return copy;
-        }
-        
-        // Handle Object
-        if (obj instanceof Object) {    
-            var copy = {};
-            for (var attr in obj) {
-                if (obj.hasOwnProperty(attr)) {
-                    // copy[attr] = cloneObject(obj[attr]);
-                    copy[attr] = typeof obj[attr] === "Object" ? cloneObject(obj[attr]) : obj[attr];
-                }
-            }
-             
-            return copy;
-        }
-        
-        throw new Error("Unable to copy obj! Its type isn't supported.");
     }
 }

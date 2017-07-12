@@ -18,7 +18,6 @@ export default {
     data () {
     	return {
             image: ""
-            
     	}
     },
     created: function() {
@@ -48,9 +47,13 @@ export default {
                 reader.readAsDataURL(file[i]); 
                 reader.onload =function(e){
                     _this.image = e.target.result;  
+                    console.log("dssdf"+_this.image);
                     _this.$emit('exportImg',_this.image);         
                 };                 
             }  
+        },
+        setImage: function(img){
+            this.image = img;
         }
     }
 }

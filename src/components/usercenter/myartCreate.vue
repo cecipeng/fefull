@@ -70,7 +70,7 @@
                 <div class="ui-formrow ui-forminline">
                     <span class="form-label">文章封面：</span>
                     <div class="form-con form-upload">
-                        <uploadImg @exportImg = "getImg"></uploadImg>
+                        <uploadImg @exportImg = "getImg" ref="upload"></uploadImg>
                         <p class="upload-intro">仅支持JPG、GIF、PNG格式，图片尺寸为：350*200PX</p>
                     </div>
                 </div>
@@ -106,15 +106,16 @@ export default {
                 title: "", //文章标题
                 origin: {
                     originId: 0,
-                    originName: ""
+                    originName: "s"
                 }, //是否原创
                 maintxt: "", //文章正文内容
                 cover: "", //封面图
                 category: {
                     categoryId: 0,
-                    categoryName: ""
+                    categoryName: "s"
                 }, //所属分类
                 tagclouds: [], //所属标签云
+                editType: 1,
                 reprint: "" //转载自
             },
             formStatus: {
@@ -148,24 +149,29 @@ export default {
 
         //重置表单：清空数据or赋值数据:根据路由传入的id
         const articleId = this.$route.params.articleId;
-        if(articleId!=0) {
+        console.log("id="+articleId);
+        if(articleId==0) {
+            console.log("新建");
+            for(var i = 0; i < this.$store.state.tagcloudData.length; i++) { //复选框默认全不选
+                this.isCheck[i] = false;
+            }
+            this.result.origin = this.originSource[1]; //默认显示“原创”
+            this.result.category = this.$store.state.articleSortData[0]; //默认分类为第一个
+            this.initResult(this.result);
+            
+        }
+        else if(articleId=='return') { //有数据
+            console.log("返回");
+            this.initResult(this.$store.state.editArticle);
+        }
+        else { //未传入数据，判断为新建，所有表单重置为初始值
+            console.log("编辑");
             this.http_getContent(articleId);
         }
-        // else if(typeof this.$store.state.editArticle == "object") { //有数据
-        //     this.initResult(this.$store.state.editArticle);
-        // }
-        // else { //未传入数据，判断为新建，所有表单重置为初始值
-        //     for(var i = 0; i < this.$store.state.tagcloudData.length; i++) { //复选框默认全不选
-        //         this.isCheck[i] = false;
-        //     }
-        //     this.result.origin = this.originSource[1]; //默认显示“原创”
-        //     this.result.category = this.$store.state.articleSortData[0]; //默认分类为第一个
-        //     this.initResult(this.result);
-        // }
     },
     computed: {
         allTablist() { //文章分类
-            this.result.category = this.$store.state.articleSortData[0];
+            // this.result.category = this.$store.state.articleSortData[0];
             return this.$store.state.articleSortData;
         },
         allTagcloud() { //标签云
@@ -179,31 +185,32 @@ export default {
         //初始化表单
         initResult: function(re){
             let tag;
+
             //标签复选框根据数据来渲染是否勾选
             outer:
             for(var i = 0; i < this.$store.state.tagcloudData.length; i++) {
                 tag = this.$store.state.tagcloudData[i];
                 inter:
                 for(var j = 0; j < re.tagclouds.length; j++) {
-                    if(re.tagclouds[j] == tag.tagcloudId) {
+                    if(re.tagclouds[j].tagcloudId == tag.tagcloudId) {
                         this.isCheck[i] = true;
                         continue outer;
                     }
                 }
                 this.isCheck[i] = false;
-            }           
-            // this.result = UTIL.cloneObject(re);
-            this.result = {}
-            for (var attr in re) {
-                if (re.hasOwnProperty(attr)) {
-                    this.result[attr] = re[attr];
-                }
-            }
-            console.log(this.result);
+            }   
+
+            this.result = re;
+
+            //赋值富文本框
+            this.$refs.getContent.setUeditor(this.result.maintxt); //获取富文本内容
+
+            //封面图
+            this.$refs.upload.setImage(this.result.cover);
         },
         preview: function(){
             if(this.validate()) { //表单验证通过
-            
+                console.log(this.result);
                 this.$store.commit('setEditArticle',this.result);
                 this.$router.push({ name: 'preview'})
             }
@@ -257,7 +264,6 @@ export default {
                 function(RE,r,s){
 
                     if(RE.meta.code == "0000") { //请求成功
-                        console.log(RE.datas);
                         _this.initResult.call(_this,RE.datas);
                     }
                     else { 

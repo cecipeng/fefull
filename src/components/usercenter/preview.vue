@@ -72,7 +72,7 @@ export default {
             var _this = this;
             
             UTIL.AJAX_POST(
-                UTIL.AJAX_URL().articleAdd,
+                UTIL.AJAX_URL().saveOrUpdate,
                 this.article,
                 function(RE,r,s){
                     if(RE.meta.code == "0000") { //请求成功
@@ -85,7 +85,7 @@ export default {
         },
         //返回修改
         backToEditor: function(){
-            this.$router.push({ name: 'myartCreate' });
+            this.$router.push({name: 'myartCreate', params: { 'articleId': 'return'} })
         },
         //返回我的文章列表
         backToList: function(){
