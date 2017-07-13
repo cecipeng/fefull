@@ -66,9 +66,6 @@ export default {
     },
 	components: { comListArticle,comPage,comLoadingMod,comError },
     created: function(){
-		//获取（公用数据）文章分类
-        this.$store.commit('http_articleSort');
-
         //获取收藏文章列表，默认获取全部分类下的第一页
         this.http_article(1);
     },

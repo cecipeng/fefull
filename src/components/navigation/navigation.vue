@@ -272,11 +272,9 @@ export default {
                 if(x.categoryId == val) {
                     this.curEditElement.categoryId = x.categoryId;
                     this.curEditElement.categoryName = x.categoryName;
-                    console.log(this.curEditElement.categoryName);
                     return;
                 }
             })
-            
         },
         //新建分类
         http_addcategory(){

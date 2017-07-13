@@ -82,8 +82,6 @@ export default {
     
     components: { comSearch,comTagcloud,comListArticle,comPage,comLoadingMod,comError },
     created: function(){
-        //获取标签云列表
-        this.$store.commit('http_tagcloud');
 
         //首次跳转到该页根据路由传入的关键字搜索。(不能用搜索组件传入的关键字，因为是article内到搜索组件)
         const key = this.$route.params.key;

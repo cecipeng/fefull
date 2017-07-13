@@ -105,9 +105,6 @@ export default {
     created: function(){
         //根据文章id获取文章
         this.http_getContent();
-
-        //获取标签云列表
-        this.$store.commit('http_tagcloud');
     },
     computed: {
         allTagcloud() { //标签云

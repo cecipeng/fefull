@@ -15,7 +15,7 @@
                             <i class="dropdown-arrow"></i>
                         </a>
                         <ul slot="list" class="droplist">
-                            <li v-for="(item, index) in originSource"><a class="dropitem" :val="item">{{item.originName}}</a></li>
+                            <comDropdownItem v-for="(item, index) in originSource" class="dropitem" :val="item">{{item.originName}}</comDropdownItem>
                         </ul>
                     </comDropdown>
                     <!-- /是否原创 -->
@@ -89,6 +89,7 @@
 import Ueditor from './../common/ueditor.vue';
 import UploadImg from './../common/uploadImg.vue';
 import comDropdown from './../common/dropdown'
+import comDropdownItem from './../common/dropdown-item'
 
 //公用方法
 import UTIL from './../../util.js'
@@ -139,47 +140,39 @@ export default {
             isCheck: [],
         }
     },
-    components: { Ueditor,UploadImg,comDropdown },
+    components: { Ueditor,UploadImg,comDropdown,comDropdownItem },
     created: function(){
-        //获取（公用数据）文章分类
-        this.$store.commit('http_articleSort');
-
-        //获取标签云列表
-        this.$store.commit('http_tagcloud');
-
+    },
+    mounted(){
         //重置表单：清空数据or赋值数据:根据路由传入的id
         const articleId = this.$route.params.articleId;
+
         console.log("id="+articleId);
-        if(articleId==0) {
+        if(articleId==0) {//未传入数据，判断为新建，所有表单重置为初始值
             console.log("新建");
             for(var i = 0; i < this.$store.state.tagcloudData.length; i++) { //复选框默认全不选
                 this.isCheck[i] = false;
             }
             this.result.origin = this.originSource[1]; //默认显示“原创”
-            this.result.category = this.$store.state.articleSortData[0]; //默认分类为第一个
-            this.initResult(this.result);
-            
+            this.result.category = (this.$store.state.articleSortData)[0]; //默认分类为第一个
+            this.initResult(this.result); 
         }
         else if(articleId=='return') { //有数据
             console.log("返回");
             this.initResult(this.$store.state.editArticle);
         }
-        else { //未传入数据，判断为新建，所有表单重置为初始值
+        else { 
             console.log("编辑");
             this.http_getContent(articleId);
         }
     },
     computed: {
         allTablist() { //文章分类
-            // this.result.category = this.$store.state.articleSortData[0];
             return this.$store.state.articleSortData;
         },
         allTagcloud() { //标签云
             return this.$store.state.tagcloudData;
         }
-    },
-    mounted: function(){
-       
     },
     methods: {
         //初始化表单
@@ -248,9 +241,7 @@ export default {
         },
         //是否原创下拉菜单回调事件
         itemClickCall(val){
-            console.log(val);
             this.result.origin = val;
-            
         },
         //获取文章
         http_getContent(articleId) {

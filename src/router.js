@@ -42,7 +42,7 @@ const routes = [
             {
                 path: '/usercenter/myartCreateMarkdown/:articleId',
                 name: 'myartCreateMarkdown',
-                component: MyartCreateMarkdown,
+                component: MyartCreateMarkdown
             },
             {
                 path: '/usercenter/myartList',
@@ -73,10 +73,20 @@ const router = new VueRouter({
     routes
 });
 
-//每次页面跳转前获取用户信息，用于渲染页面
+//每次页面跳转前
 router.beforeEach((to, from, next) => {
+    const routList = /(article)|(articleDetail)|(search)|(usercenter)|(myartCreate)|(myartCreateMarkdown)|(myartList)|(favorartList)/;
+
+    //获取用户信息，用于渲染页面
     store.commit('getLoginInfor');
-    next();
+
+    //文章相关页先获取文章分类和标签云
+    if(routList.test(to.path)) {
+        getTabAndTagcloud(function(){
+            next();
+        });
+    }
+    else next();
 })
 
 function isLogin() {
@@ -91,9 +101,53 @@ function isLogin() {
     }
 }
 
-// router.beforeEach((transition) => {
-//     console.log("d");
-//                 transition.next();
-// });
+function getTabAndTagcloud(callback){
+    let count = 0;
+    if(store.state.articleSortData.length<=0) {
+        UTIL.AJAX_GET(
+            UTIL.AJAX_URL().articleCategories,
+            "",
+            function(RE,r,s){
+                if(RE.meta.code == "0000") { //请求成功
+                    s.commit('setArticleSort',RE.datas);
+                    count++;
+                    if(count == 2) {
+                        callback();
+                    }
+                }
+                else { 
+                    console.log("FEFull：获取文章分类列表失败，"+RE.meta.message);
+                }
+            }
+        )  
+    }
+    else {
+        count++;
+    }
+    if(store.state.tagcloudData.length<=0) {
+        UTIL.AJAX_GET(
+            UTIL.AJAX_URL().articleTags,
+            "",
+            function(RE,r,s){
+                if(RE.meta.code == "0000") { //请求成功
+                    s.commit('setTagcloud',RE.datas);
+                    count++;
+                    if(count == 2) {
+                        callback();
+                    }
+                }
+                else { 
+                    console.log("FEFull：获取标签云列表失败，"+RE.meta.message);
+                }
+            }
+        ) 
+    }
+    else {
+        count++;
+    }
+    if(count == 2) {
+        callback();
+    }
+}
 
 module.exports = router;

@@ -14,7 +14,7 @@ export default {
 	},
 	props: {
 		val: { //id值
-			type: [String, Number]
+			// type: [String, Number]
 		},
 		disabled: {
 			type: Boolean,

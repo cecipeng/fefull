@@ -96,11 +96,6 @@ export default {
     },
     components: { comSearch,comTagcloud,comListArticle,comPage,comLoadingMod,comError,comDropdown },
     created: function(){
-        //获取（公用数据）文章分类
-        this.$store.commit('http_articleSort');
-
-        //获取标签云列表
-        this.$store.commit('http_tagcloud');
 
         //获取文章列表，默认获取全部分类下的第一页
         this.http_article(1);

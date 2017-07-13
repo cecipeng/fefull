@@ -28,34 +28,12 @@ const store = new Vuex.Store({
         //     state.ajaxMessage = mess;
         // },
     	//获取文章分类
-    	http_articleSort: function(state){
-            UTIL.AJAX_GET(
-                UTIL.AJAX_URL().articleCategories,
-                "",
-                function(RE,r,s){
-                    if(RE.meta.code == "0000") { //请求成功
-                        s.state.articleSortData = RE.datas;
-                    }
-                    else { 
-                        console.log("FEFull：获取文章分类列表失败，"+RE.meta.message);
-                    }
-                }
-            )  
+    	setArticleSort: function(state,data){
+            state.articleSortData = data;
     	},
         //获取标签云列表
-        http_tagcloud: function(state){
-            UTIL.AJAX_GET(
-                UTIL.AJAX_URL().articleTags,
-                "",
-                function(RE,r,s){
-                    if(RE.meta.code == "0000") { //请求成功
-                        s.state.tagcloudData = RE.datas;
-                    }
-                    else { 
-                        console.log("FEFull：获取标签云列表失败，"+RE.meta.message);
-                    }
-                }
-            ) 
+        setTagcloud: function(state,data){
+            state.tagcloudData = data;
         },
         //获取登录用户信息
         getLoginInfor: function(state){
@@ -66,7 +44,6 @@ const store = new Vuex.Store({
                     "userHead" : localStorage.userHead,
                     "isLogining": true
                 };
-                console.log("yes:userId:"+state.loginUser.isLogining);
             }
             else {
                 state.loginUser = {
@@ -75,7 +52,6 @@ const store = new Vuex.Store({
                     "userHead" : "",
                     "isLogining": false
                 };
-                console.log("no:userId:"+state.loginUser.isLogining);
             }
         },
         //存储正在编辑的文章内容

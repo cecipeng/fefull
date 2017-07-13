@@ -52,7 +52,7 @@
                     </comDropdown>
                 </div>
                 <div class="unlogin" v-else>
-                    <router-link target="_blank" class="ui-btn ui-btn-default" to="/login">登录</router-link>
+                    <router-link class="ui-btn ui-btn-default" to="/login">登录</router-link>
                     <router-link target="_blank" class="ui-btn ui-btn-default" to="/login">注册</router-link>
                 </div>
                 

@@ -58,7 +58,7 @@ export default {
                         localStorage.setItem('userHead', RE.datas.userHead);
                         localStorage.setItem('accessToken', RE.datas.accessToken);
                         _this.isLogining = false;
-                        r.push({ path: '/home' });
+                        r.go(-1);
                         s.commit('getLoginInfor');
                     }
                     else if(RE.meta.code == "2001") {  //账号或密码错误
