@@ -5,7 +5,7 @@
         </div>
         <div class="imgpreview" v-if="image.length >0">
             <img :src="image" alt="">
-            <a @click="image = ''" class="btn-delImg"></a>
+            <a @click="delImage" class="btn-delImg"></a>
         </div>
     </div>
 </template>
@@ -54,6 +54,10 @@ export default {
         },
         setImage: function(img){
             this.image = img;
+        },
+        delImage(){
+            this.image = '';
+            this.$emit('delImage');  
         }
     }
 }

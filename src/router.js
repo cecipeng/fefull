@@ -35,7 +35,7 @@ const routes = [
         name: 'usercenter',
         component: Usercenter,
         children: [{
-                path: '/usercenter/myartCreate/:articleId',
+                path: '/usercenter/myartCreate/:articleId/:editType',
                 name: 'myartCreate',
                 component: MyartCreate,
             },

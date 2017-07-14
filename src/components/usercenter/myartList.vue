@@ -8,8 +8,8 @@
 					<i class="dropdown-arrow"></i>
 				</a>
 				<div slot="list" class="droplist">
-					<router-link class="dropitem" tag="a" :to="{ name: 'myartCreate', params: { articleId: 0 }}">新建文章</router-link>
-					<router-link class="dropitem" tag="a" :to="{ name: 'myartCreateMarkdown', params: { articleId: 0 }}">新建Markdown</router-link>
+					<router-link class="dropitem" tag="a" :to="{ name: 'myartCreate', params: { articleId: 0,editType: 1 }}">新建文章</router-link>
+					<router-link class="dropitem" tag="a" :to="{ name: 'myartCreate', params: { articleId: 0,editType: 2 }}">新建Markdown</router-link>
 				</div>
 			</comDropdown>
             
@@ -55,7 +55,8 @@
 								<td>{{item.like}}</td>
 								<td>
 									<a title="查看" target="_blank" class="btn-ctrl ctrl-view"></a>
-									<a title="编辑" class="btn-ctrl ctrl-edit" @click="editArticle(item.editType,item.articleId)"></a>
+                                    <!--<router-link class="btn-ctrl ctrl-edit" tag="a" :to="{ name: 'myartCreate', params: { articleId: item.articleId, editType: item.editType }}">编辑</router-link>-->
+									<a title="编辑" class="btn-ctrl ctrl-edit" @click="$router.push({name: 'myartCreate', params: { articleId: item.articleId,editType: item.editType }})"></a>
 									<a title="删除" class="btn-ctrl ctrl-del" @click="delArticleId=item.articleId;$refs.showModal1.showModal()"></a>
 								</td>
 							</tr>
@@ -200,11 +201,11 @@ export default {
         changePage(idx){ 
             this.http_article(idx,this.ajaxParams.params.categoryId);
         },
-		//跳转编辑
-		editArticle(editype,id){
-			const sort = editype == 1 ? "myartCreate" : "myartCreateMarkdown";
-			this.$router.push({name: sort, params: { 'articleId': id} })
-		},
+		// //跳转编辑
+		// editArticle(editype,id){
+		// 	const sort = editype == 2 ? "myartCreateMarkdown" : ;
+		// 	this.$router.push({name: "myartCreate", params: { 'articleId': id} })
+		// },
 		//确认删除
 		deleteSubmit(){
 			const _this = this;

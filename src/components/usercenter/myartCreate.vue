@@ -1,85 +1,176 @@
 <template>
     <div class="myartCreate">
-        <div class="ui-user-header">
-            <h2 class="user-header"><em class="font-l">创</em>建文章</h2>
+            
+        <div class="markdownbox" v-if="editType==2">
+            <div class="markdown-head">
+                <div class="ui-user-header">
+                    <h2 class="user-header"><em class="font-l">创</em>建文章</h2>
+                </div>
+                <div class="markdown-title">
+                    <input type="text" class="form-input inp-arttit" placeholder="请输入文章标题" v-model="result.title">
+                    <div class="markdown-sub">
+                        <div class="sub-col sub-col-origin">
+                            <label class="col-label">来源：</label>
+                            <span class="col-con">{{result.origin.originName}}</span>
+                            <span class="col-con-origin" v-if="result.reprint.length != 0 && result.origin.originId==0"></span>
+                            <span class="col-con-empty" v-if="result.reprint.length == 0 && result.origin.originId==0" :class="{'form-error':formStatus.reprint.status===1}"></span>
+                        </div>
+                        <div class="sub-col">
+                            <label class="col-label">分类：</label>
+                            <span class="col-con">{{result.category.categoryName}}</span>
+                        </div>
+                        <div class="sub-col">
+                            <label class="col-label">标签：</label>
+                            <span class="col-con" v-if="result.tagclouds.length != 0">css</span>
+                            <span class="col-con-empty" v-else  :class="{'form-error':formStatus.tagclouds.status===1}"></span>
+                        </div>
+                        <div class="sub-col sub-col-cover">
+                            <label class="col-label">封面：</label>
+                            <span class="col-con-cover" v-if="result.cover.length != 0"></span>
+                            <span class="col-con-empty" v-else></span>
+                        </div>
+                        <a class="btn-editsub" @click="showSubDropdown=!showSubDropdown">文章设置</a>
+                    </div> 
+                    <div class="markdown-sub-dropdown" v-show="showSubDropdown">
+                        <!-- 文章设置 -->
+                        <div class="createtit">文章设置</div>
+                        <div class="artsetting">
+
+                            <div class="ui-formrow ui-forminline">
+                                <label class="form-label">文章来源：</label>
+                                <div class="form-con">
+                                    <ul class="sortwrap">
+                                        <li class="sort" v-for="(item, index) in originSource" :class="{'on':item.originId == result.origin.originId}" @click="result.origin = item">{{item.originName}}</li>
+                                    </ul>
+                                    <input type="text" v-if="result.origin.originId==0" class="form-input" v-model="result.reprint" placeholder="转载地址">
+                                </div>
+                            </div>
+
+                            <div class="ui-formrow ui-forminline">
+                                <label class="form-label">文章分类：</label>
+                                <div class="form-con">
+                                    <ul class="sortwrap">
+                                        <li class="sort" v-for="(item, index) in allTablist" :data-id="item.categoryId" :class="{'on':item.categoryId == result.category.categoryId}" @click="result.category = item">{{item.categoryName}}</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="ui-formrow ui-forminline" :class="{'form-error':formStatus.tagclouds.status===1}">
+                                <label class="form-label">文章标签：</label>
+                                <div class="form-con">
+                                    <ul class="checkboxwrap">
+                                        <li class="form-checkbox" v-for="(item, index) in allTagcloud" :data-id="item.tagcloudId" :class="{'check':isCheck[index]}">
+                                            <span class="checkbox-txt">{{item.tagcloudName}}</span>
+                                            <input type="checkbox" class="form-hidden" :value="item.tagcloudId" v-model="result.tagclouds" @click="isCheck[index] = !isCheck[index]">
+                                        </li>
+                                    </ul>
+                                </div>
+                                <p class="form-tip">{{formStatus.tagclouds.tiptxt}}</p> 
+                            </div> 
+
+                            <div class="ui-formrow ui-forminline">
+                                <span class="form-label">文章封面：</span>
+                                <div class="form-con form-upload">
+                                    <uploadImg @exportImg = "getImg" @delImage="delImg" ref="upload"></uploadImg>
+                                    <p class="upload-intro">仅支持JPG、GIF、PNG格式，图片尺寸为：350*200PX</p>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- /文章设置 -->
+                    </div>   
+                </div>
+            </div>    
+            <div class="createbox">
+                
+                <div id="editor">
+                    <mavon-editor v-model="markdownvalue" style="height: 100%" placeholder="xxx"></mavon-editor>
+                </div>
+            </div>
         </div>
-        <div class="createbox">
-            <!-- 文章标题 -->
-            <div class="createtit"><span class="num">1/&nbsp;</span>文章标题</div>
-            <div class="arttitwrap">
-                <div class="ui-formrow arttitbox" :class="{'form-error':formStatus.title.status===1}">
-                    <!-- 是否原创 -->
-                    <comDropdown trigger="hover" placement="bottom" @itemClickParent="itemClickCall">
-                        <a slot="rel" class="selector">
-                            <span class="origin">{{result.origin.originName}}</span>
-                            <i class="dropdown-arrow"></i>
-                        </a>
-                        <ul slot="list" class="droplist">
-                            <comDropdownItem v-for="(item, index) in originSource" class="dropitem" :val="item">{{item.originName}}</comDropdownItem>
-                        </ul>
-                    </comDropdown>
-                    <!-- /是否原创 -->
-                    <input type="text" class="form-input form-input-wide inp-arttit" placeholder="请输入文章标题" v-model="result.title">
-                    <p class="form-tip">{{formStatus.title.tiptxt}}</p>
-                </div>
 
-                <div class="reprint ui-formrow ui-forminline" v-if="result.origin.originId==0" :class="{'form-error':formStatus.reprint.status===1}">
-                    <label class="form-label">转载地址：</label>
-                    <div class="form-con">
-                        <input type="text" class="form-input" v-model="result.reprint">
-                    </div>
-                    <p class="form-tip">{{formStatus.reprint.tiptxt}}</p>
-                </div>
+        <div class="ueditorbox" v-else>
+            <div class="ui-user-header">
+                <h2 class="user-header"><em class="font-l">创</em>建文章</h2>
             </div>
-            <!-- /文章标题 -->
+            <div class="createbox">
+                <!-- 文章标题 -->
+                <div class="createtit"><span class="num">1/&nbsp;</span>文章标题</div>
+                <div class="arttitwrap">
+                    <div class="ui-formrow arttitbox" :class="{'form-error':formStatus.title.status===1}">
+                        <!-- 是否原创 -->
+                        <comDropdown trigger="hover" placement="bottom" @itemClickParent="itemClickCall">
+                            <a slot="rel" class="selector">
+                                <span class="origin">{{result.origin.originName}}</span>
+                                <i class="dropdown-arrow"></i>
+                            </a>
+                            <ul slot="list" class="droplist">
+                                <comDropdownItem v-for="(item, index) in originSource" class="dropitem" :val="item">{{item.originName}}</comDropdownItem>
+                            </ul>
+                        </comDropdown>
+                        <!-- /是否原创 -->
+                        <input type="text" class="form-input form-input-wide inp-arttit" placeholder="请输入文章标题" v-model="result.title">
+                        <p class="form-tip">{{formStatus.title.tiptxt}}</p>
+                    </div>
 
-            <!-- 文章正文 -->
-            <div class="createtit"><span class="num">2/&nbsp;</span>文章正文</div>
-            <div class="ui-formrow ui-formnolabel" :class="{'form-error':formStatus.maintxt.status===1}">
-                <Ueditor :content="result.maintxt" ref="getContent"></Ueditor>
-                <p class="form-tip">{{formStatus.maintxt.tiptxt}}</p>
-            </div>
-            <!-- /文章正文 -->
-
-            <!-- 文章设置 -->
-            <div class="createtit"><span class="num">3/&nbsp;</span>文章设置</div>
-            <div class="artsetting">
-
-                <div class="ui-formrow ui-forminline">
-                    <label class="form-label">文章分类：</label>
-                    <div class="form-con">
-                        <ul class="sortwrap">
-                            <li class="sort" v-for="(item, index) in allTablist" :data-id="item.categoryId" :class="{'on':item.categoryId == result.category.categoryId}" @click="result.category = item">{{item.categoryName}}</li>
-                        </ul>
+                    <div class="reprint ui-formrow ui-forminline" v-if="result.origin.originId==0" :class="{'form-error':formStatus.reprint.status===1}">
+                        <label class="form-label">转载地址：</label>
+                        <div class="form-con">
+                            <input type="text" class="form-input" v-model="result.reprint">
+                        </div>
+                        <p class="form-tip">{{formStatus.reprint.tiptxt}}</p>
                     </div>
                 </div>
+                <!-- /文章标题 -->
 
-                <div class="ui-formrow ui-forminline" :class="{'form-error':formStatus.tagclouds.status===1}">
-                    <label class="form-label">文章标签：</label>
-                    <div class="form-con">
-                        <ul class="checkboxwrap">
-                            <li class="form-checkbox" v-for="(item, index) in allTagcloud" :data-id="item.tagcloudId" :class="{'check':isCheck[index]}">
-                                <span class="checkbox-txt">{{item.tagcloudName}}</span>
-                                <input type="checkbox" class="form-hidden" :value="item.tagcloudId" v-model="result.tagclouds" @click="isCheck[index] = !isCheck[index]">
-                            </li>
-                        </ul>
-                    </div>
-                    <p class="form-tip">{{formStatus.tagclouds.tiptxt}}</p> 
-                </div> 
-
-                <div class="ui-formrow ui-forminline">
-                    <span class="form-label">文章封面：</span>
-                    <div class="form-con form-upload">
-                        <uploadImg @exportImg = "getImg" ref="upload"></uploadImg>
-                        <p class="upload-intro">仅支持JPG、GIF、PNG格式，图片尺寸为：350*200PX</p>
-                    </div>
+                <!-- 文章正文 -->
+                <div class="createtit"><span class="num">2/&nbsp;</span>文章正文</div>
+                <div class="ui-formrow ui-formnolabel" :class="{'form-error':formStatus.maintxt.status===1}">
+                    <Ueditor :content="result.maintxt" ref="getContent"></Ueditor>
+                    <p class="form-tip">{{formStatus.maintxt.tiptxt}}</p>
                 </div>
+                <!-- /文章正文 -->
 
-            </div>
-            <!-- /文章设置 -->
-            <div class="btnwrap">
-                <a class="ui-btn ui-btn-main" @click="preview()">写完了，预览</a>
-                <a class="ui-btn ui-btn-sub">还没写完，保存3天</a>
+                <!-- 文章设置 -->
+                <div class="createtit"><span class="num">3/&nbsp;</span>文章设置</div>
+                <div class="artsetting">
+
+                    <div class="ui-formrow ui-forminline">
+                        <label class="form-label">文章分类：</label>
+                        <div class="form-con">
+                            <ul class="sortwrap">
+                                <li class="sort" v-for="(item, index) in allTablist" :data-id="item.categoryId" :class="{'on':item.categoryId == result.category.categoryId}" @click="result.category = item">{{item.categoryName}}</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="ui-formrow ui-forminline" :class="{'form-error':formStatus.tagclouds.status===1}">
+                        <label class="form-label">文章标签：</label>
+                        <div class="form-con">
+                            <ul class="checkboxwrap">
+                                <li class="form-checkbox" v-for="(item, index) in allTagcloud" :data-id="item.tagcloudId" :class="{'check':isCheck[index]}">
+                                    <span class="checkbox-txt">{{item.tagcloudName}}</span>
+                                    <input type="checkbox" class="form-hidden" :value="item.tagcloudId" v-model="result.tagclouds" @click="isCheck[index] = !isCheck[index]">
+                                </li>
+                            </ul>
+                        </div>
+                        <p class="form-tip">{{formStatus.tagclouds.tiptxt}}</p> 
+                    </div> 
+
+                    <div class="ui-formrow ui-forminline">
+                        <span class="form-label">文章封面：</span>
+                        <div class="form-con form-upload">
+                            <uploadImg @exportImg = "getImg" @delImage="delImg" ref="upload"></uploadImg>
+                            <p class="upload-intro">仅支持JPG、GIF、PNG格式，图片尺寸为：350*200PX</p>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /文章设置 -->
+                <div class="btnwrap">
+                    <a class="ui-btn ui-btn-main" @click="preview()">写完了，预览</a>
+                    <a class="ui-btn ui-btn-sub">还没写完，保存3天</a>
+                </div>
             </div>
         </div>
     </div>
@@ -90,6 +181,8 @@ import Ueditor from './../common/ueditor.vue';
 import UploadImg from './../common/uploadImg.vue';
 import comDropdown from './../common/dropdown'
 import comDropdownItem from './../common/dropdown-item'
+import { mavonEditor } from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
 
 //公用方法
 import UTIL from './../../util.js'
@@ -138,10 +231,14 @@ export default {
                 }
             },
             isCheck: [],
+            editType: 1, //1:普通富文本框，2:markdown
+            showSubDropdown: false, //【markdown】显示文章设置详情
+            markdownvalue: "", //【markdown】文章正文内容
         }
     },
-    components: { Ueditor,UploadImg,comDropdown,comDropdownItem },
+    components: { Ueditor,UploadImg,comDropdown,comDropdownItem,mavonEditor },
     created: function(){
+        this.editType = this.$route.params.editType;
     },
     mounted(){
         //重置表单：清空数据or赋值数据:根据路由传入的id
@@ -157,7 +254,7 @@ export default {
             this.result.category = (this.$store.state.articleSortData)[0]; //默认分类为第一个
             this.initResult(this.result); 
         }
-        else if(articleId=='return') { //有数据
+        else if(articleId==-1) { //有数据
             console.log("返回");
             this.initResult(this.$store.state.editArticle);
         }
@@ -223,7 +320,6 @@ export default {
         },
         //判断是否为空
         validateEmpty: function(re,st){
-            console.log(re.length);
             if(re.length == 0) {
                 st.status = 1;
                 st.tiptxt = "不能为空！";
@@ -238,6 +334,10 @@ export default {
         //获取上传图片
         getImg: function(img){
             this.result.cover = img;
+        },
+        //删除上传图片
+        delImg: function(){
+            this.result.cover = '';
         },
         //是否原创下拉菜单回调事件
         itemClickCall(val){

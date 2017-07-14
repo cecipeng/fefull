@@ -85,7 +85,7 @@ export default {
         },
         //返回修改
         backToEditor: function(){
-            this.$router.push({name: 'myartCreate', params: { 'articleId': 'return'} })
+            this.$router.push({name: 'myartCreate', params: { 'articleId': -1} })
         },
         //返回我的文章列表
         backToList: function(){

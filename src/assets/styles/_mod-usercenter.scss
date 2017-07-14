@@ -80,9 +80,7 @@
 	//个人中心顶部
 	.ui-user-header {
 		@extend %cf;
-		@extend %vm;
 		padding: 20px 30px 30px 20px;
-		margin-bottom: 20px;
 		text-align: right;	
 		.user-header {
 			float: left;
@@ -103,7 +101,7 @@
 		}
 	}
 	//创建文章
-	.myartCreate {
+	.myartCreate .ueditorbox {
 		.createbox {
 			width: 80%;
 			padding: 0 30px;
@@ -189,9 +187,6 @@
 	}
 	//文章列表
 	.myartList {
-		.listbox {
-			padding: 0 30px;
-		}
 		.artlist {
 			width: 100%;
 			td {
@@ -229,7 +224,11 @@
 		}
 	}
 	//收藏文章
-	.favorartList {
+	.favorartList,
+	.myartList {
+		.listbox {
+			padding: 0 30px;
+		}
 		.ui-tab1 {
 			padding: 0 20px;
 			.tab-head {
@@ -240,6 +239,160 @@
 			}
 			.tab-body {
 				padding-top: 40px;
+			}
+		}
+	}
+
+	//markdown
+	.markdownbox {
+		position: relative;
+		padding-top: 142px;
+		position: relative;
+		background-color: $bg-l;
+		height: 100%;
+		.createbox {
+			height: 100%;
+		}
+		#editor {
+			height: 100%;
+		}
+		.markdown-head {
+			position: absolute;
+			left: 0;
+			top: 0;
+			right: 0;
+			height: 142px;
+		}
+		.form-error {
+			color: $red;
+		}
+		.sortwrap {
+			display: inline-block;
+			vertical-align: middle;
+		}
+		.ui-user-header {
+			padding-bottom: 16px;
+		}
+		.markdown-title {
+			position: relative;
+			padding: 0 20px;
+			margin-bottom: 20px;
+		}
+		.inp-arttit {
+			float: left;
+			width: 40%;
+		}
+		.markdown-sub {
+			display: inline-block;
+			vertical-align: middle;
+			max-width: 60%;
+			height: 40px;
+			position: relative;
+			padding: 0 100px 0 20px;
+			overflow: hidden;
+		}
+		.sub-col {
+			display: inline-block;
+			vertical-align: middle;
+			font-size: 14px;
+			line-height: 40px;
+			margin-right: 20px;
+		}
+		.col-label {
+			color: $fz;
+		}
+		.col-con {
+			color: $main;
+		}
+		.col-con-empty {
+			min-width: 22px;
+			position: relative;
+			color: #aaa;
+			&:before {
+				@extend %iconfont;
+				@extend %icon-help;
+			}
+		}
+		.col-con-origin {
+			@extend %iconfont;
+			@extend %icon-link;
+			color: $main;
+		}
+		.col-con-cover {
+			@extend %iconfont;
+			@extend %icon-tupian1;
+			color: $main;
+		}
+		.btn-editsub {
+			position: absolute;
+			top: 5px;
+			right: 0;
+			width: 100px;
+			height: 30px;
+			padding: 0 15px 0 10px;
+			line-height: 30px;
+			text-align: center;
+			border-left: 1px solid $border-d;
+			cursor: pointer;
+			&:before {
+				position: absolute;
+				top: 50%;
+				right: 0;
+				width: 12px;
+				height: 12px;
+				margin-top: -6px;
+				line-height: 12px;
+				font-size: 12px;
+				color: $fz;
+				@extend %iconfont;
+				@extend %icon-arrow3;
+			}
+			&:hover {
+				color: $main;
+				&:before {
+					color: $main;
+				}
+			}
+		}
+		.markdown-sub-dropdown {
+			position: absolute;
+			top: 40px;
+			left: 0;
+			right: 0;
+			padding: 20px;
+			background-color: #fff;
+			z-index: 2000;
+			box-shadow: 0 1px 3px rgba(0,0,0,.3);
+		}
+		.sortwrap {
+		    height: 40px;
+		    @extend %vm;
+		    .sort {
+		    	display: inline-block;
+		    	vertical-align: middle;
+		    	height: 24px;
+		    	line-height: 24px;
+		    	padding: 0 10px;
+		    	font-size: 14px;
+		    	color: $fz;
+		    	border-radius: 3px;
+		    	margin-right: 6px;
+		    	cursor: pointer;
+		    	transition: color 0.3s ease-out;
+		    	&:hover {
+		    		color: $main;
+		    	}
+		    	&.on {
+		    		background-color: $main;
+		    		color: #fff;
+		    	}
+		    }
+		}
+		.checkboxwrap {
+			height: 40px;
+			@extend %vm;
+			.form-checkbox {
+				margin-right: 20px;
 			}
 		}
 	}
