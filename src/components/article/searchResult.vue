@@ -14,15 +14,15 @@
     	            <!-- /排序 -->
     	            
                     <!-- com-tagcloud -->
-                    <div class="ui-dropdown tagcloud"  @mouseleave="showDropdown2=false">
-                        <a class="selector" @mouseenter="showDropdown2=true">
+                    <comDropdown trigger="hover" placement="bottom-end" width="320px" top="35px">
+                        <a slot="rel" class="selector">
                             标签云
                             <i class="dropdown-arrow"></i>
                         </a>
-                        <div class="dropdown" v-show="showDropdown2">
-                            <comTagcloud :tagcloudList="allTagcloud" @searching="searchTagcloud"></comTagcloud>  
-                        </div>
-                    </div>
+                        <ul slot="list" class="droplist">
+                            <comTagcloud :tagcloudList="allTagcloud"  @searching="searchTagcloud"></comTagcloud>  
+                        </ul>
+                    </comDropdown>
                     <!-- /com-tagcloud -->
     	        </div>
     	    </div>
@@ -43,6 +43,7 @@ import comSearch from './search'
 import comTagcloud from './../common/tagcloud'
 import comListArticle from './../common/list-art'
 import comLoadingMod from './../common/loading-mod'
+import comDropdown from './../common/dropdown'
 import comError from './../common/error'
 import comPage from './../common/page'
 
@@ -55,7 +56,6 @@ export default {
         return {
             resultTitle: "",
             curArtList: [], //显示的列表
-            showDropdown2: false, //显示标签云下拉菜单
             showpage: false, //显示分页
 	        showloading: false, //显示正在加载
             showError: { //缺省图
@@ -80,7 +80,7 @@ export default {
         }
     },
     
-    components: { comSearch,comTagcloud,comListArticle,comPage,comLoadingMod,comError },
+    components: { comSearch,comTagcloud,comListArticle,comPage,comLoadingMod,comError,comDropdown },
     created: function(){
 
         //首次跳转到该页根据路由传入的关键字搜索。(不能用搜索组件传入的关键字，因为是article内到搜索组件)
@@ -173,18 +173,10 @@ export default {
                         }
                         else _this.showError.show = false;
                     }
-                    else { 
-                        //请求错误，除code等于0000外，其他code都在页面调用error组件展示错误信息
-                        if(RE.meta.code == "1002") {
-                            _this.showError.show = true;
-                            _this.showError.type = "";
-                            _this.showError.text = "请求参数错误";
-                        }
-                        if(RE.meta.code == "1003") {
-                            _this.showError.show = true;
-                            _this.showError.type = "weberror";
-                        }
-                        console.log("FEFull：搜索失败，"+RE.meta.message);
+                    else if(RE.meta.code == "1003") { //服务端错误
+                        _this.showError.show = true;
+                        _this.showError.type = "weberror";
+                        console.log("FEFull：获取文章列表失败，"+RE.meta.message);
                     }
                 }
             ) 

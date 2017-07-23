@@ -14,14 +14,15 @@
 
 
 export default {
-    props: [''], 
+    props: ['img'], 
     data () {
     	return {
             image: ""
     	}
     },
-    created: function() {
-       
+    mounted: function() {
+       console.log(this.img);
+       this.image = this.img || "";
     },
   
     computed: {
@@ -47,12 +48,12 @@ export default {
                 reader.readAsDataURL(file[i]); 
                 reader.onload =function(e){
                     _this.image = e.target.result;  
-                    console.log("dssdf"+_this.image);
                     _this.$emit('exportImg',_this.image);         
                 };                 
             }  
         },
         setImage: function(img){
+            console.log(img.length);
             this.image = img;
         },
         delImage(){

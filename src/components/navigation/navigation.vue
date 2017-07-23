@@ -230,7 +230,6 @@ export default {
                 if(RE.meta.code == "0000") { //请求成功
                     next(vm => {
                         
-                        
                         if(sort===0) {//未登录数据
                             vm.sysList = RE.datas;
                             vm.memberList = false;

@@ -33,12 +33,14 @@
 	.logo {
 		display: inline-block;
 		vertical-align: middle;
-		height: 62px;
-		line-height: 62px;
-		padding-left: 70px;
-		font-size: 20px;
+		height: 40px;
+		line-height: 40px;
+		padding-left: 80px;
+		font-size: 16px;
 		color: #fff;
 		@include bgurl('logo.png');
+		background-size: auto 25px;
+		background-position: left center;
 		@include hover(transform,scale(1.07),scale(1.07));
 	}
 	//下拉菜单

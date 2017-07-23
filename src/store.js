@@ -20,6 +20,13 @@ const store = new Vuex.Store({
         strict: false, //是否启用严格模式
         editArticle: "", //正在编辑的文章
         modalZindex: 102, //弹窗z-index，初始值为102
+        message: { //全局提示
+            show: false, //是否显示提示
+            content: "", //内容
+            type: "default", //类型
+            showClosebtn: false, //是否显示关闭按钮
+            time: 1.5 //显示时间，默认1.5s
+        },
         modalMask: 0 //是否显示弹窗遮罩,每打开一个弹窗+1，每关闭一个弹窗-1，当值为0表示无弹窗了，设置遮罩不显示
         // ajaxMessage: "me" //接口返回信息
     },
@@ -65,6 +72,14 @@ const store = new Vuex.Store({
         //设置弹窗遮罩是否显示
         setModalMask: function(state,con){ //传入的con参数：增加一个：1；减少一个：-1
             state.modalMask += con;
+        },
+        //显示全局提示，及参数
+        setMessage: function(state,conf){
+            state.message.show = conf[0] || false;
+            state.message.content = conf[1] || "";
+            state.message.type = conf[2] || "default";
+            state.message.showClosebtn = conf[3] || false;
+            state.message.time = conf[4] || 1.5;
         }
     }
 });

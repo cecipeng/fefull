@@ -140,18 +140,10 @@ export default {
                     if(RE.meta.code == "0000") { //请求成功
                         _this.article = RE.datas;
                     }
-                    else { 
-                        //请求错误，除code等于0000外，其他code都在页面调用error组件展示错误信息
-                        if(RE.meta.code == "1002") {
-                            _this.showError.show = true;
-                            _this.showError.type = "";
-                            _this.showError.text = "请求参数错误";
-                        }
-                        if(RE.meta.code == "1003") {
-                            _this.showError.show = true;
-                            _this.showError.type = "weberror";
-                        }
-                        console.log("FEFull：获取文章详情失败，"+RE.meta.message);
+                    else if(RE.meta.code == "1003") { //服务端错误
+                        _this.showError.show = true;
+                        _this.showError.type = "weberror";
+                        console.log("FEFull：获取文章列表失败，"+RE.meta.message);
                     }
                 }
             );
@@ -166,19 +158,18 @@ export default {
                     articleId: this.articleId
                 },
                 function(RE,r,s){
-                    if(RE.meta.code == "0000") { //请求成功
-                        _this.article.fav++;
-                        _this.article.isCollection = 1;
-                    }
-                    else { 
-                        //请求错误，除code等于0000外，其他code都在页面调用error组件展示错误信息
-                        if(RE.meta.code == "1002") {
-                      
-                        }
-                        if(RE.meta.code == "1003") {
-                  
-                        }
-                        console.log("FEFull：收藏文章失败，"+RE.meta.message);
+                    switch(RE.meta.code) {
+                        case "0000": //请求成功
+                            _this.article.fav++;
+                            _this.article.isCollection = 1;
+                            break;
+                        case "2002": //记录已存在
+                            s.commit('setMessage',[true,"已经收藏过了～","warn",false]);
+                            break;
+                        case "1003":  //服务端错误
+                            s.commit('setMessage',[true,"网络错误，请重试","default",false]);
+                            console.log("FEFull：获取文章列表失败，"+RE.meta.message);
+                            break;
                     }
                 }
             );
@@ -192,19 +183,18 @@ export default {
                     articleId: this.articleId
                 },
                 function(RE,r,s){
-                    if(RE.meta.code == "0000") { //请求成功
-                        _this.article.fav--;
-                        _this.article.isCollection = 0;
-                    }
-                    else { 
-                        //请求错误，除code等于0000外，其他code都在页面调用error组件展示错误信息
-                        if(RE.meta.code == "1002") {
-                      
-                        }
-                        if(RE.meta.code == "1003") {
-                  
-                        }
-                        console.log("FEFull：收藏文章失败，"+RE.meta.message);
+                    switch(RE.meta.code) {
+                        case "0000": //请求成功
+                            _this.article.fav--;
+                            _this.article.isCollection = 0;
+                            break;
+                        case "2003": //记录不存在
+                            s.commit('setMessage',[true,"不存在的文章","error",false]);
+                            break;
+                        case "1003":  //服务端错误
+                            s.commit('setMessage',[true,"网络错误，请重试","default",false]);
+                            console.log("FEFull：获取文章列表失败，"+RE.meta.message);
+                            break;
                     }
                 }
             );

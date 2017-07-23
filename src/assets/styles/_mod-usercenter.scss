@@ -189,6 +189,15 @@
 	.myartList {
 		.artlist {
 			width: 100%;
+			.artlist-md {
+				height: 16px;
+				padding: 0 4px;
+				background-color: $main;
+				font-size: 12px;
+				color: #fff;
+				border-radius: 3px;
+				margin-right: 6px;
+			}
 			td {
 				line-height: 40px;
 				font-size: 12px;
@@ -262,6 +271,10 @@
 			top: 0;
 			right: 0;
 			height: 142px;
+			.btnwrap {
+				display: inline-block;
+				vertical-align: middle;
+			}
 		}
 		.form-error {
 			color: $red;
@@ -322,6 +335,22 @@
 			@extend %iconfont;
 			@extend %icon-tupian1;
 			color: $main;
+		}
+		.col-con-tagcloudlist {
+			padding-right: 10px;
+			position: relative;
+			&:last-child:after {
+				display: none;
+			}
+			&:after {
+				position: absolute;
+				top: 50%;
+				right: 0;
+				width: 10px;
+				line-height: 30px;
+				margin-top: -15px;
+				content: "、";
+			}
 		}
 		.btn-editsub {
 			position: absolute;

@@ -15,17 +15,13 @@ export default {
     data () {
     	return {
             ue: {},
-            ueContent: ""
+            ueContent: "" //初始值
     	}
     },
     created: function() {
-        this.ueContent = this.content;
-        
+        this.ueContent = this.content || "正在加载...";
     },
     mounted: function(){
-        if(!this.ueContent || this.ueContent.length == 0) {
-            this.ueContent = "";
-        }
         
         UE.Editor.prototype.getActionUrl=function(action){
             if(action == 'config'){
@@ -109,15 +105,22 @@ export default {
             wordCount: false //是否开启字数统计
         });
 
+        const _this = this;
+        this.ue.ready(function() {
+            _this.ue.setContent(_this.content);
+        });
+
     },
     methods: {
         //获取编辑器内容，可在其他组件调用
         getUeditor: function(){
             return this.ue.getContent();
         },
-        setUeditor: function(txt){
-            this.ue.setContent(txt);
-        },
+        // setUeditor: function(txt){
+        //     console.log(this.ue.setContent);
+        //     console.log(txt);
+        //     this.ue.setContent(txt);
+        // },
     },
     destroyed: function(){
         this.ue.destroy();

@@ -16,6 +16,8 @@
         <comLoginPop></comLoginPop>
         
         <div class="com-modalMask" v-if="showModalMask" :style="{'z-index': modalZindex}"></div>   
+
+        <comMessage :messageConf="message"></comMessage>
     </div>
 </template>
 
@@ -23,9 +25,10 @@
 <script>
 import comHeader from './components/common/header';
 import comLoginPop from './components/common/login-pop';
+import comMessage from './components/common/message';
 export default {
     components: {
-        comHeader,comLoginPop
+        comHeader,comLoginPop,comMessage
     },
     data() {
         return {
@@ -38,6 +41,9 @@ export default {
         },
         modalZindex () {
             return this.$store.state.modalZindex - 1;
+        },
+        message () {
+            return this.$store.state.message
         }
     }
 }

@@ -1,10 +1,15 @@
 <template>
     <div class="myartCreate">
             
-        <div class="markdownbox" v-if="editType==2">
+        <!-- markdown -->
+        <div class="markdownbox" v-if="result.editType==2">
             <div class="markdown-head">
                 <div class="ui-user-header">
                     <h2 class="user-header"><em class="font-l">创</em>建文章</h2>
+                    <div class="btnwrap">
+                        <a class="ui-btn ui-btn-main" @click="preview()">写完了，预览</a>
+                        <a class="ui-btn ui-btn-sub">还没写完，保存3天</a>
+                    </div>
                 </div>
                 <div class="markdown-title">
                     <input type="text" class="form-input inp-arttit" placeholder="请输入文章标题" v-model="result.title">
@@ -21,7 +26,7 @@
                         </div>
                         <div class="sub-col">
                             <label class="col-label">标签：</label>
-                            <span class="col-con" v-if="result.tagclouds.length != 0">css</span>
+                            <span class="col-con" v-if="result.tagclouds.length != 0"><em class="col-con-tagcloudlist" v-for="item in result.tagclouds">{{item.tagcloudName}}</em></span>
                             <span class="col-con-empty" v-else  :class="{'form-error':formStatus.tagclouds.status===1}"></span>
                         </div>
                         <div class="sub-col sub-col-cover">
@@ -61,11 +66,10 @@
                                     <ul class="checkboxwrap">
                                         <li class="form-checkbox" v-for="(item, index) in allTagcloud" :data-id="item.tagcloudId" :class="{'check':isCheck[index]}">
                                             <span class="checkbox-txt">{{item.tagcloudName}}</span>
-                                            <input type="checkbox" class="form-hidden" :value="item.tagcloudId" v-model="result.tagclouds" @click="isCheck[index] = !isCheck[index]">
+                                            <input type="checkbox" class="form-hidden" :value="item" v-model="result.tagclouds" @click="isCheck[index] = !isCheck[index]">
                                         </li>
                                     </ul>
                                 </div>
-                                <p class="form-tip">{{formStatus.tagclouds.tiptxt}}</p> 
                             </div> 
 
                             <div class="ui-formrow ui-forminline">
@@ -84,11 +88,13 @@
             <div class="createbox">
                 
                 <div id="editor">
-                    <mavon-editor v-model="markdownvalue" style="height: 100%" placeholder="xxx"></mavon-editor>
+                    <mavon-editor :ishljs = "true" v-model="result.mainSource" @change="getMarkdownRender" style="height: 100%" placeholder="xxx"></mavon-editor>
                 </div>
             </div>
         </div>
+        <!-- /markdown -->
 
+        <!-- 富文本 -->
         <div class="ueditorbox" v-else>
             <div class="ui-user-header">
                 <h2 class="user-header"><em class="font-l">创</em>建文章</h2>
@@ -150,7 +156,7 @@
                             <ul class="checkboxwrap">
                                 <li class="form-checkbox" v-for="(item, index) in allTagcloud" :data-id="item.tagcloudId" :class="{'check':isCheck[index]}">
                                     <span class="checkbox-txt">{{item.tagcloudName}}</span>
-                                    <input type="checkbox" class="form-hidden" :value="item.tagcloudId" v-model="result.tagclouds" @click="isCheck[index] = !isCheck[index]">
+                                    <input type="checkbox" class="form-hidden" :value="item" v-model="result.tagclouds" @click="isCheck[index] = !isCheck[index]">
                                 </li>
                             </ul>
                         </div>
@@ -160,7 +166,7 @@
                     <div class="ui-formrow ui-forminline">
                         <span class="form-label">文章封面：</span>
                         <div class="form-con form-upload">
-                            <uploadImg @exportImg = "getImg" @delImage="delImg" ref="upload"></uploadImg>
+                            <uploadImg @exportImg = "getImg" @delImage="delImg" ref="upload" :img="result.cover"></uploadImg>
                             <p class="upload-intro">仅支持JPG、GIF、PNG格式，图片尺寸为：350*200PX</p>
                         </div>
                     </div>
@@ -173,6 +179,7 @@
                 </div>
             </div>
         </div>
+        <!-- ／富文本 -->
     </div>
 </template>
 <script>
@@ -203,13 +210,14 @@ export default {
                     originName: "s"
                 }, //是否原创
                 maintxt: "", //文章正文内容
+                mainSource: "", //文章正文源码（markdown模式下）
                 cover: "", //封面图
                 category: {
                     categoryId: 0,
                     categoryName: "s"
                 }, //所属分类
                 tagclouds: [], //所属标签云
-                editType: 1,
+                editType: 1, //1:普通富文本框，2:markdown
                 reprint: "" //转载自
             },
             formStatus: {
@@ -231,20 +239,46 @@ export default {
                 }
             },
             isCheck: [],
-            editType: 1, //1:普通富文本框，2:markdown
             showSubDropdown: false, //【markdown】显示文章设置详情
             markdownvalue: "", //【markdown】文章正文内容
         }
     },
     components: { Ueditor,UploadImg,comDropdown,comDropdownItem,mavonEditor },
-    created: function(){
-        this.editType = this.$route.params.editType;
+    beforeRouteEnter (to, from, next) {
+        //重置表单：清空数据or赋值数据:根据路由传入的id
+        const articleId = to.params.articleId;
+
+        if(articleId!=0 && articleId !=-1) {
+            console.log("编辑");
+
+            UTIL.AJAX_POST(
+                UTIL.AJAX_URL().articleDetail,
+                {
+                    articleId: articleId
+                },
+                function(RE,r,s){
+
+                    if(RE.meta.code == "0000") { //请求成功
+                        next(vm => {
+                            vm.initResult.call(vm,RE.datas);
+                        })
+                    }
+                    else if(RE.meta.code == "1003") { //服务端错误
+                        next(false);
+                        s.commit('setMessage',[true,"网络异常，请稍后重试","error",false]);
+                        console.log("FEFull：获取文章列表失败，"+RE.meta.message);
+                    }
+                }
+            );
+        }
+        else next();
     },
-    mounted(){
+    created: function(){
+        this.result.editType = this.$route.params.editType; //确定编辑类型，由路由传入，决定渲染不同dom。1:富文本，2:markdown
+
         //重置表单：清空数据or赋值数据:根据路由传入的id
         const articleId = this.$route.params.articleId;
 
-        console.log("id="+articleId);
         if(articleId==0) {//未传入数据，判断为新建，所有表单重置为初始值
             console.log("新建");
             for(var i = 0; i < this.$store.state.tagcloudData.length; i++) { //复选框默认全不选
@@ -256,12 +290,12 @@ export default {
         }
         else if(articleId==-1) { //有数据
             console.log("返回");
+            
             this.initResult(this.$store.state.editArticle);
         }
-        else { 
-            console.log("编辑");
-            this.http_getContent(articleId);
-        }
+    },
+    mounted(){
+        
     },
     computed: {
         allTablist() { //文章分类
@@ -289,32 +323,42 @@ export default {
                 }
                 this.isCheck[i] = false;
             }   
-
             this.result = re;
-
-            //赋值富文本框
-            this.$refs.getContent.setUeditor(this.result.maintxt); //获取富文本内容
 
             //封面图
             this.$refs.upload.setImage(this.result.cover);
+            
         },
         preview: function(){
+            
             if(this.validate()) { //表单验证通过
-                console.log(this.result);
                 this.$store.commit('setEditArticle',this.result);
                 this.$router.push({ name: 'preview'})
             }
         },
         //验证表单
         validate: function(){
-            this.result.maintxt = this.$refs.getContent.getUeditor(); //获取富文本内容
+            
+            //获取富文本内容
+            if(this.result.editType == 1) {
+                this.result.maintxt = this.$refs.getContent.getUeditor(); 
+            }
+
             if( //不能为空判断
                 this.validateEmpty(this.result.title, this.formStatus.title) &&//标题
-                this.validateEmpty(this.result.reprint, this.formStatus.reprint) &&//转载地址
+                
                 this.validateEmpty(this.result.maintxt, this.formStatus.maintxt) &&//正文
                 this.validateEmpty(this.result.tagclouds, this.formStatus.tagclouds)//标签云
             ) {
-                return true;
+                if(this.result.origin.originId == 0) {
+                    if(this.validateEmpty(this.result.reprint, this.formStatus.reprint)) {//转载地址
+                        return true;
+                    }
+                    else return false;
+                }
+                else {
+                    return true;
+                }
             }
             else return false;
         },
@@ -343,33 +387,31 @@ export default {
         itemClickCall(val){
             this.result.origin = val;
         },
-        //获取文章
-        http_getContent(articleId) {
-            var _this = this;
-
-            UTIL.AJAX_POST(
-                UTIL.AJAX_URL().articleDetail,
-                {
-                    articleId: articleId
-                },
-                function(RE,r,s){
-
-                    if(RE.meta.code == "0000") { //请求成功
-                        _this.initResult.call(_this,RE.datas);
-                    }
-                    else { 
-                        //请求错误，除code等于0000外，其他code都在页面调用error组件展示错误信息
-                        if(RE.meta.code == "1002") {
-                          
-                        }
-                        if(RE.meta.code == "1003") {
-                          
-                        }
-                        console.log("FEFull：获取文章详情失败，"+RE.meta.message);
-                    }
-                }
-            );
+        //获取markdown内容
+        getMarkdownRender(val,render){
+            this.result.maintxt = render;
         },
+        //获取文章
+        // http_getContent(articleId) {
+        //     var _this = this;
+
+        //     UTIL.AJAX_POST(
+        //         UTIL.AJAX_URL().articleDetail,
+        //         {
+        //             articleId: articleId
+        //         },
+        //         function(RE,r,s){
+
+        //             if(RE.meta.code == "0000") { //请求成功
+        //                 _this.initResult.call(_this,RE.datas);
+        //             }
+        //             else if(RE.meta.code == "1003") { //服务端错误
+        //                 s.commit('setMessage',[true,"网络异常，请稍后重试","error",false]);
+        //                 console.log("FEFull：获取文章列表失败，"+RE.meta.message);
+        //             }
+        //         }
+        //     );
+        // },
     }
 }
 </script>

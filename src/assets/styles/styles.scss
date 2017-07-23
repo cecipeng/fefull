@@ -23,6 +23,7 @@
 // base
 @import "fonts/iconfont";      // if you need
 @import "_base/_layout";
+@import "components/_transition"; //过渡动画
 
 // Components - copy - ui
 @import "components/_btn";
@@ -31,6 +32,7 @@
 // @import "../components/_ui-placeholder/_placeholder";
 @import "components/_form";
 @import "components/_pop";      //js
+@import "components/_message";   
 @import "components/_tab";      //js
 // @import "../components/_ui-title/_title";
 // @import "../components/_ui-link/_link";

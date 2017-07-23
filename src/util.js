@@ -16,7 +16,9 @@ Vue.http.interceptors.push((request, next) => {
 });
 
 //统一接口地址前缀
-const baseUrl = "http://121.40.121.128:8090/api/";
+// const baseUrl = "http://121.40.121.128:8090/api/";
+const baseUrl = "http://192.168.1.104:8899/fefull/api/";
+// const baseUrl = "http://seazy.ngrok.cc/fefull/api/";
 
 export default {
     
@@ -41,10 +43,16 @@ export default {
                 case "1001": //未登录
                     router.push({ path: '/login' }); //跳转到登录页
                     break;
-                case "1002": //请求参数错误，但依然回调
+                case "1002": //请求参数错误
+                    const mess = {
+                        show: true, //是否显示提示
+                        content: "参数错误，请重试～", //内容
+                        type: "error", //类型
+                        showClosebtn: true //是否显示关闭按钮
+                    }
+                    store.commit('setMessage',mess);
                     console.log("FEFull："+response.data.meta.message);
-                case "1003": //网络异常，但依然回调
-                    console.log("FEFull："+response.data.meta.message);
+                    break;
                 default: //请求成果,或其他业务返回码
                     callback(response.data, router, store);
             }
@@ -73,10 +81,16 @@ export default {
                 case "1001": //未登录
                     router.push({ path: '/login' }); //跳转到登录页
                     break;
-                case "1002": //请求参数错误，但依然回调
+                case "1002": //请求参数错误
+                    const mess = {
+                        show: true, //是否显示提示
+                        content: "参数错误，请重试～", //内容
+                        type: "error", //类型
+                        showClosebtn: true //是否显示关闭按钮
+                    }
+                    store.commit('setMessage',mess);
                     console.log("FEFull："+response.data.meta.message);
-                case "1003": //网络异常，但依然回调
-                    console.log("FEFull："+response.data.meta.message);
+                    break;
                 default: //请求成果,或其他业务返回码
                     callback(response.data, router, store);
             }
