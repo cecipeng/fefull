@@ -75,8 +75,9 @@
                             <div class="ui-formrow ui-forminline">
                                 <span class="form-label">文章封面：</span>
                                 <div class="form-con form-upload">
-                                    <uploadImg @exportImg = "getImg" @delImage="delImg" ref="upload"></uploadImg>
-                                    <p class="upload-intro">仅支持JPG、GIF、PNG格式，图片尺寸为：350*200PX</p>
+                                    <uploadImg @exportImg = "getImg" @delImage="delImg" :img="result.cover" ref="upload"></uploadImg>
+                                    <p class="upload-intro">仅支持JPG、GIF、PNG格式，图片尺寸为：380*200PX</p>
+                                    <p>{{result.cover}}</p>
                                 </div>
                             </div>
 
@@ -167,7 +168,7 @@
                         <span class="form-label">文章封面：</span>
                         <div class="form-con form-upload">
                             <uploadImg @exportImg = "getImg" @delImage="delImg" ref="upload" :img="result.cover"></uploadImg>
-                            <p class="upload-intro">仅支持JPG、GIF、PNG格式，图片尺寸为：350*200PX</p>
+                            <p class="upload-intro">仅支持JPG、GIF、PNG格式，图片尺寸为：380*200PX</p>
                         </div>
                     </div>
 
@@ -326,6 +327,7 @@ export default {
             this.result = re;
 
             //封面图
+            console.log(this.$refs.upload);
             this.$refs.upload.setImage(this.result.cover);
             
         },

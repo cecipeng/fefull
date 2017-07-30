@@ -8,9 +8,11 @@
 				</a>
 			</slot>
 		</div>
-		<div class="dropdown-list" v-show="show" :style="{width: width,top: top}">
-			<slot name="list"></slot>
-		</div>
+		<transition name="slide">
+			<div class="dropdown-list" v-show="show" :style="{width: width,top: top,'margin-left': offset}">
+				<slot name="list"></slot>
+			</div>
+		</transition>
 	</div>
 </template>
 
@@ -23,6 +25,7 @@ import UTIL from './../../util.js'
 export default {
 	data: function(){
 		return {
+			offset: 0,
 			show: false //显示下拉菜单
 		}
 	},
@@ -53,6 +56,7 @@ export default {
 		}
 	},
 	created() {
+		this.offset = parseInt(this.width) / -2;
 	},
 	mounted () {
 		this.$on('itemClickDropdown', function(val) {

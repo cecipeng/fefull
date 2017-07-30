@@ -182,43 +182,48 @@
         //一级标题
         h1 {
             margin-bottom: 25px;
-            line-height: 40px;
+            margin-top: 25px;
+            line-height: 64px;
             font-size: 24px;
-            color: $main;
+            color: $fz-d;
             font-weight: bold;
         }
         //二级标题
         h2 {
             margin-bottom: 20px;
-            line-height: 30px;
+            padding-top: 50px;
+            line-height: 50px;
             font-size: 20px;
-            color: $main;
+            color: $fz-d;
             font-weight: bold;
             border-bottom: 1px solid $border;
         }
         //二级标题
         h3 {
             margin-bottom: 15px;
+            padding-top: 25px;
             line-height: 26px;
             font-size: 16px;
-            color: $main;
+            color: $fz-d;
             font-weight: bold;
         }
         //二级标题
         h4 {
             margin-bottom: 10px;
+            padding-top: 10px;
             line-height: 16px;
             font-size: 14px;
-            color: $main;
+            color: $fz-d;
             font-weight: bold;
         }
         //二级标题
         h5,
         h6 {
             margin-bottom: 10px;
+            padding-top: 10px;
             line-height: 20px;
             font-size: 12px;
-            color: $main;
+            color: $fz-d;
             font-weight: bold;
         }
         //代码片段
@@ -238,9 +243,9 @@
         }
         //无序列表
         ul {
-            margin-left: 20px;
+            margin-left: 30px;
             margin-bottom: 25px;
-            list-style: square;
+            list-style: disc;
             >li {
                 margin-bottom: 10px;
                 line-height: 24px;
@@ -261,6 +266,13 @@
             }
         }
         //代码片段通用
+        pre {
+            padding: 20px;
+            border-radius: $radius;
+            background-color: $bg-l;
+            color: $fz;
+            margin-bottom: 20px;
+        }
     }
     .layout-sideby {
         float: right;

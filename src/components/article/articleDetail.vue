@@ -57,6 +57,10 @@
                     
                 </div>
                 <!-- /文章正文 -->
+
+                <!-- 文章锚点  -->
+                <comAnchor :list="anchorList" type="fix"></comAnchor>
+                <!-- ／文章锚点  -->
             </div>
         </div>
     </div>
@@ -67,6 +71,7 @@ import comUserheader from './../common/userhead.vue';
 import comTagcloud from './../common/tagcloud'
 import comLoadingMod from './../common/loading-mod'
 import comError from './../common/error'
+import comAnchor from './../common/anchor'
 
 //临时数据
 import dataArtList from './../../data_artlist_tab1.js'
@@ -94,6 +99,7 @@ export default {
                 type: "", //错误类型
                 text: "" //错误提示文字
             },
+            anchorList: [], //锚点内容
             showloading: false, //显示正在加载
             similar: [] //相似文章
         }
@@ -101,7 +107,7 @@ export default {
     watch: {
         '$route': 'http_getContent' //路由发生改变时重新载入内容
     },
-    components: { comUserheader,comTagcloud,comLoadingMod,comError },
+    components: { comUserheader,comTagcloud,comLoadingMod,comError,comAnchor },
     created: function(){
         //根据文章id获取文章
         this.http_getContent();
@@ -139,6 +145,7 @@ export default {
 
                     if(RE.meta.code == "0000") { //请求成功
                         _this.article = RE.datas;
+                        _this.setAnchor(RE.datas.maintxt);
                     }
                     else if(RE.meta.code == "1003") { //服务端错误
                         _this.showError.show = true;
@@ -198,6 +205,10 @@ export default {
                     }
                 }
             );
+        },
+        //设置文章锚点内容/([^>]*)(<([a-z/][-a-z0-9_:.]*)[^>/]*(\/*)>)([^<]*)/g
+        setAnchor(list){
+            list.match(/[^<code]*<h[1-3][^<\/]+<\/h[1-3]>/g);
         }
     }
 }

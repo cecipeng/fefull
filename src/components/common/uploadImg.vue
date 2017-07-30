@@ -20,8 +20,8 @@ export default {
             image: ""
     	}
     },
-    mounted: function() {
-       console.log(this.img);
+    created: function() {
+       console.log(this.img.length);
        this.image = this.img || "";
     },
   

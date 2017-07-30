@@ -38,7 +38,7 @@
             <div class="frbox">
                 <div class="header-userdrop ui-dropdown" v-if="showUserHeader">
                     
-                    <comDropdown trigger="hover" placement="bottom" width="100px">
+                    <comDropdown trigger="hover" placement="bottom" width="100px" top="40px">
                         <a slot="rel" class="selector">
                             <!-- com-userhead -->
                             <comUserheader stylesize="s" :userData="$store.state.loginUser"></comUserheader>

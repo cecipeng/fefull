@@ -9,7 +9,7 @@
                         <p class="article-date"><em class="date">{{article.publishedDate}}</em></p>
                         <p class="article-date" :data-categoryId="article.category.categoryId">分类：<em class="date">{{article.category.categoryName}}</em></p>
                         <div class="article-date tagwrap">
-                            <a v-for="item in article.tagclouds" class="btn-tag" @click="searching(item.tagcloudId)">{{item.tagcloudName}}</a>
+                            <a v-for="item in article.tagclouds" class="btn-tag">{{item.tagcloudName}}</a>
                         </div>
                     </div>
                 </div>
@@ -29,7 +29,7 @@
             <!-- 文章正文 -->
             <div class="layout-mainby">
                 <div class="articlewrap">
-                    <blockquote v-if="article.origin.id!=1">转载自：<span class="link">{{article.reprint}}</span></blockquote>
+                    <blockquote v-if="article.origin.originId!=1">转载自：<span class="link">{{article.reprint}}</span></blockquote>
                     <div class="articletxt" v-html="article.maintxt"></div>
                 </div>
             </div>
