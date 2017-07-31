@@ -1,7 +1,7 @@
 <template>
     <div class="com-anchor" :class="type">
         <ul class="anchorwrap">
-            <li class="anchor-item" v-for="item1 in anchorlist">
+            <li class="anchor-item" v-for="item1 in anchorlist" v-if="item1.title.length>0">
                 <a class="anchor-link">{{item1.title}}</a>
                 <ul class="anchor-subitem" v-if="item1.child.length>0">
                     <li class="anchor-item" v-for="item2 in item1.child">
@@ -26,7 +26,7 @@ export default {
         return {
             anchorlist: [
                 {
-                    title: '标题1',
+                    title: '',
                     child: ''
                 },
                 {

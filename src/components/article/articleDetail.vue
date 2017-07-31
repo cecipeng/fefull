@@ -206,9 +206,16 @@ export default {
                 }
             );
         },
-        //设置文章锚点内容/([^>]*)(<([a-z/][-a-z0-9_:.]*)[^>/]*(\/*)>)([^<]*)/g
+        //设置文章锚点内容
         setAnchor(list){
-            list.match(/[^<code]*<h[1-3][^<\/]+<\/h[1-3]>/g);
+            const reg = /<h[1-3][^<\/]+<\/h[1-3]>(?!((?!.*<code[>\s]).*<\/code>))/g
+            const resultArr = list.match(reg);
+            console.log(resultArr)
+            if(resultArr){
+                for(var i=0;i<resultArr.length;i++){
+                    var text = resultArr[i].replace(/<(?:.|\s)*?>/g, "");
+                }
+            }
         }
     }
 }
