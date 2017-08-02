@@ -71,7 +71,7 @@ import comUserheader from './../common/userhead.vue';
 import comTagcloud from './../common/tagcloud'
 import comLoadingMod from './../common/loading-mod'
 import comError from './../common/error'
-import comAnchor from './../common/anchor'
+// import comAnchor from './../common/anchor'
 
 //临时数据
 import dataArtList from './../../data_artlist_tab1.js'
@@ -107,7 +107,7 @@ export default {
     watch: {
         '$route': 'http_getContent' //路由发生改变时重新载入内容
     },
-    components: { comUserheader,comTagcloud,comLoadingMod,comError,comAnchor },
+    components: { comUserheader,comTagcloud,comLoadingMod,comError },
     created: function(){
         //根据文章id获取文章
         this.http_getContent();
@@ -208,7 +208,6 @@ export default {
         },
         //设置文章锚点内容
         setAnchor(list){
-<<<<<<< HEAD
             const reg = /<h[1-4][^<\/]+<\/h[1-4]>(?!((?!.*<code[>\s]).*<\/code>))/g
             const matchArr = list.match(reg);
             
@@ -281,7 +280,6 @@ export default {
         //去除标签，只留innerHTML，用于：setAnchor()方法
         getInnerHtml(str){
             return str.replace(/<(?:.|\s)*?>/g, "");
-=======
             const reg = /<h[1-3][^<\/]+<\/h[1-3]>(?!((?!.*<code[>\s]).*<\/code>))/g
             const resultArr = list.match(reg);
             console.log(resultArr)
@@ -290,7 +288,6 @@ export default {
                     var text = resultArr[i].replace(/<(?:.|\s)*?>/g, "");
                 }
             }
->>>>>>> 1b2ab83116eda741d7ba897f89d32951450d3c02
         }
     }
 }
