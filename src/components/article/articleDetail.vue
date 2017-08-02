@@ -59,7 +59,7 @@
                 <!-- /文章正文 -->
 
                 <!-- 文章锚点  -->
-                <comAnchor :list="anchorList" type="fix"></comAnchor>
+                <!-- <comAnchor :list="anchorList" type="fix"></comAnchor> -->
                 <!-- ／文章锚点  -->
             </div>
         </div>
@@ -208,6 +208,80 @@ export default {
         },
         //设置文章锚点内容
         setAnchor(list){
+<<<<<<< HEAD
+            const reg = /<h[1-4][^<\/]+<\/h[1-4]>(?!((?!.*<code[>\s]).*<\/code>))/g
+            const matchArr = list.match(reg);
+            
+            let resultArr = [{
+                child: [{
+                    child: [{
+                        child: [{}]
+                    }]
+                }]
+            }];
+            let [a,b,c,d] = [-1,-1,-1,-1];
+
+            if(matchArr){
+                
+                for(var i=0;i<matchArr.length;i++){
+                    if(matchArr[i].startsWith('<h1')) {
+                        a++;
+                        [b,c,d] = [-1,-1,-1];
+                        resultArr[a].title = getInnerHtml(matchArr[i]);
+                        resultArr[a].child = [];
+                        console.log(a);
+                    }
+                    else if(matchArr[i].startsWith('<h2')) {
+                        b++;
+                        a = a==-1? 0 : a;
+                        [c,d] = [-1,-1];
+                        resultArr[a].child[b].title = getInnerHtml(matchArr[i]);
+                        resultArr[a].child[b].child = [];
+                        console.log(b);
+                    }
+                    else if(matchArr[i].startsWith('<h3')) {
+                        c++;
+                        a = a==-1? 0 : a;
+                        b = b==-1? 0 : b;
+                        d=-1;
+                        resultArr[a].child[b].child[c].title = getInnerHtml(matchArr[i]);
+                        resultArr[a].child[b].child[c].child = [];
+                        console.log(c);
+                    }
+                    else if(matchArr[i].startsWith('<h4')) {
+                        d++;
+                        a = a==-1? 0 : a;
+                        b = b==-1? 0 : b;
+                        c = c==-1? 0 : c;
+                        resultArr[a].child[b].child[c].child[d].title = getInnerHtml(matchArr[i]);
+                        resultArr[a].child[b].child[c].child[d].child = [];
+                        console.log(d);
+                    }
+                }
+                console.log(resultArr[0]);
+            }
+
+            // function initArr(a,b,c,d){
+            //     var resultArr = [];`
+            //     resultArr[a].child[b] = [];
+            //     resultArr[a].child[b].child[c] = [];
+            //     resultArr[a].child[b].child[c].child = [];
+            //     return resultArr;
+            // }
+
+            // let resultArr = [{
+            //     child: [{
+            //         child: [{
+            //             child: [{}]
+            //         }]
+            //     }]
+            // }];
+            
+        },
+        //去除标签，只留innerHTML，用于：setAnchor()方法
+        getInnerHtml(str){
+            return str.replace(/<(?:.|\s)*?>/g, "");
+=======
             const reg = /<h[1-3][^<\/]+<\/h[1-3]>(?!((?!.*<code[>\s]).*<\/code>))/g
             const resultArr = list.match(reg);
             console.log(resultArr)
@@ -216,6 +290,7 @@ export default {
                     var text = resultArr[i].replace(/<(?:.|\s)*?>/g, "");
                 }
             }
+>>>>>>> 1b2ab83116eda741d7ba897f89d32951450d3c02
         }
     }
 }

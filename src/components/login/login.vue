@@ -2,7 +2,7 @@
     <div class="layout-mod mod-login">
     	<div class="formbox">
             <input type="text" v-model="loginModel.userName" class="form-input form-input-wide inp-username" placeholder="请输入" @keyup.enter="login">
-            <input type="text" v-model="loginModel.password" class="form-input form-input-wide inp-pwd" placeholder="请输入" @keyup.enter="login">
+            <input type="password" v-model="loginModel.password" class="form-input form-input-wide inp-pwd" placeholder="请输入" @keyup.enter="login">
             <p class="errortip">{{errortip}}</p>
             <div class="btnwrap">
                 <a class="ui-btn ui-btn-wide ui-btn-main s-disabled" v-if="isLogining">正在登录...</a>
