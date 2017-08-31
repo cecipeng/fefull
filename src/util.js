@@ -17,9 +17,8 @@ Vue.http.interceptors.push((request, next) => {
 
 //统一接口地址前缀
 // const baseUrl = "http://121.40.121.128:8090/api/";
-const baseUrl = "http://121.40.121.128:8090/api/";
-// const baseUrl = "http://192.168.1.104:8899/fefull/api/";
-// const baseUrl = "http://192.168.1.104:8899/fefull/api/";
+// const baseUrl = "http://121.40.121.128:8090/api/";
+const baseUrl = "http://192.168.1.102:8899/fefull/api/";
 // const baseUrl = "http://seazy.ngrok.cc/fefull/api/";
 
 export default {
@@ -118,6 +117,7 @@ export default {
             login : "login/verify", //登录验证
             navMember : "navigator/member", //导航列表（登录后）：获取系统和用户自定义导航
             navSystem : "navigator/system", //导航列表（登录前）：仅获取系统导航
+            addMemberCategories : "navigator/saveNavCategory", //新增用户导航分类
         }
     },
 

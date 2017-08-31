@@ -65,6 +65,7 @@
                             </li>
                         </ul>
                     </div>
+                    <comError :text="showError.text" :type="showError.type" v-if="showError.show" size="smallCol"></comError>
                     <a class="btn-add-navigation ui-btn ui-btn-default" @click="openModal2()">添加导航</a>    
                 </div>  
                 <!--／我的导航-->     
@@ -87,8 +88,9 @@
                 <!--／公共导航-->              
             </div>
         </comModal>   
-        <!--弹窗：编辑导航-->
+        <!--/弹窗：编辑导航-->
 
+        <!--弹窗：新建导航-->
         <comModal ref="showModal2" :modalOpt='{
             confirmButtonText: "保存",
             title: "编辑导航",
@@ -139,6 +141,7 @@
                 </div>
             </div>
         </comModal> 
+        <!--／弹窗：新建导航-->
     </div>
 </template>
 
@@ -250,7 +253,6 @@ export default {
                                 vm.memberList = RE.datas.member;
                             }
                         }
-
                     });
                 }
                 else { 
@@ -278,7 +280,22 @@ export default {
         //新建分类
         http_addcategory(){
             this.addcategory = true;
-            //添加到数据库
+            var _this = this;
+            
+            UTIL.AJAX_POST(
+                UTIL.AJAX_URL().addMemberCategories,
+                this.addcategoryText,
+                function(RE,r,s){
+                    if(RE.meta.code == "0000") { //请求成功
+                       
+                        console.log(RE.datas);
+                    }
+                    else if(RE.meta.code == "1003") { //服务端错误
+                        s.commit('setMessage',[true,"网络异常，请稍后重试","error",false]);
+                        console.log("FEFull：新建导航分类失败，"+RE.meta.message);
+                    }
+                }
+            )  
             //重新获取数据
         },
         //点击展开添加弹窗

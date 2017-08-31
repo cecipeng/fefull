@@ -52,7 +52,7 @@
                 <div class="layout-mainby">
                     <div class="articlewrap">
                         <blockquote v-if="article.origin.originId!=1">转载自：<span class="link">{{article.reprint}}</span></blockquote>
-                        <div class="articletxt" v-html="article.maintxt"></div>
+                        <div class="articletxt" v-html="articleMaintxt" v-highlight></div>
                     </div>
                     
                 </div>
@@ -67,11 +67,17 @@
 </template>
 
 <script>
+import Vue from 'vue'
+
 import comUserheader from './../common/userhead.vue';
 import comTagcloud from './../common/tagcloud'
 import comLoadingMod from './../common/loading-mod'
 import comError from './../common/error'
 // import comAnchor from './../common/anchor'
+
+import Highlight from './../common/highlight.js'
+Vue.use(Highlight)
+
 
 //临时数据
 import dataArtList from './../../data_artlist_tab1.js'
@@ -115,6 +121,16 @@ export default {
     computed: {
         allTagcloud() { //标签云
             return this.$store.state.tagcloudData;
+        },
+        articleMaintxt() {
+            // const reg = /<pre.*<\/pre>))/g
+            // const matchArr = list.match(reg);
+            // $('pre code').each(function(i, block) {
+            //     var _html = block.innerHTML.replace(/\</g, '&lt;').replace(/\>/, '&gt;')
+            //     block.innerHTML = _html;
+            //     hljs.highlightBlock(block);
+            // });
+            return this.article.maintxt
         }
     },
     methods: {

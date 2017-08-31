@@ -85,7 +85,7 @@ export default {
 
         //首次跳转到该页根据路由传入的关键字搜索。(不能用搜索组件传入的关键字，因为是article内到搜索组件)
         const key = this.$route.params.key;
-        this.http_search(1,key.keyword,key.tagcloudId);
+        this.http_search(1,key.keyword,key.tagcloudId,key.categoryId);
     },
     computed: {
         allTagcloud() { //标签云

@@ -36,7 +36,7 @@
 			padding-top: 80px;
 			background-color: $bg-d;
 			border-top-left-radius: 10px;
-			background-color: $nav;
+			background-color: $bgdark;
 			.com-userhead {
 				position: absolute;
 				left: 0;
@@ -58,7 +58,7 @@
 			cursor: pointer;
 			&.on {
 				// background-color: $bg-der;
-				background-color: $nav-l;
+				background-color: $bgdark-l;
 				// margin-left: -6px;
 				color: $main;
 				// border-top-left-radius: 5px;

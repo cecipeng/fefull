@@ -10,7 +10,7 @@
                             <router-link class="item" to="/home">首页</router-link>
                         </li>
                         <li>
-                            <router-link class="item" to="/article">文章</router-link>
+                            <router-link class="item" to="/article/">文章</router-link>
                         </li>
                          <li id="ui-dropdown" @mouseleave="showMenu = false">
                             <a class="item selector" :class="{on:showMenu ==true}" @mouseenter="showMenu = true">资源库<i class="dropdown-arrow"></i></a>
@@ -52,8 +52,8 @@
                     </comDropdown>
                 </div>
                 <div class="unlogin" v-else>
-                    <router-link class="ui-btn ui-btn-default" to="/login">登录</router-link>
-                    <router-link target="_blank" class="ui-btn ui-btn-default" to="/login">注册</router-link>
+                    <router-link class="ui-link ui-link-light" to="/login">登录</router-link>
+                    <router-link target="_blank" class="ui-link ui-link-light" to="/login">注册</router-link>
                 </div>
                 
             </div>   
@@ -70,7 +70,7 @@ export default {
     data () {
         return {
             showMenu: false, //显示导航二级菜单
-            noHeaderRouter: /(usercenter)|(myartCreate)|(myartCreateMarkdown)|(myartList)|(favorartList)|(login)|(preview)|(pageError)/ //不需要头部的页面路由
+            noHeaderRouter: /(usercenter)|(myartCreate)|(myartCreateMarkdown)|(myartList)|(favorartList)|(preview)|(pageError)/ //不需要头部的页面路由
         }
     },
     created: function(){

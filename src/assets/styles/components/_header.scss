@@ -10,7 +10,7 @@
 .com-header {
 	height: $header-h;
 	@extend %cf;
-	background-color: $nav;
+	background-color: $bgdark-d;
 	.layout-wrapper {
 		height: 100%;
 	}
@@ -26,7 +26,7 @@
 	//头部下拉菜单特殊处理
 	.ui-dropdown {
 		.dropdown-list {
-			background-color: $nav-l;
+			background-color: $bgdark;
 		}
 	}
 	//logo
@@ -74,10 +74,8 @@
 	.unlogin {
 		height: 100%;
 		@extend %vm;
-		.ui-btn {
-			min-width: 60px;
+		.ui-link {
 			margin-left: 10px;
-			background-color: none;
 		}
 	}
 }
@@ -106,7 +104,7 @@
 			cursor: pointer;
 			// font-weight: lighter;
 			@extend %tof;
-			@include hover(background-color,$nav-l,$nav-l);
+			@include hover(background-color,$bgdark,$bgdark);
 			&.router-link-active {
 				color: $main;
 			}
@@ -114,7 +112,7 @@
 				position: relative;
 				padding-right: 33px;
 				&.on {
-					background-color: $nav-l;
+					background-color: $bgdark;
 				}
 			}
 		}
@@ -139,7 +137,7 @@
 			margin-left: -70px;
 			padding-top: 5px;
 			z-index: $zindex-dd;
-			background-color: $nav-l;
+			background-color: $bgdark;
 			.dropitem {
 				display: block;
 				height: 36px;
@@ -155,7 +153,7 @@
 	//头部下拉菜单特殊处理
 	.ui-dropdown {
 		.dropdown-list {
-			background-color: $nav-l;
+			background-color: $bgdark;
 		}
 	}
 }

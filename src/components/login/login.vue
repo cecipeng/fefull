@@ -1,14 +1,22 @@
 <template>
     <div class="layout-mod mod-login">
-    	<div class="formbox">
-            <input type="text" v-model="loginModel.userName" class="form-input form-input-wide inp-username" placeholder="请输入" @keyup.enter="login">
-            <input type="password" v-model="loginModel.password" class="form-input form-input-wide inp-pwd" placeholder="请输入" @keyup.enter="login">
-            <p class="errortip">{{errortip}}</p>
-            <div class="btnwrap">
-                <a class="ui-btn ui-btn-wide ui-btn-main s-disabled" v-if="isLogining">正在登录...</a>
-                <a class="ui-btn ui-btn-wide ui-btn-main" v-else @click="login">登录</a>
+        <div class="layout-wrapper">
+            <div class="formbox">
+                <div class="form-title">登录 Fefull</div>
+                <div class="form-row form-username">
+                    <input type="text" v-model="loginModel.userName" class="form-input form-input-wide" placeholder="用户名" @keyup.enter="login">
+                </div>
+                <div class="form-row form-pwd">
+                    <input type="password" v-model="loginModel.password" class="form-input form-input-wide" placeholder="密码" @keyup.enter="login">
+                </div>
+                <p class="errortip">{{errortip}}</p>
+                <div class="btnwrap">
+                    <a class="ui-btn ui-btn-wide ui-btn-main s-disabled" v-if="isLogining">正在登录...</a>
+                    <a class="ui-btn ui-btn-wide ui-btn-main" v-else @click="login">登录</a>
+                </div>
             </div>
         </div>
+    	
     </div>
 </template>
 

@@ -267,11 +267,17 @@
         }
         //代码片段通用
         pre {
-            padding: 20px;
+            padding: 0;
             border-radius: $radius;
-            background-color: $bg-l;
+            
             color: $fz;
             margin-bottom: 20px;
+            .hljs {
+                background-color: $bg-l;
+                line-height: 1.5;
+                font-size: 14px;
+                font-family: 'Lucida Console,Consolas,Monaco,Andale Mono,Ubuntu Mono,monospace';
+            }
         }
     }
     .layout-sideby {
