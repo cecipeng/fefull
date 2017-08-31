@@ -48,24 +48,28 @@
                 <!--我的导航-->
                 <div class="navigation-mynav">
                     <p class="edit-maintitle">我的导航</p>
-                    <div class="mynav-sort" v-for="item in memberList">
-                        <div class="ui-formrow mynav-sort-title">
-                            <label class="form-label">分类：</label>
-                            <div class="form-con">
-                                <input type="text" class="form-input" v-model="item.categoryName">
-                            </div>
-                        </div>
-                        <ul class="mynav-sort-list">
-                            <li v-for="list in item.navigators">
-                                <p class="item-edit">
-                                    <a href="###" class="btn-edit" @click="openModal2(list,item.categoryId,item.categoryName)"></a>
-                                    <a href="###" class="btn-del"></a>
-                                </p>
-                                <p class="item-title" :data-id="list.navigatorId">{{list.navigatorName}}</p>
-                            </li>
-                        </ul>
-                    </div>
                     <comError :text="showError.text" :type="showError.type" v-if="showError.show" size="smallCol"></comError>
+                    <div class="mynav-sort" v-for="(item,index) in memberList" v-else>
+                        <draggable v-model="memberList[index]" :options="{group:'item', handle:'.handle'}">
+                            <transition-group>
+                                <div class="ui-formrow mynav-sort-title">
+                                    <label class="form-label">分类：</label>
+                                    <div class="form-con">
+                                        <input type="text" class="form-input" v-model="item.categoryName">
+                                    </div>
+                                </div>
+                                <ul class="mynav-sort-list">
+                                    <li v-for="list in item.navigators">
+                                        <p class="item-edit">
+                                            <a href="###" class="btn-edit" @click="openModal2(list,item.categoryId,item.categoryName)"></a>
+                                            <a href="###" class="btn-del"></a>
+                                        </p>
+                                        <p class="item-title" :data-id="list.navigatorId">{{list.navigatorName}}</p>
+                                    </li>
+                                </ul>
+                            </transition-group>
+                        </draggable>
+                    </div>
                     <a class="btn-add-navigation ui-btn ui-btn-default" @click="openModal2()">添加导航</a>    
                 </div>  
                 <!--／我的导航-->     
@@ -147,6 +151,7 @@
 
 <script>
 
+import draggable from 'vuedraggable'
 import comListNavigation from './../common/list-navigation'
 import comModal from './../common/modal'
 import comError from './../common/error'
@@ -202,7 +207,7 @@ export default {
             addcategoryText: "", //新建分类名称
         }
     },
-    components: { comListNavigation,comModal,comError,comDropdown,comDropdownItem },
+    components: { comListNavigation,comModal,comError,comDropdown,comDropdownItem,draggable },
     created: function(){
         // this.http_comNavigation()
     },
@@ -244,13 +249,14 @@ export default {
                         else if(sort===1) {//已登录数据
                             vm.sysList = RE.datas.system;
                             
-                            if(RE.datas.member==0) { //内容为空时，显示无内容缺省图
+                            if(RE.datas.member.length==0) { //内容为空时，显示无内容缺省图
                                 vm.showError.show = true;
                                 vm.showError.type = "empty";
                             }
                             else {
                                 vm.showError.show = false;
                                 vm.memberList = RE.datas.member;
+                                console.log(vm.memberList);
                             }
                         }
                     });
@@ -284,11 +290,13 @@ export default {
             
             UTIL.AJAX_POST(
                 UTIL.AJAX_URL().addMemberCategories,
-                this.addcategoryText,
+                {
+                    categoryName: this.addcategoryText
+                },
                 function(RE,r,s){
                     if(RE.meta.code == "0000") { //请求成功
-                       
-                        console.log(RE.datas);
+                       _this.memberList = RE.datas;
+                        console.log(_this.memberList);
                     }
                     else if(RE.meta.code == "1003") { //服务端错误
                         s.commit('setMessage',[true,"网络异常，请稍后重试","error",false]);
@@ -296,7 +304,30 @@ export default {
                     }
                 }
             )  
-            //重新获取数据
+        },
+        //新建导航
+        http_addNavigation(){
+            const _this = this;
+            let _param;
+
+            _param.fkNavigatorCategory = this.curEditElement.categoryId;
+            _param.navigatorName = this.curEditElement.categoryName;
+            _param.navigatorUrl = this.curEditElement.navigatorUrl;
+            _param.description = this.curEditElement.description;
+
+            UTIL.AJAX_POST(
+                UTIL.AJAX_URL().addMemberNavigator,
+                _param,
+                function(RE,r,s){
+                    if(RE.meta.code == "0000") { //请求成功
+                        console.log(RE.datas);
+                    }
+                    else if(RE.meta.code == "1003") { //服务端错误
+                        s.commit('setMessage',[true,"网络异常，请稍后重试","error",false]);
+                        console.log("FEFull：新建导航失败，"+RE.meta.message);
+                    }
+                }
+            )  
         },
         //点击展开添加弹窗
         openModal2(item,categoryId,categoryName){
@@ -315,7 +346,6 @@ export default {
                 this.curEditElement[i] = this.orgEditElement[i];
             }
         }
-
     }
 }
 </script>
