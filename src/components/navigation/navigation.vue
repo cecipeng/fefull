@@ -50,26 +50,45 @@
                     <p class="edit-maintitle">我的导航</p>
                     <comError :text="showError.text" :type="showError.type" v-if="showError.show" size="smallCol"></comError>
                     <div class="mynav-sort" v-for="(item,index) in memberList" v-else>
-                        <draggable v-model="memberList[index]" :options="{group:'item', handle:'.handle'}">
+                        <div class="ui-formrow mynav-sort-title">
+                            <label class="form-label">分类：</label>
+                            <div class="form-con">
+                                <input type="text" class="form-input" v-model="item.categoryName">
+                            </div>
+                        </div>
+                        <ul class="mynav-sort-list">
+                            <li v-for="list in item.navigators">
+                                <p class="item-edit">
+                                    <a href="###" class="btn-edit" @click="openModal2(list,item.categoryId,item.categoryName)"></a>
+                                    <a href="###" class="btn-del"></a>
+                                </p>
+                                <p class="item-title" :data-id="list.navigatorId">{{list.navigatorName}}</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- <div class="mynav-sort">
+                        <draggable v-model="sysList">
                             <transition-group>
-                                <div class="ui-formrow mynav-sort-title">
-                                    <label class="form-label">分类：</label>
-                                    <div class="form-con">
-                                        <input type="text" class="form-input" v-model="item.categoryName">
+                                <div v-for="item in sysList">
+                                    <div class="ui-formrow mynav-sort-title">
+                                        <label class="form-label">分类：</label>
+                                        <div class="form-con">
+                                            <input type="text" class="form-input">
+                                        </div>
                                     </div>
+                                    <ul class="mynav-sort-list">
+                                        <li >
+                                            <p class="item-edit">
+                                                <a href="###" class="btn-edit"></a>
+                                                <a href="###" class="btn-del"></a>
+                                            </p>
+                                            <p class="item-title">11111</p>
+                                        </li>
+                                    </ul>
                                 </div>
-                                <ul class="mynav-sort-list">
-                                    <li v-for="list in item.navigators">
-                                        <p class="item-edit">
-                                            <a href="###" class="btn-edit" @click="openModal2(list,item.categoryId,item.categoryName)"></a>
-                                            <a href="###" class="btn-del"></a>
-                                        </p>
-                                        <p class="item-title" :data-id="list.navigatorId">{{list.navigatorName}}</p>
-                                    </li>
-                                </ul>
                             </transition-group>
                         </draggable>
-                    </div>
+                    </div> -->
                     <a class="btn-add-navigation ui-btn ui-btn-default" @click="openModal2()">添加导航</a>    
                 </div>  
                 <!--／我的导航-->     
@@ -95,7 +114,7 @@
         <!--/弹窗：编辑导航-->
 
         <!--弹窗：新建导航-->
-        <comModal ref="showModal2" :modalOpt='{
+        <comModal ref="showModal2" v-on:modalSubmit='http_addNavigation' :modalOpt='{
             confirmButtonText: "保存",
             title: "编辑导航",
             customClass: "modal-addNav"
@@ -209,66 +228,119 @@ export default {
     },
     components: { comListNavigation,comModal,comError,comDropdown,comDropdownItem,draggable },
     created: function(){
-        // this.http_comNavigation()
+        this.http()
     },
     computed: {
         
     },
-    beforeRouteEnter (to, from, next) {
-        let url = "";
-        let sort = ""; //请求接口不同，标记返回的数据类型：0:未登录下，1:已登录下
-        //获取登录状态
-        store.commit('getLoginInfor');
+    // beforeRouteEnter (to, from, next) {
+        // let url = "";
+        // let sort = ""; //请求接口不同，标记返回的数据类型：0:未登录下，1:已登录下
+        // //获取登录状态
+        // store.commit('getLoginInfor');
 
-        //已登录的请求地址和未登录的请求地址
-        if(store.state.loginUser.isLogining) { //已登录接口
-            url = UTIL.AJAX_URL().navMember;
-            sort = 1;
-        }
-        else { //未登录接口
-            url = UTIL.AJAX_URL().navSystem;
-            sort = 0;
-        }
+        // //已登录的请求地址和未登录的请求地址
+        // if(store.state.loginUser.isLogining) { //已登录接口
+        //     url = UTIL.AJAX_URL().navMember;
+        //     sort = 1;
+        // }
+        // else { //未登录接口
+        //     url = UTIL.AJAX_URL().navSystem;
+        //     sort = 0;
+        // }
 
-        //获取导航列表
-        UTIL.AJAX_POST(
-            url,
-            "",
-            function(RE,r,s){
-                if(RE.meta.code == "0000") { //请求成功
-                    next(vm => {
+        // //获取导航列表
+        // UTIL.AJAX_POST(
+        //     url,
+        //     "",
+        //     function(RE,r,s){
+        //         if(RE.meta.code == "0000") { //请求成功
+        //             next(vm => {
                         
-                        if(sort===0) {//未登录数据
-                            vm.sysList = RE.datas;
-                            vm.memberList = false;
-                            vm.showError.show = true;//提示未登录
-                            vm.showError.type = "weberror";
-                            vm.showError.text = "未登录，无法查看个人收藏导航，请先登录～";
+        //                 if(sort===0) {//未登录数据
+        //                     vm.sysList = RE.datas;
+        //                     vm.memberList = false;
+        //                     vm.showError.show = true;//提示未登录
+        //                     vm.showError.type = "weberror";
+        //                     vm.showError.text = "未登录，无法查看个人收藏导航，请先登录～";
 
-                        }
-                        else if(sort===1) {//已登录数据
-                            vm.sysList = RE.datas.system;
+        //                 }
+        //                 else if(sort===1) {//已登录数据
+        //                     vm.sysList = RE.datas.system;
                             
-                            if(RE.datas.member.length==0) { //内容为空时，显示无内容缺省图
-                                vm.showError.show = true;
-                                vm.showError.type = "empty";
-                            }
-                            else {
-                                vm.showError.show = false;
-                                vm.memberList = RE.datas.member;
-                                console.log(vm.memberList);
-                            }
-                        }
-                    });
-                }
-                else { 
-                    next(false);
-                    console.log("FEFull：获取公共列表失败，"+RE.meta.message);
-                }
-            }
-        );
-    },
+        //                     if(RE.datas.member.length==0) { //内容为空时，显示无内容缺省图
+        //                         vm.showError.show = true;
+        //                         vm.showError.type = "empty";
+        //                     }
+        //                     else {
+        //                         vm.showError.show = false;
+        //                         vm.memberList = RE.datas.member;
+        //                     }
+        //                 }
+        //             });
+        //         }
+        //         else { 
+        //             next(false);
+        //             console.log("FEFull：获取公共列表失败，"+RE.meta.message);
+        //         }
+        //     }
+        // );
+    // },
     methods: {
+        http(){
+            const _this = this;
+            let url = "";
+            let sort = ""; //请求接口不同，标记返回的数据类型：0:未登录下，1:已登录下
+            //获取登录状态
+            store.commit('getLoginInfor');
+
+            //已登录的请求地址和未登录的请求地址
+            if(store.state.loginUser.isLogining) { //已登录接口
+                url = UTIL.AJAX_URL().navMember;
+                sort = 1;
+            }
+            else { //未登录接口
+                url = UTIL.AJAX_URL().navSystem;
+                sort = 0;
+            }
+
+            //获取导航列表
+            UTIL.AJAX_POST(
+                url,
+                "",
+                function(RE,r,s){
+                    
+                    if(RE.meta.code == "0000") { //请求成功
+                        
+                            if(sort===0) {//未登录数据
+                                _this.sysList = RE.datas;
+                                _this.memberList = false;
+                                _this.showError.show = true;//提示未登录
+                                _this.showError.type = "weberror";
+                                _this.showError.text = "未登录，无法查看个人收藏导航，请先登录～";
+
+                            }
+                            else if(sort===1) {//已登录数据
+                                _this.sysList = RE.datas.system;
+                                console.log(RE.datas.member);
+                                if(RE.datas.member.length==0) { //内容为空时，显示无内容缺省图
+                                    _this.showError.show = true;
+                                    _this.showError.type = "empty";
+                                }
+                                else {
+                                    _this.showError.show = false;
+                                    _this.memberList = RE.datas.member;
+                                    
+                                }
+                            }
+                    }
+                    else { 
+                        
+                        console.log("FEFull：获取公共列表失败，"+RE.meta.message);
+                    }
+                }
+            );
+        },
         //列表显示方式切换
         changeView: function(idx){
             this.viewIndex = idx;
@@ -309,7 +381,7 @@ export default {
         http_addNavigation(){
             const _this = this;
             let _param;
-
+console.log("ff");
             _param.fkNavigatorCategory = this.curEditElement.categoryId;
             _param.navigatorName = this.curEditElement.categoryName;
             _param.navigatorUrl = this.curEditElement.navigatorUrl;
