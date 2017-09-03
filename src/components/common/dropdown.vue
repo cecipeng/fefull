@@ -1,5 +1,5 @@
 <template>
-	<div class="ui-dropdown" :placement="placement"  @mouseleave="handleMouseLeave" @mouseenter="handleMouseEnter">
+	<div class="ui-dropdown" :placement="placement" :class="{disabled:disabled}"  @mouseleave="handleMouseLeave" @mouseenter="handleMouseEnter">
 		<div class="dropdown-rel" @click="handleClick">
 			<slot name="rel">
 				<a class="btn-rel">
@@ -53,6 +53,10 @@ export default {
 		},
 		reltextName: { //rel显示文字
 			default: '下拉菜单'
+		},
+		disabled: { //是否可编辑
+			type: Boolean,
+			default: false
 		}
 	},
 	created() {
@@ -67,17 +71,17 @@ export default {
 	methods: {
 		//点击显示／隐藏：click方式
 		handleClick(){
-			if (this.trigger !== 'click') return false;
+			if (this.trigger !== 'click' || this.disabled == true) return false;
 			this.show = !this.show;
 		},
 		//点击隐藏：click方式
 		handleClose(){
-			if (this.trigger !== 'click') return false;
+			if (this.trigger !== 'click' || this.disabled == true) return false;
 			this.show = false;
 		},
 		//hover显示：hover方式
 		handleMouseEnter(){
-			if (this.trigger !== 'hover') return false;
+			if (this.trigger !== 'hover' || this.disabled == true) return false;
 			clearTimeout(this.timeout);
 			this.timeout = setTimeout(() => {
 				this.show = true;
@@ -85,7 +89,7 @@ export default {
 		},
 		//hover隐藏：hover方式
 		handleMouseLeave(){
-			if (this.trigger !== 'hover') return false;
+			if (this.trigger !== 'hover' || this.disabled == true) return false;
 			clearTimeout(this.timeout);
 			this.timeout = setTimeout(() => {
 				this.show = false;

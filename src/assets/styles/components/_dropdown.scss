@@ -10,6 +10,13 @@
 	display: inline-block;
 	vertical-align: middle;
 	position: relative;
+	&.disabled {
+		.btn-rel {
+			background: $border !important;
+			color: $fz-l;
+			cursor: default;
+		}
+	}
 	.btn-rel {
 		display: block;
 		position: relative;

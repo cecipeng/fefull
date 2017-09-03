@@ -49,7 +49,7 @@
                 <div class="navigation-mynav">
                     <p class="edit-maintitle">我的导航</p>
                     <comError :text="showError.text" :type="showError.type" v-if="showError.show" size="smallCol"></comError>
-                    <div class="mynav-sort" v-for="(item,index) in memberList" v-else>
+                    <div class="mynav-sort" v-else v-for="(item,index) in memberList">
                         <div class="ui-formrow mynav-sort-title">
                             <label class="form-label">分类：</label>
                             <div class="form-con">
@@ -57,39 +57,18 @@
                             </div>
                         </div>
                         <ul class="mynav-sort-list">
-                            <li v-for="list in item.navigators">
+                        <draggable v-model="memberList[index].navigators" :options="{group:'people',handle:'.dargDiv'}">
+                            <li v-for="list in memberList[index].navigators" :key="list.navigatorId">
                                 <p class="item-edit">
-                                    <a href="###" class="btn-edit" @click="openModal2(list,item.categoryId,item.categoryName)"></a>
-                                    <a href="###" class="btn-del"></a>
+                                    <a href="###" class="btn-edit" @click="openModal2(true,list,memberList[index].categoryId,memberList[index].categoryName)"></a>
+                                    <a href="###" class="btn-del dargDiv"></a>
                                 </p>
                                 <p class="item-title" :data-id="list.navigatorId">{{list.navigatorName}}</p>
                             </li>
+                        </draggable>
                         </ul>
                     </div>
-                    <!-- <div class="mynav-sort">
-                        <draggable v-model="sysList">
-                            <transition-group>
-                                <div v-for="item in sysList">
-                                    <div class="ui-formrow mynav-sort-title">
-                                        <label class="form-label">分类：</label>
-                                        <div class="form-con">
-                                            <input type="text" class="form-input">
-                                        </div>
-                                    </div>
-                                    <ul class="mynav-sort-list">
-                                        <li >
-                                            <p class="item-edit">
-                                                <a href="###" class="btn-edit"></a>
-                                                <a href="###" class="btn-del"></a>
-                                            </p>
-                                            <p class="item-title">11111</p>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </transition-group>
-                        </draggable>
-                    </div> -->
-                    <a class="btn-add-navigation ui-btn ui-btn-default" @click="openModal2()">添加导航</a>    
+                    <a class="btn-add-navigation ui-btn ui-btn-default" @click="openModal2(false)">添加导航</a>    
                 </div>  
                 <!--／我的导航-->     
 
@@ -115,15 +94,15 @@
 
         <!--弹窗：新建导航-->
         <comModal ref="showModal2" v-on:modalSubmit='http_addNavigation' :modalOpt='{
-            confirmButtonText: "保存",
-            title: "编辑导航",
+            confirmButtonText: editNavigation ? "修改" : "保存",
+            title: editNavigation ? "编辑导航" : "新建导航",
             customClass: "modal-addNav"
         }'> 
             <div slot="body" class="formwrap">
                 <div class="ui-formrow">
                     <label class="form-label">分类</label>
                     <div class="form-con" style="width: 70%">
-                        <comDropdown trigger="hover" placement="bottom" @itemClickParent="itemClickCall">
+                        <comDropdown trigger="hover" placement="bottom" :disabled="editNavigation ? true : false" @itemClickParent="itemClickCall">
                             <a slot="rel" class="btn-rel btn-rel-category">
                                 <span class="selector-btn" :data-id="curEditElement.categoryId">{{curEditElement.categoryName}}</span>
 				                <i class="dropdown-arrow"></i>
@@ -189,6 +168,7 @@ export default {
             curEditElement: { //绑定当前编辑的导航内容：更新值
                 categoryId: 0, //所属分类
                 categoryName: "",
+                navigatorId: "",
                 navigatorName: "",
                 navigatorUrl: "",
                 description: ""
@@ -196,6 +176,7 @@ export default {
             orgEditElement: { //绑定当前编辑的导航内容：原始值
                 categoryId: 0, //所属分类
                 categoryName: "",
+                navigatorId: "",
                 navigatorName: "",
                 navigatorUrl: "",
                 description: ""
@@ -215,7 +196,52 @@ export default {
                 }
             },
             sysList: "", //公共导航列表
-            memberList: "", //用户导航列表
+            memberList: [
+            // {
+            //     "categoryId": 3, 
+            //     "categoryName": "竞技游戏", 
+            //     "navigators": [
+            //         {
+            //             "navigatorId": 1, 
+            //             "navigatorName": "魔兽", 
+            //             "navigatorUrl": "www.moshou.com", 
+            //             "description": "魔兽简介", 
+            //             "isFavor": 1,
+            //             "isSystem": 1
+            //         },
+            //         {
+            //             "navigatorId": 1, 
+            //             "navigatorName": "魔兽1", 
+            //             "navigatorUrl": "www.moshou.com", 
+            //             "description": "魔兽简介", 
+            //             "isFavor": 1,
+            //             "isSystem": 1
+            //         }
+            //     ]
+            // },
+            // {
+            //     "categoryId": 3, 
+            //     "categoryName": "竞技游戏2", 
+            //     "navigators": [
+            //         {
+            //             "navigatorId": 1, 
+            //             "navigatorName": "魔兽2", 
+            //             "navigatorUrl": "www.moshou.com", 
+            //             "description": "魔兽简介", 
+            //             "isFavor": 1,
+            //             "isSystem": 1
+            //         },
+            //         {
+            //             "navigatorId": 1, 
+            //             "navigatorName": "魔兽22", 
+            //             "navigatorUrl": "www.moshou.com", 
+            //             "description": "魔兽简介", 
+            //             "isFavor": 1,
+            //             "isSystem": 1
+            //         }
+            //     ]
+            // }
+        ], //用户导航列表
             showError: { //缺省图
                 show: false, //是否显示
                 type: "", //错误类型
@@ -224,6 +250,7 @@ export default {
             viewIndex: 1, //列表显示类型，0:大卡片，1:小卡片
             addcategory: true, //新建分类，点击变为false，开始编辑
             addcategoryText: "", //新建分类名称
+            editNavigation: false, //修改导航or新建导航。false：新建，true：修改 
         }
     },
     components: { comListNavigation,comModal,comError,comDropdown,comDropdownItem,draggable },
@@ -377,32 +404,64 @@ export default {
                 }
             )  
         },
-        //新建导航
+        //新建or修改导航
         http_addNavigation(){
             const _this = this;
             let _param;
-console.log("ff");
             _param.fkNavigatorCategory = this.curEditElement.categoryId;
+            _param.navigatorId = this.curEditElement.categoryId;
             _param.navigatorName = this.curEditElement.categoryName;
             _param.navigatorUrl = this.curEditElement.navigatorUrl;
             _param.description = this.curEditElement.description;
 
-            UTIL.AJAX_POST(
-                UTIL.AJAX_URL().addMemberNavigator,
-                _param,
-                function(RE,r,s){
-                    if(RE.meta.code == "0000") { //请求成功
-                        console.log(RE.datas);
+            if(this.editNavigation) { //修改导航
+                UTIL.AJAX_POST(
+                    UTIL.AJAX_URL().updateNav,
+                    _param,
+                    function(RE,r,s){
+                        if(RE.meta.code == "0000") { //请求成功
+                            // _this.memberList = RE.datas;
+                            _this.memberList.forEach(function(x1){
+                                x1.navigators.forEach(function(x2){
+                                    if(x2.navigatorId == RE.datas.navigatorId) {
+                                        x2.navigatorName = RE.datas.navigatorName;
+                                        x2.navigatorUrl = RE.datas.navigatorUrl;
+                                        x2.description = RE.datas.description;
+                                        return;
+                                    }
+                                });
+                            });
+                            
+                        }
+                        else if(RE.meta.code == "1003") { //服务端错误
+                            s.commit('setMessage',[true,"网络异常，请稍后重试","error",false]);
+                            console.log("FEFull：修改导航失败，"+RE.meta.message);
+                        }
                     }
-                    else if(RE.meta.code == "1003") { //服务端错误
-                        s.commit('setMessage',[true,"网络异常，请稍后重试","error",false]);
-                        console.log("FEFull：新建导航失败，"+RE.meta.message);
+                )  
+            }
+            else { //新增导航
+                UTIL.AJAX_POST(
+                    UTIL.AJAX_URL().saveNav,
+                    _param,
+                    function(RE,r,s){
+                        if(RE.meta.code == "0000") { //请求成功
+                            console.log(RE.datas);
+                            _this.memberList.map(function(){
+
+                            })
+                        }
+                        else if(RE.meta.code == "1003") { //服务端错误
+                            s.commit('setMessage',[true,"网络异常，请稍后重试","error",false]);
+                            console.log("FEFull：新建导航失败，"+RE.meta.message);
+                        }
                     }
-                }
-            )  
+                )
+            }
         },
         //点击展开添加弹窗
-        openModal2(item,categoryId,categoryName){
+        openModal2(editoradd,item,categoryId,categoryName){
+            this.editNavigation = editoradd;
             this.initEditElement(item,categoryId,categoryName);
             this.$refs.showModal2.showModal();
         },
@@ -410,6 +469,7 @@ console.log("ff");
         initEditElement(item,categoryId,categoryName){
             this.orgEditElement.categoryId = categoryId ? categoryId : "";
             this.orgEditElement.categoryName = categoryName ? categoryName : "--选择分类--";
+            this.orgEditElement.navigatorId = item ? item.navigatorId : "";
             this.orgEditElement.navigatorName = item ? item.navigatorName : "";
             this.orgEditElement.navigatorUrl = item ? item.navigatorUrl : "";
             this.orgEditElement.description = item ? item.description : "";
