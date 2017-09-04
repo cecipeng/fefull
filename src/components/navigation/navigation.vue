@@ -41,33 +41,35 @@
             size: "large",
             top: "5%",
             confirmButtonText: "保存",
-            bodyHeight: "600px"
-            
+            totalHeight: "80%"
         }'>
             <div slot="body" class="navigation-modal-edit">
                 <!--我的导航-->
                 <div class="navigation-mynav">
                     <p class="edit-maintitle">我的导航</p>
                     <comError :text="showError.text" :type="showError.type" v-if="showError.show" size="smallCol"></comError>
-                    <div class="mynav-sort" v-else v-for="(item,index) in memberList">
-                        <div class="ui-formrow mynav-sort-title">
-                            <label class="form-label">分类：</label>
-                            <div class="form-con">
-                                <input type="text" class="form-input" v-model="item.categoryName">
+                    <draggable v-model="memberList" class="mynav-sortwrap" v-else :options="{group:'category',handle:'.btn-move-category'}">
+                        <div class="mynav-sort" v-for="(item,index) in memberList">
+                            <div class="ui-formrow mynav-sort-title">
+                                <label class="form-label">分类：</label>
+                                <div class="form-con">
+                                    <input type="text" class="form-input" v-model="item.categoryName">
+                                    <a href="###" class="btn-move-category"></a>
+                                </div>
                             </div>
+                            <draggable element="ul" class="mynav-sort-list" v-model="memberList[index].navigators" :options="{group:'navigator',handle:'.btn-move-navigator'}">
+                                <li v-for="list in memberList[index].navigators" :key="list.navigatorId" >
+                                    <p class="item-edit">
+                                        <a href="###" class="btn-edit" @click="openModal2(true,list,memberList[index].categoryId,memberList[index].categoryName)"></a>
+                                        <a href="###" class="btn-del" @click="http_delNavigator(list.navigatorId)"></a>
+                                        <a href="###" class="btn-move-navigator"></a>
+                                    </p>
+                                    <p class="item-title" :data-id="list.navigatorId">{{list.navigatorName}}</p>
+                                </li>
+                            </draggable>
                         </div>
-                        <ul class="mynav-sort-list">
-                        <draggable v-model="memberList[index].navigators" :options="{group:'people',handle:'.dargDiv'}">
-                            <li v-for="list in memberList[index].navigators" :key="list.navigatorId">
-                                <p class="item-edit">
-                                    <a href="###" class="btn-edit" @click="openModal2(true,list,memberList[index].categoryId,memberList[index].categoryName)"></a>
-                                    <a href="###" class="btn-del dargDiv"></a>
-                                </p>
-                                <p class="item-title" :data-id="list.navigatorId">{{list.navigatorName}}</p>
-                            </li>
-                        </draggable>
-                        </ul>
-                    </div>
+                    </draggable>
+                    
                     <a class="btn-add-navigation ui-btn ui-btn-default" @click="openModal2(false)">添加导航</a>    
                 </div>  
                 <!--／我的导航-->     
@@ -79,9 +81,14 @@
                         <p class="sysnav-sort-text" :data-id="item.categoryId">{{item.categoryName}}：</p>
                         <ul class="sysnav-sort-list">
                             <li v-for="list in item.navigators">
-                                <p class="item-edit">
-                                    <a href="###" class="btn-add"></a>
-                                </p>
+                                <div class="item-edit">
+                                    <comDropdown trigger="hover" width="150px" placement="top-end" @itemClickParent="itemClickCall">
+                                        <a slot="rel" class="btn-add"></a>
+                                        <ul slot="list" class="droplist">
+                                            <comDropdownItem v-for="(item, index) in memberList" class="dropitem" :val="item.categoryId">{{item.categoryName}}</comDropdownItem>
+                                        </ul>
+                                    </comDropdown>
+                                </div>
                                 <p class="item-title" :data-id="list.navigatorId">{{list.navigatorName}}</p>
                             </li>
                         </ul>
@@ -407,13 +414,14 @@ export default {
         //新建or修改导航
         http_addNavigation(){
             const _this = this;
-            let _param;
-            _param.fkNavigatorCategory = this.curEditElement.categoryId;
-            _param.navigatorId = this.curEditElement.categoryId;
-            _param.navigatorName = this.curEditElement.categoryName;
+            var _param = {};
+            console.log(this.curEditElement.categoryId);
+            _param.categoryId = this.curEditElement.categoryId;
+            _param.navigatorId = this.curEditElement.navigatorId;
+            _param.navigatorName = this.curEditElement.navigatorName;
             _param.navigatorUrl = this.curEditElement.navigatorUrl;
             _param.description = this.curEditElement.description;
-
+console.log(_param.categoryId);
             if(this.editNavigation) { //修改导航
                 UTIL.AJAX_POST(
                     UTIL.AJAX_URL().updateNav,
@@ -446,10 +454,18 @@ export default {
                     _param,
                     function(RE,r,s){
                         if(RE.meta.code == "0000") { //请求成功
-                            console.log(RE.datas);
-                            _this.memberList.map(function(){
-
-                            })
+                            
+                            _this.memberList.forEach(function(x1){
+                                if(x1.categoryId == RE.datas.categoryId) {
+                                    x1.navigators.push({
+                                        'navigatorId': RE.datas.navigatorId,
+                                        'navigatorName': RE.datas.navigatorName,
+                                        'navigatorUrl': RE.datas.navigatorUrl,
+                                        'description': RE.datas.description
+                                    });
+                                }
+                            });
+                            console.log(_this.memberList);
                         }
                         else if(RE.meta.code == "1003") { //服务端错误
                             s.commit('setMessage',[true,"网络异常，请稍后重试","error",false]);
@@ -458,6 +474,35 @@ export default {
                     }
                 )
             }
+        },
+        //删除导航
+        http_delNavigator(id){
+            var _this = this;
+            console.log(id);
+            UTIL.AJAX_POST(
+                UTIL.AJAX_URL().deleteNav,
+                {
+                    navigatorId: id
+                },
+                function(RE,r,s){
+                    if(RE.meta.code == "0000") { //请求成功
+                        _this.memberList.forEach(function(x1,index1){
+                            x1.navigators.forEach(function(x2,index2){
+                                if(x2.navigatorId == id) {
+                                    console.log(_this.memberList);
+                                    delete _this.memberList[index1].navigators[index2];
+                                    console.log(_this.memberList);
+                                    return;
+                                }
+                            });
+                        });
+                    }
+                    else if(RE.meta.code == "1003") { //服务端错误
+                        s.commit('setMessage',[true,"网络异常，请稍后重试","error",false]);
+                        console.log("FEFull：删除导航分类失败，"+RE.meta.message);
+                    }
+                }
+            )  
         },
         //点击展开添加弹窗
         openModal2(editoradd,item,categoryId,categoryName){

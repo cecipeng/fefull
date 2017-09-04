@@ -1,6 +1,6 @@
 <template>
 	<div class="ui-modal" v-show="show" :class="[modal.customClass]" :style="{'z-index': zindex}">
-		<div class="modal-dialog" :class="modal.size" :style="{top: modal.top}">
+		<div class="modal-dialog" :class="modal.size" :style="{top: modal.top,'height': modal.totalHeight}">
 
 			<a class="close-modal" v-if="modal.showCloseBtn" @click="closeModal()"></a>
 
@@ -65,6 +65,7 @@ export default {
 				top: _modal.top ? _modal.top : "15%", //CSS 中的 top 值（仅在 size 不为 full 时有效）
 				// showMask: ((typeof _modal.showMask === 'undefined') || (_modal.showMask === true)) ? "" : "nomask", //是否显示遮罩层，默认：显示(为空)
 				bodyHeight: _modal.bodyHeight ? _modal.bodyHeight : "auto", //内容区域固定高度，超过出现滚动条。设置为null表示不固定高度，默认：不固定高度
+				totalHeight: _modal.totalHeight ? _modal.totalHeight : "auto", //弹窗总高度。设置为null表示不固定高度，默认：不固定高度
 				customClass: _modal.customClass ? _modal.customClass : "" //弹窗自定义类名，用于控制特殊样式，默认：无
 			};
 		}

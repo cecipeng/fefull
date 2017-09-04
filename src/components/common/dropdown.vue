@@ -8,8 +8,8 @@
 				</a>
 			</slot>
 		</div>
-		<transition name="slide">
-			<div class="dropdown-list" v-show="show" :style="{width: width,top: top,'margin-left': offset}">
+		<transition name="slider-top">
+			<div class="dropdown-list" v-show="show" :style="{width: width,position: top,'margin-left': offset}">
 				<slot name="list"></slot>
 			</div>
 		</transition>
@@ -26,6 +26,8 @@ export default {
 	data: function(){
 		return {
 			offset: 0,
+			slider: 'slider-bottom', //弹出层出现的动画
+			position: 'top', //弹出层出现位置的数值：根据传入的placement确定，如传入left，则top的值为100%
 			show: false //显示下拉菜单
 		}
 	},
@@ -67,6 +69,39 @@ export default {
 			this.show = false;
 			this.$emit('itemClickParent', val);
 		}.bind(this));
+
+		switch(this.placement) {
+			case "top-start":
+			case "top":
+			case "top-end":
+				this.position = 'bottom';
+				this.slider = 'slider-top';
+                break;
+            case "bottom-start":
+			case "bottom":
+			case "bottom-end":
+				this.position = 'top';
+				this.slider = 'slider-bottom';
+				break;
+			case "left-start":
+			case "left":
+			case "left-end":
+				this.position = 'right';
+				this.top = '100%';
+				this.slider = 'slider-left';
+				break;
+			case "right-start":
+			case "right":
+			case "right-end":
+				this.position = 'left';
+				this.top = '100%';
+				this.slider = 'slider-right';
+                break;
+			default: 
+				this.position = 'top';
+				this.slider = 'slider-bottom';
+		}
+		
 	},
 	methods: {
 		//点击显示／隐藏：click方式

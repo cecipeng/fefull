@@ -148,12 +148,29 @@
             margin-bottom: 10px;
             padding-top: 20px;
             border-top: 1px dashed $border;
-            &:nth-child(2) {
-                border-top: none;
-                .mynav-sort-list li:first-child {
-                    .item-edit {
-                        display: block;
-                    }
+            // &:nth-child(2) {
+            //     border-top: none;
+            //     // .mynav-sort-list li:first-child {
+            //     //     .item-edit {
+            //     //         display: block;
+            //     //     }
+            //     // }
+            // }
+            .btn-move-category {
+                display: inline-block;
+                vertical-align: middle;
+                width: 30px;
+                height: 30px;
+                line-height: 30px;
+                @extend %iconfont;
+                @extend %icon-move;
+                border-radius: $radius;
+                &:hover {
+                    background-color: $bg-l;
+                }
+                &:active {
+                    color: #fff;
+                    background-color: $main;
                 }
             }
         }
@@ -165,7 +182,7 @@
             //添加按钮
             .btn-add-navigation {
                 position: absolute;
-                top: 40px;
+                top: 70px;
                 right: 20px;
                 color: $main;
                 border-color: $main;
@@ -194,13 +211,17 @@
                 }
                 .form-input {
                     width: 150px;
+                    margin-right: 10px;
+                    vertical-align: middle;
                 }
             }
         }
         .mynav-sort-list {
+            min-height: 30px;
             padding-left: 100px;
             @extend %cf;
-            li {
+            > li {
+                position: relative;
                 float: left;
                 width: 150px;
                 background-color: #fff;
@@ -210,9 +231,10 @@
                 margin-right: 15px;
                 margin-bottom: 15px;
                 background-color: $bg-l;
+                overflow: hidden;
                 &:hover {
                     .item-edit {
-                        display: block;
+                        transform: translateX(0);
                     }
                 }
                 
@@ -224,8 +246,13 @@
                 @extend %tof;
             }
             .item-edit {
-                display: none;
-                float: right;
+                // display: none;
+                position: absolute;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                transition: transform .1s;
+                transform: translateX(100px);
                 @extend %cf;
                 a {
                     display: block;
@@ -235,8 +262,10 @@
                     line-height: 30px;
                     font-size: 18px;
                     color: #fff;
-                    background-color: $bg-d;
+                    background-color: rgba(0,0,0,.7);
                     @extend %iconfont;
+                    user-select: none;
+                    cursor: pointer;
                     &:hover {
                         background-color: $main;
                     }
@@ -245,10 +274,14 @@
                     }
                 }
                 .btn-edit {
+                    
                     @extend %icon-edit1;
                 }
                 .btn-del {
                     @extend %icon-shanchu;
+                }
+                .btn-move-navigator {
+                    @extend %icon-move;
                 }
             }
         }
@@ -284,7 +317,8 @@
         .sysnav-sort-list {
             @extend %cf;
             
-            li {
+            > li {
+                position: relative;
                 float: left;
                 width: 150px;
                 background-color: #fff;
@@ -293,9 +327,10 @@
                 border-radius: 3px;
                 margin-right: 15px;
                 margin-bottom: 15px;
+                // overflow: hidden;
                 &:hover {
                     .item-edit {
-                        display: block;
+                        transform: translateX(0);
                     }
                 }
                 &.isFav {
@@ -324,8 +359,12 @@
                 @extend %tof;
             }
             .item-edit {
-                display: none;
-                float: right;
+                position: absolute;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                transition: transform .1s;
+                transform: translateX(100px);
                 @extend %cf;
                 a {
                     display: block;
@@ -335,7 +374,7 @@
                     line-height: 30px;
                     font-size: 18px;
                     color: #fff;
-                    background-color: $bg-d;
+                    background-color: rgba(0,0,0,.7);
                     @extend %iconfont;
                     &:hover {
                         background-color: $main;
