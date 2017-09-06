@@ -156,15 +156,21 @@
             //     //     }
             //     // }
             // }
-            .btn-move-category {
+            &:hover {
+                .btn-category-ctrl {
+                    opacity: 1;
+                }
+            }
+            .btn-category-ctrl {
+                opacity: 0;
+                @include transition(opactiy);
                 display: inline-block;
                 vertical-align: middle;
                 width: 30px;
                 height: 30px;
                 line-height: 30px;
-                @extend %iconfont;
-                @extend %icon-move;
                 border-radius: $radius;
+                @extend %iconfont;
                 &:hover {
                     background-color: $bg-l;
                 }
@@ -172,6 +178,12 @@
                     color: #fff;
                     background-color: $main;
                 }
+            }
+            .btn-move-category {
+                @extend %icon-move;
+            }
+            .btn-del-category {
+                @extend %icon-shanchu;
             }
         }
         //我的导航
@@ -296,11 +308,11 @@
             padding-left: 100px;
             &:nth-child(2) {
                 margin-top: 20px;
-                li:first-child {
-                    .item-edit {
-                        display: block;
-                    }
-                }
+                // li:first-child {
+                //     .item-edit {
+                //         display: block;
+                //     }
+                // }
             }
             .sysnav-sort-text {
                 position: absolute;
@@ -330,7 +342,7 @@
                 // overflow: hidden;
                 &:hover {
                     .item-edit {
-                        transform: translateX(0);
+                        display: block;
                     }
                 }
                 &.isFav {
@@ -363,10 +375,9 @@
                 right: 0;
                 top: 0;
                 bottom: 0;
-                transition: transform .1s;
-                transform: translateX(100px);
+                display: none;
                 @extend %cf;
-                a {
+                .btn-ctrl {
                     display: block;
                     float: left;
                     width: 30px;
@@ -375,6 +386,7 @@
                     font-size: 18px;
                     color: #fff;
                     background-color: rgba(0,0,0,.7);
+                    cursor: pointer;
                     @extend %iconfont;
                     &:hover {
                         background-color: $main;
@@ -418,37 +430,37 @@
             text-align: center;
             background-color: #fff;
         }
-        //新建分类
-        .addcategory {
-            
-            border-top: 1px solid $border;
-            background-color: $bg-l;
+    }
+    //新建分类
+    .addcategory {
+        
+        border-top: 1px solid $border;
+        background-color: $bg-l;
+    }
+    .btn-addcategory {
+        display: block;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        color: $fz-l;
+        font-size: 12px;
+        cursor: pointer;
+        &:hover {
+            color: $main;
         }
-        .btn-addcategory {
-            display: block;
-            height: 30px;
-            line-height: 30px;
-            text-align: center;
-            color: $fz-l;
-            font-size: 12px;
-            cursor: pointer;
-            &:hover {
-                color: $main;
-            }
+    }
+    .add-editbox {
+        padding: 10px;
+        .btn-add-commit {
+            float: right;
+            min-width: 0;
+            margin-left: 6px;
         }
-        .add-editbox {
-            padding: 10px;
-            .btn-add-commit {
-                float: right;
-                min-width: 0;
-                margin-left: 6px;
-            }
-            .add-input {
-                overflow: hidden;
-                .form-input {
-                    height: 30px;
-                    line-height: 28px;
-                }
+        .add-input {
+            overflow: hidden;
+            .form-input {
+                height: 30px;
+                line-height: 28px;
             }
         }
     }

@@ -126,6 +126,8 @@ export default {
             saveNav : "navigator/saveNav", //新增用户导航
             deleteNavCategory : "navigator/deleteNavCategory", //删除用户导航分类
             deleteNav : "navigator/deleteNav", //删除用户导航
+            batchUpdate : "navigator/batchUpdate", //批量修改导航（分类名称，导航排序，分类排序）
+            collectSystemNav : "navigator/collectSystemNav", //收藏系统导航
         }
     },
 

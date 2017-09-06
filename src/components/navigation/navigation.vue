@@ -36,12 +36,12 @@
         </div>
 
         <!--弹窗：编辑导航-->
-        <comModal ref="showModal1" :modalOpt='{
+        <comModal ref="showModal1" v-on:modalSubmit='http_batchUpdateNavigation' :modalOpt='{
             showHeader: false,
             size: "large",
             top: "5%",
             confirmButtonText: "保存",
-            totalHeight: "80%"
+            bodyHeight: "700px"
         }'>
             <div slot="body" class="navigation-modal-edit">
                 <!--我的导航-->
@@ -54,10 +54,11 @@
                                 <label class="form-label">分类：</label>
                                 <div class="form-con">
                                     <input type="text" class="form-input" v-model="item.categoryName">
-                                    <a href="###" class="btn-move-category"></a>
+                                    <a href="###" class="btn-category-ctrl btn-move-category"></a>
+                                    <a href="###" class="btn-category-ctrl btn-del-category" @click="http_delCategory(item)"></a>
                                 </div>
                             </div>
-                            <draggable element="ul" class="mynav-sort-list" v-model="memberList[index].navigators" :options="{group:'navigator',handle:'.btn-move-navigator'}">
+                            <draggable element="ul" class="mynav-sort-list" v-model="memberList[index].navigators" :options="{group:'navigator',handle:'.btn-move-navigator'}" @start="dragging=true" @end="dragging=false" @change="log">
                                 <li v-for="list in memberList[index].navigators" :key="list.navigatorId" >
                                     <p class="item-edit">
                                         <a href="###" class="btn-edit" @click="openModal2(true,list,memberList[index].categoryId,memberList[index].categoryName)"></a>
@@ -80,12 +81,19 @@
                     <div class="sysnav-sort" v-for="item in sysList">
                         <p class="sysnav-sort-text" :data-id="item.categoryId">{{item.categoryName}}：</p>
                         <ul class="sysnav-sort-list">
-                            <li v-for="list in item.navigators">
+                            <li v-for="list in item.navigators" :class="{isFav: list.isFavor == 1}">
                                 <div class="item-edit">
-                                    <comDropdown trigger="hover" width="150px" placement="top-end" @itemClickParent="itemClickCall">
-                                        <a slot="rel" class="btn-add"></a>
+                                    <comDropdown trigger="click" width="150px" top="30px" placement="top-end" @itemClickParent="itemClickCall">
+                                        <a slot="rel" class="btn-add btn-ctrl"></a>
                                         <ul slot="list" class="droplist">
-                                            <comDropdownItem v-for="(item, index) in memberList" class="dropitem" :val="item.categoryId">{{item.categoryName}}</comDropdownItem>
+                                            <comDropdownItem v-for="(item, index) in memberList" class="dropitem" @click.native="http_addSystem(list,item.categoryId)" :val="item.categoryId">{{item.categoryName}}</comDropdownItem>
+                                            <li class="addcategory">
+                                                <a class="btn-addcategory" @click="addcategory=false" v-if="addcategory">新建分类...</a>
+                                                <div class="add-editbox" v-if="!addcategory">
+                                                    <a class="btn-add-commit ui-btn ui-btn-main" data-size="size-s" @click="http_addcategory">创建</a>
+                                                    <p class="add-input"><input type="text" class="form-input" v-model="addcategoryText"></p>
+                                                </div>
+                                            </li>
                                         </ul>
                                     </comDropdown>
                                 </div>
@@ -256,6 +264,7 @@ export default {
             },
             viewIndex: 1, //列表显示类型，0:大卡片，1:小卡片
             addcategory: true, //新建分类，点击变为false，开始编辑
+            dragging: false, //拖拽标记
             addcategoryText: "", //新建分类名称
             editNavigation: false, //修改导航or新建导航。false：新建，true：修改 
         }
@@ -389,6 +398,11 @@ export default {
                 }
             })
         },
+        //拖动结束
+        log(evt) {
+            console.log('拖动前的索引 :' + evt.oldIndex)
+            console.log('拖动后的索引 :' + evt.newIndex)
+        },
         //新建分类
         http_addcategory(){
             this.addcategory = true;
@@ -454,18 +468,35 @@ console.log(_param.categoryId);
                     _param,
                     function(RE,r,s){
                         if(RE.meta.code == "0000") { //请求成功
-                            
-                            _this.memberList.forEach(function(x1){
-                                if(x1.categoryId == RE.datas.categoryId) {
-                                    x1.navigators.push({
-                                        'navigatorId': RE.datas.navigatorId,
-                                        'navigatorName': RE.datas.navigatorName,
-                                        'navigatorUrl': RE.datas.navigatorUrl,
-                                        'description': RE.datas.description
-                                    });
+                        
+                            if(_this.memberList.length == 0) {
+                                _this.memberList[0] = {
+                                    "categoryId": RE.datas.categoryId, 
+                                    "categoryName": RE.datas.categoryName, 
+                                    "navigators": [
+                                        {
+                                            "navigatorId": RE.datas.navigatorId, 
+                                            "navigatorName": RE.datas.navigatorName, 
+                                            "navigatorUrl": RE.datas.navigatorUrl, 
+                                            "description": RE.datas.description, 
+                                            "isFavor": 1,
+                                            "isSystem": 0
+                                        }
+                                    ]
                                 }
-                            });
-                            console.log(_this.memberList);
+                            }
+                            else {
+                                _this.memberList.forEach(function(x1){
+                                    if(x1.categoryId == RE.datas.categoryId) {
+                                        x1.navigators.push({
+                                            'navigatorId': RE.datas.navigatorId,
+                                            'navigatorName': RE.datas.navigatorName,
+                                            'navigatorUrl': RE.datas.navigatorUrl,
+                                            'description': RE.datas.description
+                                        });
+                                    }
+                                });
+                            }
                         }
                         else if(RE.meta.code == "1003") { //服务端错误
                             s.commit('setMessage',[true,"网络异常，请稍后重试","error",false]);
@@ -474,6 +505,26 @@ console.log(_param.categoryId);
                     }
                 )
             }
+        },
+        //批量修改导航（分类名称，导航排序，分类排序）
+        http_batchUpdateNavigation(){
+            const _this = this;
+          
+            UTIL.AJAX_POST(
+                UTIL.AJAX_URL().batchUpdate,
+                {
+                    dataList: this.memberList
+                },
+                function(RE,r,s){
+                    if(RE.meta.code == "0000") { //请求成功
+                    
+                    }
+                    else if(RE.meta.code == "1003") { //服务端错误
+                        s.commit('setMessage',[true,"网络异常，请稍后重试","error",false]);
+                        console.log("FEFull：批量修改导航失败，"+RE.meta.message);
+                    }
+                }
+            )  
         },
         //删除导航
         http_delNavigator(id){
@@ -489,9 +540,17 @@ console.log(_param.categoryId);
                         _this.memberList.forEach(function(x1,index1){
                             x1.navigators.forEach(function(x2,index2){
                                 if(x2.navigatorId == id) {
-                                    console.log(_this.memberList);
-                                    delete _this.memberList[index1].navigators[index2];
-                                    console.log(_this.memberList);
+                                    _this.memberList[index1].navigators.splice(index2,1);
+                                    if(x2.isSystem == 1) { //系统导航
+                                        _this.sysList.forEach(function(x3,index3){
+                                            x3.navigators.forEach(function(x4,index4){
+                                                if(x4.navigatorId == id) {
+                                                    _this.sysList[index3].navigators[index4].isFavor = 0;
+                                                    return;
+                                                }
+                                            });
+                                        });
+                                    }
                                     return;
                                 }
                             });
@@ -500,6 +559,71 @@ console.log(_param.categoryId);
                     else if(RE.meta.code == "1003") { //服务端错误
                         s.commit('setMessage',[true,"网络异常，请稍后重试","error",false]);
                         console.log("FEFull：删除导航分类失败，"+RE.meta.message);
+                    }
+                }
+            )  
+        },
+        //删除导航分类
+        http_delCategory(item){
+            var _this = this;
+            console.log(item.navigators);
+            if(item.navigators.length > 0) {
+                this.$store.commit('setMessage',[true,"无法删除分类，请先删除分类下的导航","warn",false]);
+            }
+            else {
+                UTIL.AJAX_POST(
+                    UTIL.AJAX_URL().deleteNavCategory,
+                    {
+                        categoryId: item.categoryId
+                    },
+                    function(RE,r,s){
+                        if(RE.meta.code == "0000") { //请求成功
+                            _this.memberList.forEach(function(x1,index1){
+                                if(x1.categoryId == item.categoryId) {
+                                    _this.memberList.splice(index1,1);
+                                    s.commit('setMessage',[true,"删除成功","success",false]);
+                                    return;
+                                }
+                            });
+                        }
+                        else if(RE.meta.code == "1003") { //服务端错误
+                            s.commit('setMessage',[true,"网络异常，请稍后重试","error",false]);
+                            console.log("FEFull：删除导航分类失败，"+RE.meta.message);
+                        }
+                    }
+                )  
+            }
+        },
+        //添加系统导航
+        http_addSystem(navigator,categoryId){
+            var _this = this;
+            UTIL.AJAX_POST(
+                UTIL.AJAX_URL().collectSystemNav,
+                {
+                    navigatorId: navigator.navigatorId,
+                    categoryId: categoryId,
+                },
+                function(RE,r,s){
+                    if(RE.meta.code == "0000") { //请求成功
+                        _this.sysList.forEach(function(x1,index1){
+                            x1.navigators.forEach(function(x2,index2){
+                                if(x2.navigatorId == navigator.navigatorId) {
+                                    _this.sysList[index1].navigators[index2].isFavor = 1;
+                                    return;
+                                }
+                            });
+                        });
+                        _this.memberList.forEach(function(x1,index1){
+                            if(x1.categoryId == categoryId){
+                                _this.memberList[index1].navigators.push(navigator);
+                                return;
+                            }
+                        })
+                        s.commit('setMessage',[true,"成功添加系统导航","success",false]);
+                    }
+                    else if(RE.meta.code == "1003") { //服务端错误
+                        s.commit('setMessage',[true,"网络异常，请稍后重试","error",false]);
+                        console.log("FEFull：添加系统导航失败，"+RE.meta.message);
                     }
                 }
             )  

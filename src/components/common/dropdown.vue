@@ -9,7 +9,7 @@
 			</slot>
 		</div>
 		<transition name="slider-top">
-			<div class="dropdown-list" v-show="show" :style="{width: width,position: top,'margin-left': offset}">
+			<div class="dropdown-list" v-show="show" :style="style">
 				<slot name="list"></slot>
 			</div>
 		</transition>
@@ -27,6 +27,7 @@ export default {
 		return {
 			offset: 0,
 			slider: 'slider-bottom', //弹出层出现的动画
+			style: {},
 			position: 'top', //弹出层出现位置的数值：根据传入的placement确定，如传入left，则top的值为100%
 			show: false //显示下拉菜单
 		}
@@ -101,6 +102,12 @@ export default {
 				this.position = 'top';
 				this.slider = 'slider-bottom';
 		}
+
+		this.style = {
+			'width': this.width,
+			'margin-left': this.offset
+		}
+		this.style[this.position] = this.top;
 		
 	},
 	methods: {
