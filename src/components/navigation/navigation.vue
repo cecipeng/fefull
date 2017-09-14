@@ -7,14 +7,15 @@
                     <h4 class="maintitle">我的导航</h4>      
                     <div class="frbox">
                         <p class="viewwrap">
-                            <a href="###" class="btn-view btn-view-large" :class="{'on':viewIndex==0}" @click="viewIndex = 0" title="详细"></a>  
-                            <a href="###" class="btn-view btn-view-small" :class="{'on':viewIndex==1}" @click="viewIndex = 1" title="缩略"></a>
+                            <a href="###" class="btn-view btn-view-detail" :class="{'on':viewIndex=='detail'}" @click="viewIndex = 'detail'" title="详细"></a>  
+                            <a href="###" class="btn-view btn-view-list" :class="{'on':viewIndex=='list'}" @click="viewIndex = 'list'" title="缩略"></a>
+                            <a href="###" class="btn-view btn-view-slider" :class="{'on':viewIndex=='slider'}" @click="viewIndex = 'slider'" title="收起"></a>
                         </p>
                         <a href="###" class="ui-btn ui-btn-default btn-editor" data-size="size-s" @click="$refs.showModal1.showModal()"><i class="edit"></i>编辑</a>  
                     </div>  
                 </div>
                 <comError :text="showError.text" :type="showError.type" v-if="showError.show" size="smallCol"></comError>
-                <div class="navigation-box" :class="[viewIndex == 1 ? 'listsmall' : '']" v-for="item in memberList" v-else>
+                <div class="navigation-box" :class="[viewIndex ? viewIndex : 'navigation-mod-list']" v-for="item in memberList" v-else>
                     <div class="ui-maintitle" data-style='style2'>
                         <h4 class="maintitle" :data-id="item.categoryId">{{item.categoryName}}</h4>     
                     </div>
@@ -27,7 +28,7 @@
             <div class="ui-maintitle maintitle-sysnav" data-style='style1'>
                 <h4 class="maintitle">热门导航</h4>  
             </div>
-            <div class="navigation-box" :class="[viewIndex == 1 ? 'listsmall' : '']" v-for="item in sysList">
+            <div class="navigation-box" :class="[viewIndex ? viewIndex : 'navigation-mod-list']" v-for="item in sysList">
                 <div class="ui-maintitle" data-style='style2'>
                     <h4 class="maintitle" :data-id="item.categoryId">{{item.categoryName}}</h4>     
                 </div>
@@ -61,7 +62,7 @@
                             <draggable element="ul" class="mynav-sort-list" v-model="memberList[index].navigators" :options="{group:'navigator',handle:'.btn-move-navigator'}" @start="dragging=true" @end="dragging=false" @change="log">
                                 <li v-for="list in memberList[index].navigators" :key="list.navigatorId" >
                                     <p class="item-edit">
-                                        <a href="###" class="btn-edit" @click="openModal2(true,list,memberList[index].categoryId,memberList[index].categoryName)"></a>
+                                        <a href="###" class="btn-edit" v-if="list.isSystem!=1" @click="openModal2(true,list,memberList[index].categoryId,memberList[index].categoryName)"></a>
                                         <a href="###" class="btn-del" @click="http_delNavigator(list.navigatorId)"></a>
                                         <a href="###" class="btn-move-navigator"></a>
                                     </p>
@@ -262,7 +263,7 @@ export default {
                 type: "", //错误类型
                 text: "" //错误提示文字
             },
-            viewIndex: 1, //列表显示类型，0:大卡片，1:小卡片
+            viewIndex: 'detail', //列表显示类型，'detail':详情，'list'，'slider'
             addcategory: true, //新建分类，点击变为false，开始编辑
             dragging: false, //拖拽标记
             addcategoryText: "", //新建分类名称
@@ -416,12 +417,13 @@ export default {
                 function(RE,r,s){
                     if(RE.meta.code == "0000") { //请求成功
                        _this.memberList = RE.datas;
-                        console.log(_this.memberList);
                     }
                     else if(RE.meta.code == "1003") { //服务端错误
                         s.commit('setMessage',[true,"网络异常，请稍后重试","error",false]);
                         console.log("FEFull：新建导航分类失败，"+RE.meta.message);
                     }
+                    //新增完成后清空input，并隐藏
+                    this.addcategoryText = "";
                 }
             )  
         },
@@ -459,6 +461,7 @@ console.log(_param.categoryId);
                             s.commit('setMessage',[true,"网络异常，请稍后重试","error",false]);
                             console.log("FEFull：修改导航失败，"+RE.meta.message);
                         }
+                        
                     }
                 )  
             }

@@ -18,9 +18,9 @@ Vue.http.interceptors.push((request, next) => {
 //统一接口地址前缀
 // const baseUrl = "http://121.40.121.128:8090/api/";
 // const baseUrl = "http://121.40.121.128:8090/api/";
-const baseUrl = "http://192.168.1.101:8899/fefull/api/";
+// const baseUrl = "http://192.168.1.101:8899/fefull/api/";
 // const baseUrl = "http://seazy.ngrok.cc/fefull/api/";
-// const baseUrl = "http://192.168.1.104:8899/fefull/api/";
+const baseUrl = "http://192.168.1.104:8899/fefull/api/";
 // const baseUrl = "http://192.168.1.104:8899/fefull/api/";
 // const baseUrl = "http://seazy.ngrok.cc/fefull/api/";
 

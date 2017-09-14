@@ -14,7 +14,7 @@
         padding-top: 15px;
         background-color: #fff;
         //缩图模式
-        &.listsmall {
+        &.list {
             padding-bottom: 0;
             padding-top: 15px;
             .com-list-navigation {
@@ -44,6 +44,73 @@
                 }
             }
         }
+        //收起模式
+        &.slider {
+            @extend %cf;
+            > .ui-maintitle {
+                width: 120px;
+                height: auto;
+                float: left;
+                margin-bottom: 0;
+                cursor: pointer;
+                .maintitle {
+                    height: auto;
+                    margin-right: 10px;
+                    padding: 0 10px;
+                    border: 1px solid $border;
+                    background-color: $bg-l;
+                    text-align: center;
+                }
+            }
+            .com-list-navigation {
+                overflow: hidden;
+            }
+            .menulist {
+                margin-right: 0;
+                > li {
+                    width: auto;
+                    margin-right: 30px;
+                    margin-bottom: 10px;
+                }
+                .item {
+                    height: 30px;
+                    padding: 0;
+                    border: none;
+                    background: none;
+                    &:hover {
+                        .list-title {
+                            padding-right: 0;
+                        }
+                        // .list-maintxt {
+                        //     display: block;
+                        // }
+                    }
+                }
+                .list-title {
+                    border-bottom: none;
+                    margin-bottom: 0;
+                }
+                .title {
+                    height: 30px;
+                    line-height: 30px;
+                }
+                .list-go {
+                    display: none;
+                }
+                .list-maintxt {
+                    display: none;
+                    // position: absolute;
+                    // top: 30px;
+                    // left: 0;
+                    // right: auto;
+                    // max-width: 100px;
+                    // padding: 10px;
+                    // border: 1px solid $border;
+                    // background: $bg-l;
+                }
+            }
+            
+        }
         .layout-wrapper {
             padding-bottom: 10px;
         }
@@ -69,6 +136,20 @@
                 background-color: $main;
                 content:"已收藏";
                 border-radius: 0 0 0 20px;
+            }
+        }
+        .navigation-box.slider {
+            > .ui-maintitle .maintitle {
+                background-color: #fff;
+            }
+            .item {
+                box-shadow: none;
+            }
+            .isFav {
+                border-bottom: 2px solid $main;
+            }
+            .isFav:after {
+                display: none;
             }
         }
     }
@@ -119,11 +200,14 @@
                 color: #fff;
             }
         }
-        .btn-view-small {
+        .btn-view-list {
             @extend %icon-menu1;
         }
-        .btn-view-large {
+        .btn-view-detail {
             @extend %icon-menu;
+        }
+        .btn-view-slider {
+            @extend %icon-listview;
         }
     }
 
