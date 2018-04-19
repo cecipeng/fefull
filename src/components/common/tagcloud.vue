@@ -1,7 +1,8 @@
 <template>
-	
 	<ul class="com-tagcloud">
-		<li v-for="item in tagcloudList"><a class="item" @click="searching(item.tagcloudId)">{{item.tagcloudName}}</a></li>
+		<li v-for="item in tagcloudList">
+			<a class="item" @click="searching(item.tagcloudId)">{{item.tagcloudName}}</a>
+		</li>
 	</ul>
 </template>
 

@@ -16,6 +16,7 @@ import FavorartList from './components/usercenter/favorartList'
 import Login from './components/login/login'
 import Preview from './components/usercenter/preview'
 import Navigation from './components/navigation/navigation'
+import makeupList from './components/makeup/makeupList'
 
 Vue.use(VueRouter);
 
@@ -64,6 +65,7 @@ const routes = [
         },
     },
     { path: '/navigation', name: 'navigation', component: Navigation },
+    { path: '/makeupList', name: 'makeupList', component: makeupList },
     { path: '/', name: 'default', redirect: '/article' } //设置默认页
 ];
 

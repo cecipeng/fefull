@@ -7,30 +7,27 @@
                 <div class="com-mainmenu">
                     <ul class="mainmenu">
                         <li>
-                            <router-link class="item" to="/home">首页</router-link>
+                            <router-link class="item" to="/home">Home</router-link>
                         </li>
-                        <li>
-                            <router-link class="item" to="/article/">文章</router-link>
-                        </li>
-                         <li id="ui-dropdown" @mouseleave="showMenu = false">
-                            <a class="item selector" :class="{on:showMenu ==true}" @mouseenter="showMenu = true">资源库<i class="dropdown-arrow"></i></a>
-                            <div class="dropdown-list" v-show="showMenu">
+                        <li id="ui-dropdown" @mouseleave="showMenu1 = false">
+                            <a class="item selector" :class="{on:showMenu1 ==true}" @mouseenter="showMenu1 = true">Work<i class="dropdown-arrow"></i></a>
+                            <div class="dropdown-list" v-show="showMenu1">
                                 <ul class="droplist">
-                                    <li><a @click="showMenu = false" href="###" class="dropitem">基础库下载</a></li>
-                                    <li><a @click="showMenu = false" href="###" class="dropitem">插件库</a></li>
-                                    <li><a @click="showMenu = false" href="###" class="dropitem">实例分享</a></li>
+                                    <li><router-link @click="showMenu1 = false" to="/article" class="dropitem">Article</router-link></li>
+                                    <li><router-link @click="showMenu1 = false" to="/article" class="dropitem">在线编辑器</router-link></li>
+                                    <li><router-link @click="showMenu1 = false" to="/article" class="dropitem">项目管理</router-link></li>
                                 </ul>
                             </div>
                         </li>
-                        <li>
-                            <a class="item">在线编辑器</a>
+                        <li id="ui-dropdown" @mouseleave="showMenu2 = false">
+                            <a class="item selector" :class="{on:showMenu2 ==true}" @mouseenter="showMenu2 = true">资源库<i class="dropdown-arrow"></i></a>
+                            <div class="dropdown-list" v-show="showMenu2">
+                                <ul class="droplist">
+                                    <li><router-link @click="showMenu2 = false" to="/navigation" class="dropitem">网址导航</router-link></li>
+                                    <li><router-link @click="showMenu2 = false" to="/makeupList" class="dropitem">makeup</router-link></li>
+                                </ul>
+                            </div>
                         </li>
-                        <li>
-                            <router-link class="item" to="/navigation">网址导航</router-link>
-                        </li>
-                        <li>
-                            <a class="item">项目管理</a>
-                        </li> 
                     </ul>
                 </div>
                 <!-- /mainmenu -->
@@ -69,7 +66,8 @@ export default {
     components: { comUserheader,comDropdown },
     data () {
         return {
-            showMenu: false, //显示导航二级菜单
+            showMenu1: false, //显示导航二级菜单
+            showMenu2: false, //显示导航二级菜单
             noHeaderRouter: /(usercenter)|(myartCreate)|(myartCreateMarkdown)|(myartList)|(favorartList)|(preview)|(pageError)/ //不需要头部的页面路由
         }
     },

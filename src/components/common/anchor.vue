@@ -1,15 +1,9 @@
 <template>
     <div class="com-anchor" :class="type">
         <ul class="anchorwrap">
-<<<<<<< HEAD
             <li class="anchor-item" v-for="item1 in anchorlist">
                 <a class="anchor-link" v-if="item1.title.length>0">{{item1.title}}</a>
                 <ul class="anchor-subitem" v-if="item1.child && item1.child.length>0">
-=======
-            <li class="anchor-item" v-for="item1 in anchorlist" v-if="item1.title.length>0">
-                <a class="anchor-link">{{item1.title}}</a>
-                <ul class="anchor-subitem" v-if="item1.child.length>0">
->>>>>>> 1b2ab83116eda741d7ba897f89d32951450d3c02
                     <li class="anchor-item" v-for="item2 in item1.child">
                         <a class="anchor-link" v-if="item2.title.length>0">{{item2.title}}</a>
                         <ul class="anchor-subitem" v-if="item2.child && item2.child.length>0">
@@ -38,7 +32,6 @@ export default {
             anchorlist: [
                 {
                     title: '',
-<<<<<<< HEAD
                     child: [
                         {
                             title: '标题2.2',
@@ -55,9 +48,6 @@ export default {
                             ]
                         }
                     ]
-=======
-                    child: ''
->>>>>>> 1b2ab83116eda741d7ba897f89d32951450d3c02
                 },
                 {
                     title: '标题2',
