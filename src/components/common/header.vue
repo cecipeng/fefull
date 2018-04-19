@@ -2,7 +2,7 @@
     <div class="com-header" v-if="showHeader">
         <div class="layout-wrapper">
             <div class="flbox">
-                 <a href="###" class="logo">前端综合体</a> 
+                 <a href="###" class="logo"></a> 
                 <!-- mainmenu -->
                 <div class="com-mainmenu">
                     <ul class="mainmenu">
