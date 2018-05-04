@@ -130,7 +130,7 @@ export default {
                     else if(RE.meta.code == "1003") { //服务端错误
                         _this.showError.show = true;
                         _this.showError.type = "weberror";
-                        console.log("FEFull：获取文章列表失败，"+RE.meta.message);
+                        console.log("Allinone：获取文章列表失败，"+RE.meta.message);
                     }
                 }
             );

@@ -20,7 +20,7 @@ Vue.http.interceptors.push((request, next) => {
 // const baseUrl = "http://121.40.121.128:8090/api/";
 // const baseUrl = "http://192.168.1.101:8899/fefull/api/";
 // const baseUrl = "http://seazy.ngrok.cc/fefull/api/";
-const baseUrl = "http://192.168.1.104:8899/fefull/api/";
+const baseUrl = "http://hj.kst985.com:8090/fefull/api/";
 // const baseUrl = "http://192.168.1.104:8899/fefull/api/";
 // const baseUrl = "http://seazy.ngrok.cc/fefull/api/";
 
@@ -56,14 +56,14 @@ export default {
                         showClosebtn: true //是否显示关闭按钮
                     }
                     store.commit('setMessage',mess);
-                    console.log("FEFull："+response.data.meta.message);
+                    console.log("Allinone："+response.data.meta.message);
                     break;
                 default: //请求成果,或其他业务返回码
                     callback(response.data, router, store);
             }
         })
         .catch(function(response) {
-            console.log("FEFull："+response.statusText);
+            console.log("Allinone："+response.statusText);
         })
     },
 
@@ -94,14 +94,14 @@ export default {
                         showClosebtn: true //是否显示关闭按钮
                     }
                     store.commit('setMessage',mess);
-                    console.log("FEFull："+response.data.meta.message);
+                    console.log("Allinone："+response.data.meta.message);
                     break;
                 default: //请求成果,或其他业务返回码
                     callback(response.data, router, store);
             }
         })
         .catch(function(response) {
-            console.log("FEFull："+response.statusText);
+            console.log("Allinone："+response.statusText);
         })
     },
 

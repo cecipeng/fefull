@@ -325,7 +325,7 @@ export default {
         //         }
         //         else { 
         //             next(false);
-        //             console.log("FEFull：获取公共列表失败，"+RE.meta.message);
+        //             console.log("Allinone：获取公共列表失败，"+RE.meta.message);
         //         }
         //     }
         // );
@@ -380,7 +380,7 @@ export default {
                     }
                     else { 
                         
-                        console.log("FEFull：获取公共列表失败，"+RE.meta.message);
+                        console.log("Allinone：获取公共列表失败，"+RE.meta.message);
                     }
                 }
             );
@@ -420,7 +420,7 @@ export default {
                     }
                     else if(RE.meta.code == "1003") { //服务端错误
                         s.commit('setMessage',[true,"网络异常，请稍后重试","error",false]);
-                        console.log("FEFull：新建导航分类失败，"+RE.meta.message);
+                        console.log("Allinone：新建导航分类失败，"+RE.meta.message);
                     }
                     //新增完成后清空input，并隐藏
                     this.addcategoryText = "";
@@ -459,7 +459,7 @@ console.log(_param.categoryId);
                         }
                         else if(RE.meta.code == "1003") { //服务端错误
                             s.commit('setMessage',[true,"网络异常，请稍后重试","error",false]);
-                            console.log("FEFull：修改导航失败，"+RE.meta.message);
+                            console.log("Allinone：修改导航失败，"+RE.meta.message);
                         }
                         
                     }
@@ -503,7 +503,7 @@ console.log(_param.categoryId);
                         }
                         else if(RE.meta.code == "1003") { //服务端错误
                             s.commit('setMessage',[true,"网络异常，请稍后重试","error",false]);
-                            console.log("FEFull：新建导航失败，"+RE.meta.message);
+                            console.log("Allinone：新建导航失败，"+RE.meta.message);
                         }
                     }
                 )
@@ -524,7 +524,7 @@ console.log(_param.categoryId);
                     }
                     else if(RE.meta.code == "1003") { //服务端错误
                         s.commit('setMessage',[true,"网络异常，请稍后重试","error",false]);
-                        console.log("FEFull：批量修改导航失败，"+RE.meta.message);
+                        console.log("Allinone：批量修改导航失败，"+RE.meta.message);
                     }
                 }
             )  
@@ -561,7 +561,7 @@ console.log(_param.categoryId);
                     }
                     else if(RE.meta.code == "1003") { //服务端错误
                         s.commit('setMessage',[true,"网络异常，请稍后重试","error",false]);
-                        console.log("FEFull：删除导航分类失败，"+RE.meta.message);
+                        console.log("Allinone：删除导航分类失败，"+RE.meta.message);
                     }
                 }
             )  
@@ -591,7 +591,7 @@ console.log(_param.categoryId);
                         }
                         else if(RE.meta.code == "1003") { //服务端错误
                             s.commit('setMessage',[true,"网络异常，请稍后重试","error",false]);
-                            console.log("FEFull：删除导航分类失败，"+RE.meta.message);
+                            console.log("Allinone：删除导航分类失败，"+RE.meta.message);
                         }
                     }
                 )  
@@ -626,7 +626,7 @@ console.log(_param.categoryId);
                     }
                     else if(RE.meta.code == "1003") { //服务端错误
                         s.commit('setMessage',[true,"网络异常，请稍后重试","error",false]);
-                        console.log("FEFull：添加系统导航失败，"+RE.meta.message);
+                        console.log("Allinone：添加系统导航失败，"+RE.meta.message);
                     }
                 }
             )  

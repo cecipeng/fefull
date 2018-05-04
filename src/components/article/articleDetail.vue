@@ -166,7 +166,7 @@ export default {
                     else if(RE.meta.code == "1003") { //服务端错误
                         _this.showError.show = true;
                         _this.showError.type = "weberror";
-                        console.log("FEFull：获取文章列表失败，"+RE.meta.message);
+                        console.log("Allinone：获取文章列表失败，"+RE.meta.message);
                     }
                 }
             );
@@ -191,7 +191,7 @@ export default {
                             break;
                         case "1003":  //服务端错误
                             s.commit('setMessage',[true,"网络错误，请重试","default",false]);
-                            console.log("FEFull：获取文章列表失败，"+RE.meta.message);
+                            console.log("Allinone：获取文章列表失败，"+RE.meta.message);
                             break;
                     }
                 }
@@ -216,7 +216,7 @@ export default {
                             break;
                         case "1003":  //服务端错误
                             s.commit('setMessage',[true,"网络错误，请重试","default",false]);
-                            console.log("FEFull：获取文章列表失败，"+RE.meta.message);
+                            console.log("Allinone：获取文章列表失败，"+RE.meta.message);
                             break;
                     }
                 }

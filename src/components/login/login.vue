@@ -2,7 +2,7 @@
     <div class="layout-mod mod-login">
         <div class="layout-wrapper">
             <div class="formbox">
-                <div class="form-title">登录 Fefull</div>
+                <div class="form-title">登录 Allinone</div>
                 <div class="form-row form-username">
                     <input type="text" v-model="loginModel.userName" class="form-input form-input-wide" placeholder="用户名" @keyup.enter="login">
                 </div>
@@ -75,7 +75,7 @@ export default {
                     }
                     else if(RE.meta.code == "1003") { //服务端错误
                         s.commit('setMessage',[true,"网络异常，请稍后重试","error",false]);
-                        console.log("FEFull：获取文章列表失败，"+RE.meta.message);
+                        console.log("Allinone：获取文章列表失败，"+RE.meta.message);
                     }
                 }
             )     

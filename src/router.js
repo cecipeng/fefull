@@ -118,7 +118,7 @@ function getTabAndTagcloud(callback){
                     }
                 }
                 else { 
-                    console.log("FEFull：获取文章分类列表失败，"+RE.meta.message);
+                    console.log("Allinone：获取文章分类列表失败，"+RE.meta.message);
                 }
             }
         )  
@@ -139,7 +139,7 @@ function getTabAndTagcloud(callback){
                     }
                 }
                 else { 
-                    console.log("FEFull：获取标签云列表失败，"+RE.meta.message);
+                    console.log("Allinone：获取标签云列表失败，"+RE.meta.message);
                 }
             }
         ) 
