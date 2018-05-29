@@ -51,13 +51,14 @@
 	.dropdown-list {
 		// display: none;
 		position: absolute;
-		max-height: 406px;		//
 		border: 1px solid $border;
 		background-color: #fff;
-		overflow-y: auto;
-		overflow-x: hidden;
 		text-align: center;
 		z-index: $zindex-dd;
+		.droplist {
+			overflow-y: auto;
+			overflow-x: hidden;
+		}
 		.dropitem {
 			display: block;
 			height: 30px;

@@ -3,7 +3,7 @@ var App = require('./App.vue')
 import Vue from 'vue'
 import store from './store.js'
 import router from './router.js'
-
+import $ from 'jquery'
 
 
 /* eslint-disable no-new */

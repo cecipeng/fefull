@@ -20,11 +20,12 @@
                             </div>
                         </li>
                         <li id="ui-dropdown" @mouseleave="showMenu2 = false">
-                            <a class="item selector" :class="{on:showMenu2 ==true}" @mouseenter="showMenu2 = true">资源库<i class="dropdown-arrow"></i></a>
+                            <a class="item selector" :class="{on:showMenu2 ==true}" @mouseenter="showMenu2 = true">Tool<i class="dropdown-arrow"></i></a>
                             <div class="dropdown-list" v-show="showMenu2">
                                 <ul class="droplist">
                                     <li><router-link @click="showMenu2 = false" to="/navigation" class="dropitem">网址导航</router-link></li>
                                     <li><router-link @click="showMenu2 = false" to="/makeupList" class="dropitem">makeup</router-link></li>
+                                    <li><router-link @click="showMenu2 = false" to="/ideaboxList" class="dropitem">摄影集</router-link></li>
                                 </ul>
                             </div>
                         </li>

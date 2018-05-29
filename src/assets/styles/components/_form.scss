@@ -7,7 +7,7 @@
 //局部变量
 $ui-form-row-h: 40px;		//单行默认高度
 $ui-form-row-w: 315px;		//单行默认宽度
-
+$ui-label-w:    115px;      //label宽度
 //定义通用边框
 %comform-border {
 	display: inline-block;
@@ -49,7 +49,7 @@ $ui-form-row-w: 315px;		//单行默认宽度
 .ui-formrow {
 	position: relative;
 	margin-bottom: 20px;
-	padding-left: 115px;
+	padding-left: $ui-label-w;
 	//无标题
 	&.ui-formnolabel {
 		padding-left: 0;
@@ -95,17 +95,27 @@ $ui-form-row-w: 315px;		//单行默认宽度
 		color: $red;
 		text-align: left;
 	}
-	// //提交按钮
-	// &.form-btnwrap {
 
-	// }
 	//隐藏元素
 	.form-hidden {
 		@extend %comform-hidden;
 	}
+
+	// 纯文本
+	.form-value {
+		line-height: 40px;
+	}
 }
 
 
+//--------------------- 提交按钮 ---------------------//
+.form-btnwrap {
+	padding-left: $ui-label-w;
+	.ui-btn {
+		min-width: 100px;
+		margin-right: 10px;
+	}
+}
 
 //--------------------- 状态汇总 ---------------------//
 .ui-formrow {
@@ -366,38 +376,61 @@ $ui-form-row-w: 315px;		//单行默认宽度
 	display: inline-block;
 	vertical-align: middle;
 	position: relative;
-	width: 96px;     //
-	height: 30px;     //
-	line-height: 30px;     //
-	border-radius: 15px;     //
+	width: 60px;     //
+	height: 24px;     //
+	padding: 0 12px;
+	margin-top: 8px;
+	line-height: 24px;     //
+	border-radius: 12px;     //
 	text-align: center;
 	font-size: 14px;     //
 	color: #fff;     //
 	transition: background-color 0.3s ease-out;     //
 	@include hover(opacity,0.8,1);     //
+	cursor: pointer;
 	//切换按钮
 	&:before {
 		position: absolute;
-		left: -2px;     //
+		left: -1px;     //
 		top: -3px;     //
-		width: 35px;     //
-		height: 35px;      //
+		width: 28px;     //
+		height: 28px;      //
 		// @include bgurl('form-switch.png');     //
-		background-color: $main;     //
+		border: 1px solid $border;     //
+		background-color: #fff;
+		box-shadow: 0 3px 5px rgba(0,0,0,0.15);
 		border-radius: 50%;
 		content: "";
 		@include transition(transform);
 	}
+	.form-switch-off,
+	.form-switch-on, {
+		display: inline-block;
+		vertical-align: middle;
+		font-size: 14px;
+	}
+	.form-switch-off {
+		color: $fz;
+		float: left;
+	}
+	.form-switch-on {
+		float: right;
+		color: #fff;
+	}
  	&[data-status="on"] {
-		padding-left: 20px;     //
-		background-color: #95d67b;     //
+		background-color: $main;  
 		transform: translateX(0px);
+		.form-switch-off {
+			display: none;
+		}
  	}
  	&[data-status="off"] {
-		padding-right: 20px;     //
-		background-color: #b9b9b9;     //
+		background-color: #ddd;  
+		.form-switch-on {
+			display: none;
+		}
 		&:before {
-			transform: translateX(65px);     //
+			transform: translateX(34px);     //
 		}
  	}
 }

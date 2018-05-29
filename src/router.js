@@ -17,6 +17,9 @@ import Login from './components/login/login'
 import Preview from './components/usercenter/preview'
 import Navigation from './components/navigation/navigation'
 import makeupList from './components/makeup/makeupList'
+import ideaList from './components/photo/ideaList'
+import ideaboxList from './components/photo/ideaboxList'
+import addIdea from './components/photo/addIdea'
 
 Vue.use(VueRouter);
 
@@ -66,6 +69,9 @@ const routes = [
     },
     { path: '/navigation', name: 'navigation', component: Navigation },
     { path: '/makeupList', name: 'makeupList', component: makeupList },
+    { path: '/ideaList', name: 'ideaList', component: ideaList },
+    { path: '/ideaboxList', name: 'ideaboxList', component: ideaboxList },
+    { path: '/addIdea', name: 'addIdea', component: addIdea },
     { path: '/', name: 'default', redirect: '/article' } //设置默认页
 ];
 

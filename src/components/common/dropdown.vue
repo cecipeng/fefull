@@ -10,7 +10,11 @@
 		</div>
 		<transition name="slider-top">
 			<div class="dropdown-list" v-show="show" :style="style">
-				<slot name="list"></slot>
+				<slot name="list">
+					<ul class="droplist" :style="{'max-height': maxHeight}">
+                      <li v-for="item in list" :data-id="item.id"><a class="dropitem" @click="choose(item.id,item.name)">{{item.name}}</a></li>
+                    </ul>
+				</slot>
 			</div>
 		</transition>
 	</div>
@@ -40,7 +44,7 @@ export default {
 			default: 'hover'
 		},
 		top: { //下拉菜单高度
-			default: '36px'
+			default: '39px'
 		},
 		placement: { //位置
 			validator (value) {
@@ -51,6 +55,9 @@ export default {
 		width: { //下拉菜单宽度
 			default: '100%'
 		},
+		maxHeight: { //下拉菜单高度，超出部分出现滚动条
+			default: '405px'
+		},
 		reltextId: { //rel显示内容id值
 			default: ''
 		},
@@ -60,6 +67,16 @@ export default {
 		disabled: { //是否可编辑
 			type: Boolean,
 			default: false
+		},
+		list: { //下拉菜单内容
+			type: Array,
+			default: [{
+				"id": 1,
+				"name": "选项1"
+			},{
+				"id": 2,
+				"name": "选项2"
+			}]
 		}
 	},
 	created() {
@@ -136,6 +153,11 @@ export default {
 			this.timeout = setTimeout(() => {
 				this.show = false;
 			}, 250);
+		},
+		//点击选项
+		choose(id,name){
+			this.reltextId = id;
+			this.reltextName = name;
 		}
 	}
 }
